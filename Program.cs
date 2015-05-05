@@ -36,7 +36,7 @@ namespace PlexScrobble
                                 TriggerBuilder.Create()
                                     //.WithCronSchedule(appSettings.CronSchedule, cron => cron.WithMisfireHandlingInstructionDoNothing())
                                     .WithSimpleSchedule(x => x
-                                        .WithIntervalInSeconds(60)
+                                        .WithIntervalInSeconds(600)
                                         .RepeatForever())
                                     .Build()));
                 });
