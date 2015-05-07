@@ -127,28 +127,51 @@ namespace PlexScrobble.Models
             }
         }
 
-        public string GetPlexToken()
+        public async Task<string> GetPlexToken()
         {
-            //$BB = [System.Text.Encoding]::UTF8.GetBytes("myplexaccount:mypassword")
-            //$EncodedPassword = [System.Convert]::ToBase64String($BB)
-            //$headers = @{}
-            //$headers.Add("Authorization","Basic $($EncodedPassword)") | out-null
-            //$headers.Add("X-Plex-Client-Identifier","TESTSCRIPTV1") | Out-Null
-            //$headers.Add("X-Plex-Product","Test script") | Out-Null
-            //$headers.Add("X-Plex-Version","V1") | Out-Null
-            //[xml]$res = Invoke-RestMethod -Headers:$headers -Method Post -Uri:$url
-            //$token = $res.user.authenticationtoken
+            var url = "https://plex.tv/users/sign_in.xml";
+            var myplexaccount = "sbarrett00";
+            var mypassword = "123456";
+            var token = "";
+            byte[] accountBytes = Encoding.UTF8.GetBytes(myplexaccount +":"+ mypassword);
+            var encodedPassword = Convert.ToBase64String(accountBytes);
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("X-Plex-Client-Identifier","PlexScrobble");
+                client.DefaultRequestHeaders.Add("Authorization", "Basic " + encodedPassword);
+                HttpContent blankcontent = new StringContent("");
+                using (HttpResponseMessage response = await client.PostAsync(url, blankcontent))
+                using (HttpContent content = response.Content)
+                {
+                    string result = await content.ReadAsStringAsync();
+                    if (result != null)
+                    {
+                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
+                        {
+                            var data = XDocument.Load(reader);
+                            token = data.ElementOrEmpty("user").ElementOrEmpty("authentication-token").Value;
+                        }
+                        
+                    }
+                }
+            }
+            return token;
         }
-
 
         public async Task<string> GetPlexResponse(string uri)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(uri))
-            using (HttpContent content = response.Content)
             {
-                string result = await content.ReadAsStringAsync();
-                return result;
+                var request = new HttpRequestMessage();
+                request.RequestUri = new Uri(uri);
+                request.Method = HttpMethod.Get;
+                request.Headers.Add();
+                using (HttpResponseMessage response = await client.GetAsync(uri))
+                using (HttpContent content = response.Content)
+                {
+                    string result = await content.ReadAsStringAsync();
+                    return result;
+                }
             }
         }
     }
