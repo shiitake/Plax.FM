@@ -15,17 +15,17 @@ namespace PlexScrobble
     {
         static void Main(string[] args)
         {
-            //var logger = LogManager.GetCurrentClassLogger();
-            //IAppSettings appSettings = new AppSettings();
+            var logger = LogManager.GetCurrentClassLogger();
+            IAppSettings appSettings = new AppSettings();
 
             try
             {
                 HostFactory.Run(c =>
                 {
-                    //c.UseNLog();
+                    c.UseNLog();
                     c.UseNinject(new AppModule());
                     c.UseQuartzNinject();
-                    //c.RunAsLocalSystem();
+                    c.RunAsLocalSystem();
 
                     c.ScheduleQuartzJobAsService(q =>
                         q.WithJob(() =>
@@ -35,9 +35,7 @@ namespace PlexScrobble
                             .AddTrigger(() =>
                                 TriggerBuilder.Create()
                                     //.WithCronSchedule(appSettings.CronSchedule, cron => cron.WithMisfireHandlingInstructionDoNothing())
-                                    .WithSimpleSchedule(x => x
-                                        .WithIntervalInSeconds(600)
-                                        .RepeatForever())
+                                    .WithSimpleSchedule(x => x.WithIntervalInSeconds(600).RepeatForever())
                                     .Build()));
                 });
             }

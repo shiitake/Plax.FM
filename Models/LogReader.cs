@@ -12,29 +12,40 @@ using System.Xml.Linq;
 using Excel;
 using FileHelpers;
 using System.IO;
+using Ninject.Extensions.Logging;
+using PlexScrobble.Configuration;
 using PlexScrobble.Utilities;
+using Quartz;
 
 namespace PlexScrobble.Models
 {
-    public class LogReader
+    public interface ILogReader
     {
-        public static string _newLog;
-        public static string _oldLog;
+        //List<SongEntry> ReadLog(string newLog, string oldLog);
+    }
+    
+    public class LogReader : ILogReader
+    {
+        private readonly ILogger _logger;
+        private readonly IAppSettings _appSettings;
+        //public static string _newLog;
+        //public static string _oldLog;
         public static string LogCopy = "LogCopy.txt";
         public string BaseUrl = @"http://localhost:32400";
-       
-        public LogReader(string newLog, string oldLog)
+
+        public LogReader(ILogger logger, IAppSettings appSettings)
         {
-            _newLog = CopyLog(newLog);
-            _oldLog = oldLog;
+            _logger = logger;
+            _appSettings = appSettings;
         }
 
-        public void ReadLog()
+        public List<SongEntry> ReadLog(string newLog, string oldLog)
         {
+            newLog = CopyLog(newLog);
             FileDiffEngine diff = new FileDiffEngine(typeof(PlexMediaServerLog));
-            PlexMediaServerLog[] entry = diff.OnlyNewRecords(_oldLog, _newLog) as PlexMediaServerLog[];
-            ParseLogs(entry);
-            System.IO.File.Copy(_newLog, _oldLog);
+            PlexMediaServerLog[] entry = diff.OnlyNewRecords(oldLog, newLog) as PlexMediaServerLog[];
+            //System.IO.File.Copy(newLog, oldLog, true);
+            return ParseLogs(entry);
         }
 
         private string CopyLog(string log)
@@ -46,12 +57,12 @@ namespace PlexScrobble.Models
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                //_logger.Error("There was an error attempting to access the Plex Media Server Log. Error: " + ex.Message);
                 throw;
             }
         }
         
-        public void ParseLogs(PlexMediaServerLog[] logs)
+        private List<SongEntry> ParseLogs(PlexMediaServerLog[] logs)
         {
             var songList = new List<SongEntry>();
             Regex rgx = new Regex(@".*\sDEBUG\s-\sLibrary\sitem\s(\d+)\s'.*'\sgot\splayed\sby\saccount\s(\d+).*");
@@ -74,15 +85,11 @@ namespace PlexScrobble.Models
                 }
                 
             }
-            if (songList.Count > 0)
-            {
-                GetSongData(songList);
-            }
+            return songList.Count > 0 ? GetSongData(songList).Result : songList;
         }
 
-        public async void GetSongData(List<SongEntry> songList)
+        public async Task<List<SongEntry>> GetSongData(List<SongEntry> songList)
         {
-            //ToDo: Make this work
             foreach (SongEntry song in songList)
             {
                 XDocument docResponse = null;
@@ -97,34 +104,39 @@ namespace PlexScrobble.Models
                         docResponse = XDocument.Load(reader);
                     }
                 }
-                var artistName = "";
 
                 if (docResponse != null)
                 {
-                    XNamespace aw = docResponse.Root.Name.NamespaceName;
-                    var artistasin = "";
-                    IEnumerable<XElement> items = null;
-                    items = (
-                        from item in
-                            docResponse.ElementOrEmpty(aw, "ItemLookupResponse")
-                                .ElementOrEmpty(aw, "Items")
-                                .Elements(aw + "Item")
-                        select item);
-                    foreach (XElement item in items)
+                    song.Artist =
+                        docResponse.ElementOrEmpty("MediaContainer")
+                            .ElementOrEmpty("Track")
+                            .AttributeOrEmpty("originalTitle")
+                            .Value;
+                    if (song.Artist == "")
                     {
-                        artistasin =
-                            item.ElementOrEmpty(aw, "RelatedItems")
-                                .ElementOrEmpty(aw, "RelatedItem")
-                                .ElementOrEmpty(aw, "Item")
-                                .ElementOrEmpty(aw, "ASIN").Value;
-                        if (artistasin.Length > 0)
-                        {
-                            return artistasin;
-                        }
+                        song.Artist =
+                            docResponse.ElementOrEmpty("MediaContainer")
+                                .ElementOrEmpty("Track")
+                                .AttributeOrEmpty("grandparentTitle")
+                                .Value;
                     }
-                    return artistasin;
+                    song.Title =
+                        docResponse.ElementOrEmpty("MediaContainer")
+                            .ElementOrEmpty("Track")
+                            .AttributeOrEmpty("title")
+                            .Value;
+                    song.Album =
+                        docResponse.ElementOrEmpty("MediaContainer")
+                            .ElementOrEmpty("Track")
+                            .AttributeOrEmpty("parentTitle")
+                            .Value;
+                }
+                if (song.Artist == "" || song.Title == "")
+                {
+                    songList.Remove(song);
                 }
             }
+            return songList;
         }
 
         public async Task<string> GetPlexToken()
@@ -134,7 +146,8 @@ namespace PlexScrobble.Models
             var mypassword = "123456";
             var token = "";
             byte[] accountBytes = Encoding.UTF8.GetBytes(myplexaccount +":"+ mypassword);
-            var encodedPassword = Convert.ToBase64String(accountBytes);
+            //var encodedPassword = Convert.ToBase64String(accountBytes);
+            var encodedPassword = "c2JhcnJldHQwMDpjZ2laTkpqSkM4Vmg=";
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("X-Plex-Client-Identifier","PlexScrobble");
@@ -162,10 +175,11 @@ namespace PlexScrobble.Models
         {
             using (HttpClient client = new HttpClient())
             {
+                var token = await GetPlexToken();
                 var request = new HttpRequestMessage();
                 request.RequestUri = new Uri(uri);
                 request.Method = HttpMethod.Get;
-                request.Headers.Add();
+                request.Headers.Add("X-Plex-Token", token.ToString());
                 using (HttpResponseMessage response = await client.GetAsync(uri))
                 using (HttpContent content = response.Content)
                 {
