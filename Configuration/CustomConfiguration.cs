@@ -56,6 +56,8 @@ namespace PlexScrobble.Configuration
             row["SessionId"] = "n/a";
             userConfig.Rows.Add(row);
             userConfig.WriteXml(settingFile, XmlWriteMode.WriteSchema);
+            _storage = new DataTable();
+            _storage.ReadXml(settingFile);
         }
 
         public void Save()
@@ -67,7 +69,7 @@ namespace PlexScrobble.Configuration
 
         public string GetValue(string settingName)
         {
-            return _storage.Rows[0]["SessionId"].ToString();
+            return _storage.Rows[0][settingName].ToString();
         }
 
         public void DeleteRow(string settingName)
@@ -84,7 +86,7 @@ namespace PlexScrobble.Configuration
         public void SetValue(string settingName, string settingValue)
         {
             var currentValue = GetValue(settingName);
-            if (currentValue == "" && currentValue != settingName)
+            if (currentValue == "" && currentValue != settingValue)
             {
                 //delete row 0 and replace
                 DeleteRow(settingName);
