@@ -125,8 +125,8 @@ namespace PlexScrobble.Models
             //                    data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("key").Value;
             //                user = data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("name").Value;
                             //save config
-                            _customConfiguration.SetValue("UserName", user);
-                            _customConfiguration.SetValue("SessionId", session);
+                            _customConfiguration.SetValue("LastFmUsername", user, "1");
+                            _customConfiguration.SetValue("SessionId", session, "1");
             //            }
 
             //        }

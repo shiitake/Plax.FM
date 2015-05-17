@@ -39,7 +39,7 @@ namespace PlexScrobble.Configuration
             }
         }
 
-        public void Create(string settingFile)
+        private void Create(string settingFile)
         {
             var configInfo = new FileInfo(settingFile);
             var directory = new DirectoryInfo(configInfo.Directory.ToString());
@@ -49,47 +49,57 @@ namespace PlexScrobble.Configuration
             }
             //create config file
             var userConfig = new DataTable("CustomConfiguration");
-            userConfig.Columns.Add("UserName");
+            userConfig.Columns.Add("PlexId");
+            userConfig.Columns.Add("PlexUsername");
+            userConfig.Columns.Add("LastFmUsername");
             userConfig.Columns.Add("SessionId");
             var row = userConfig.NewRow();
-            row["UserName"] = "default";
-            row["SessionId"] = "n/a";
+            row["PlexId"] = "1";
+            row["PlexUsername"] = "";
+            row["LastFmUsername"] = "";
+            row["SessionId"] = "";         
             userConfig.Rows.Add(row);
             userConfig.WriteXml(settingFile, XmlWriteMode.WriteSchema);
             _storage = new DataTable();
             _storage.ReadXml(settingFile);
         }
 
-        public void Save()
+        private void Save()
         {
             var settingFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 "PlexScrobble", "CustomConfiguration.xml");
             _storage.WriteXml(settingFile);
         }
 
-        public string GetValue(string settingName)
+        public string GetValue(string settingName, string plexId = "1")
         {
-            return _storage.Rows[0][settingName].ToString();
+            int row = 0;
+            for (int i = 0; i < _storage.Rows.Count; i++ )
+            {
+                if (_storage.Rows[i]["PlexId"] == plexId)
+                { row = i; }
+            }
+            return _storage.Rows[row][settingName].ToString();
         }
 
-        public void DeleteRow(string settingName)
+        public void DeleteRow(string settingName, string plexId = "1")
         {
             int row = 0;
             for (int i = 0; i < _storage.Rows.Count; i++)
             {
-                if (_storage.Rows[i]["User"].ToString() == settingName)
+                if (_storage.Rows[i]["PlexId"].ToString() == plexId)
                 {row = i;}
             }
             _storage.Rows[row].Delete();
         }
 
-        public void SetValue(string settingName, string settingValue)
+        public void SetValue(string settingName, string settingValue, string plexId = "1")
         {
-            var currentValue = GetValue(settingName);
+            var currentValue = GetValue(settingName, plexId);
             if (currentValue == "" && currentValue != settingValue)
             {
-                //delete row 0 and replace
-                DeleteRow(settingName);
+                //delete row and replace with new value
+                DeleteRow(settingName, plexId);
                 var row = _storage.NewRow();
                 row[settingName] = settingValue;
                 _storage.Rows.Add(row);

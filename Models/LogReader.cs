@@ -31,7 +31,7 @@ namespace PlexScrobble.Models
         //public static string _newLog;
         //public static string _oldLog;
         public static string LogCopy = "LogCopy.txt";
-        public string BaseUrl = @"http://localhost:32400";
+        public string BaseUrl = @"http://mediapc:32400";
 
         public LogReader(ILogger logger, IAppSettings appSettings)
         {
