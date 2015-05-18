@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.ModelBinding;
 using System.Xml;
 using System.Xml.Linq;
 using System.Web;
@@ -24,44 +25,62 @@ namespace PlexScrobble.Models
     {
         private readonly ILogger _logger;
         private readonly IAppSettings _appSettings;
-        private CustomConfiguration _customConfiguration;
+        private readonly ICustomConfiguration _customConfiguration;
         public static string UserAgent = "PlexScrobble";
 
-        public LastFmScrobbler(ILogger logger, IAppSettings appSettings)
+        public LastFmScrobbler(ILogger logger, IAppSettings appSettings, ICustomConfiguration customConfiguration)
         {
             _logger = logger;
             _appSettings = appSettings;
-            _customConfiguration = new CustomConfiguration();
+            _customConfiguration = customConfiguration;
         }
 
         public void Scrobble(List<SongEntry> songList)
         {
-            //Todo: scrobble!
             _logger.Debug("Let's scrobble something");
+            var session = GetSession();
 
-            //authentication steps
-            //1 - get token (with api-key + sig)
-            //2 - get user authentication (with api-key and token)
-            //3 - create session (api_key + token + api_sig) - save this for later
-            //4 - scrobble track with authenticated call (sk + api_key + api_sig)
+            if (session != "")
+            {
+                foreach (SongEntry songEntry in songList)
+                {
+                    ScrobbleTrack(session, songEntry);
+                }
+            }
+            else
+            {
+                _logger.Debug("Unable to get LastFM session Id.");
+            }
+        }
 
-            //token will make sure that user is authorized and will help you get session
-            //authorization - http://www.last.fm/api/auth/?api_key=266155149c516542879ee1ec55c93697&token=0619b02fd401c6129fa855cf2a2a2c55
-
+        public string GetSession()
+        {
             var session = GetUserSessionFromConfig();
+            var token = "";
 
             if (session == "" || session == "n/a")
             {
-                var token = GetLastFmToken().Result;
-                session = GetLastFmSession(token).Result;
+                _logger.Debug("Cannot find LastFM session in config. Attempting to download.");
+                token = GetLastFmToken().Result;
+                session = DownloadLastFmSession(token).Result;
             }
-
-            //scrobbletrack
-            foreach (SongEntry songEntry in songList)
+            if (session == "")
             {
-                ScrobbleTrack(session,songEntry);
+                _logger.Debug("Unable to download LastFM session.");
+                var auth = GetUserAuthorization(token);
+                //try again after authorizing
+                if (auth)
+                {
+                    session = DownloadLastFmSession(token).Result;
+                }
             }
-            
+            return session;
+        }
+        
+        public string GetUserSessionFromConfig()
+        {
+            var sessionId = _customConfiguration.GetValue("SessionId");
+            return sessionId;
         }
 
         public async Task<string> GetLastFmToken()
@@ -94,44 +113,45 @@ namespace PlexScrobble.Models
             return token;
         }
 
-        public async Task<string> GetLastFmSession(string token)
+        public async Task<string> DownloadLastFmSession(string token)
         {
-            var session = "db360eb32df7b43455a6ccefa0d262e2";
-            var user = "shiitake_dev";
-            //var builder = new UriBuilder("http://ws.audioscrobbler.com/2.0/");
-            //var param = "api_key" + _appSettings.LastFmApiKey + "methodauth.getSessiontoken" + token +
-            //                _appSettings.LastFmApiSecret;
-            //var signature = GenerateLastFmSignature(param);
-            //var query = HttpUtility.ParseQueryString(builder.Query);
-            //query["method"] = "auth.getSession";
-            //query["token"] = token;
-            //query["api_key"] = _appSettings.LastFmApiKey;
-            //query["api_sig"] = signature;
-            //builder.Query = query.ToString();
-            //var url = builder.ToString();
+            var session = "";
+            var builder = new UriBuilder("http://ws.audioscrobbler.com/2.0/");
+            var param = "api_key" + _appSettings.LastFmApiKey + "methodauth.getSessiontoken" + token +
+                            _appSettings.LastFmApiSecret;
+            var signature = GenerateLastFmSignature(param);
+            var query = HttpUtility.ParseQueryString(builder.Query);
+            query["method"] = "auth.getSession";
+            query["token"] = token;
+            query["api_key"] = _appSettings.LastFmApiKey;
+            query["api_sig"] = signature;
+            builder.Query = query.ToString();
+            var url = builder.ToString();
 
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    using (HttpResponseMessage response = await client.GetAsync(url))
-            //    using (HttpContent content = response.Content)
-            //    {
-            //        string result = await content.ReadAsStringAsync();
-            //        if (result != null)
-            //        {
-            //            using (XmlReader reader = XmlReader.Create(new StringReader(result)))
-            //            {
-            //                var data = XDocument.Load(reader);
-            //                session =
-            //                    data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("key").Value;
-            //                user = data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("name").Value;
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.GetAsync(url))
+                using (HttpContent content = response.Content)
+                {
+                    string result = await content.ReadAsStringAsync();
+                    if (result != null)
+                    {
+                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
+                        {
+                            var data = XDocument.Load(reader);
+                            session =
+                                data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("key").Value;
+                            var user = data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("name").Value;
                             //save config
-                            _customConfiguration.SetValue("LastFmUsername", user, "1");
-                            _customConfiguration.SetValue("SessionId", session, "1");
-            //            }
-
-            //        }
-            //    }
-            //}
+                            if (session != "" && user != "")
+                            {
+                                _customConfiguration.SetValue("LastFmUsername", user);
+                                _customConfiguration.SetValue("SessionId", session);
+                            }
+                        }
+                    }
+                }
+            }
             return session;
         }
 
@@ -192,17 +212,10 @@ namespace PlexScrobble.Models
             return Hashing.CalculateMD5Hash(param);
         }
 
-        public string GetUserSessionFromConfig()
-        {
-            var sessionId = _customConfiguration.GetValue("SessionId");
-            //sessionId = "db360eb32df7b43455a6ccefa0d262e2";
-            return sessionId;
-        }
-        
-        public void GetUserAuthorization(string token)
+        public bool GetUserAuthorization(string token)
         {
             PopUp msg = new PopUp();
-            msg.Message(_appSettings.LastFmApiKey, token);
+            return msg.Message(_appSettings.LastFmApiKey, token);
         }
     }
 }

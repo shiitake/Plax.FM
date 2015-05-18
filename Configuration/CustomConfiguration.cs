@@ -13,7 +13,14 @@ using System.Xml.Schema;
 
 namespace PlexScrobble.Configuration
 {
-    public class CustomConfiguration
+    public interface ICustomConfiguration
+    {
+        void AddUser(string username, int plexId);
+        string GetValue(string settingName, int plexId = 1);
+        void SetValue(string settingName, string settingValue, int plexId = 1);
+    }
+    
+    public class CustomConfiguration : ICustomConfiguration
     {
         //https://msdn.microsoft.com/en-gb/library/2tw134k3(v=vs.100).aspx
         //https://msdn.microsoft.com/en-us/library/aa730869(VS.80).aspx
@@ -21,90 +28,123 @@ namespace PlexScrobble.Configuration
         //managing app settings - https://msdn.microsoft.com/en-us/library/a65txexh(v=vs.120).aspx
         //store user and session data
 
-        private DataTable _storage = null;
+        private DataSet _storage = null;
+        private readonly string _configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "PlexScrobble\\Config", "CustomConfiguration.xml");
+        private readonly string _schemaFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "PlexScrobble\\Config", "CustomConfiguration.xsd");
 
         public CustomConfiguration()
         {
-            var settingFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                "PlexScrobble", "CustomConfiguration.xml");
-            var configInfo = new FileInfo(settingFile);
+            var configInfo = new FileInfo(_configFile);
             if (configInfo.Exists)
             {
-                _storage = new DataTable();
-                _storage.ReadXml(settingFile);
+                _storage = new DataSet();
+                _storage.ReadXmlSchema(_schemaFile);
+                _storage.ReadXml(_configFile);
             }
             else
             {
-                Create(settingFile);
+                Create();
             }
         }
 
-        private void Create(string settingFile)
+        private void Create()
         {
-            var configInfo = new FileInfo(settingFile);
+            var configInfo = new FileInfo(_configFile);
             var directory = new DirectoryInfo(configInfo.Directory.ToString());
             if (!directory.Exists)
             {
                 directory.Create();
             }
             //create config file
-            var userConfig = new DataTable("CustomConfiguration");
-            userConfig.Columns.Add("PlexId");
-            userConfig.Columns.Add("PlexUsername");
+            var config = new DataSet("UserConfiguration");
+            var userConfig = new DataTable("User");
+            var plexId = new DataColumn("PlexId", typeof(string), "", MappingType.Attribute);
+            userConfig.Columns.Add(plexId);
+            var plexUsername = new DataColumn("PlexUsername", typeof (string), "", MappingType.Attribute);
+            userConfig.Columns.Add(plexUsername);
             userConfig.Columns.Add("LastFmUsername");
             userConfig.Columns.Add("SessionId");
             var row = userConfig.NewRow();
             row["PlexId"] = "1";
-            row["PlexUsername"] = "";
-            row["LastFmUsername"] = "";
-            row["SessionId"] = "";         
+            row["PlexUsername"] = string.Empty;
+            row["LastFmUsername"] = string.Empty;
+            row["SessionId"] = string.Empty;         
             userConfig.Rows.Add(row);
-            userConfig.WriteXml(settingFile, XmlWriteMode.WriteSchema);
-            _storage = new DataTable();
-            _storage.ReadXml(settingFile);
+            config.Tables.Add(userConfig);
+            config.WriteXmlSchema(_schemaFile);
+            config.WriteXml(_configFile);
+            _storage = config;
         }
 
         private void Save()
         {
-            var settingFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                "PlexScrobble", "CustomConfiguration.xml");
-            _storage.WriteXml(settingFile);
+            _storage.WriteXmlSchema(_schemaFile);
+            _storage.WriteXml(_configFile);
         }
 
-        public string GetValue(string settingName, string plexId = "1")
+        public void AddUser(string username, int plexId)
+        {
+            var row = _storage.Tables["User"].NewRow();
+            row["PlexId"] = plexId.ToString();
+            row["PlexUsername"] = username;
+            _storage.Tables["User"].Rows.Add(row);
+            Save();
+        }
+
+        public void DeleteUser(string username)
+        {
+            var row = GetRowByUsername(username);
+            DeleteRow(row);
+        }
+
+        public void DeleteUser(int plexId)
+        {
+            var row = GetRowById(plexId);
+            DeleteRow(row);
+        }
+        
+        public string GetValue(string settingName, int plexId = 1)
+        {
+            int row = GetRowById(plexId);
+            return _storage.Tables["User"].Rows[row][settingName].ToString();
+        }
+
+        public void SetValue(string settingName, string settingValue, int plexId = 1)
+        {
+            int row = GetRowById(plexId);
+
+            _storage.Tables["User"].Rows[row][settingName] = settingValue;
+            Save();
+        }
+
+        private int GetRowById(int plexId = 1)
         {
             int row = 0;
-            for (int i = 0; i < _storage.Rows.Count; i++ )
+            for (int i = 0; i < _storage.Tables["User"].Rows.Count; i++)
             {
-                if (_storage.Rows[i]["PlexId"] == plexId)
+                if (_storage.Tables["User"].Rows[i]["PlexId"].ToString() == plexId.ToString())
                 { row = i; }
             }
-            return _storage.Rows[row][settingName].ToString();
+            return row;
         }
 
-        public void DeleteRow(string settingName, string plexId = "1")
+        private int GetRowByUsername(string username)
         {
             int row = 0;
-            for (int i = 0; i < _storage.Rows.Count; i++)
+            for (int i = 0; i < _storage.Tables["User"].Rows.Count; i++)
             {
-                if (_storage.Rows[i]["PlexId"].ToString() == plexId)
-                {row = i;}
+                if (_storage.Tables["User"].Rows[i]["PlexUsername"].ToString() == username)
+                { row = i; }
             }
-            _storage.Rows[row].Delete();
+            return row;
         }
-
-        public void SetValue(string settingName, string settingValue, string plexId = "1")
+        
+        private void DeleteRow(int row)
         {
-            var currentValue = GetValue(settingName, plexId);
-            if (currentValue == "" && currentValue != settingValue)
-            {
-                //delete row and replace with new value
-                DeleteRow(settingName, plexId);
-                var row = _storage.NewRow();
-                row[settingName] = settingValue;
-                _storage.Rows.Add(row);
-                Save();
-            }
+            _storage.Tables["User"].Rows[row].Delete();
+            Save();
         }
     }
 }

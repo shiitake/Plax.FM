@@ -11,6 +11,7 @@ namespace PlexScrobble
             Bind<IAppSettings>().To<AppSettings>();
             Bind<ILogReader>().To<LogReader>();
             Bind<ILastFmScrobbler>().To<LastFmScrobbler>();
+            Bind<ICustomConfiguration>().To<CustomConfiguration>();
         }
     }
 }

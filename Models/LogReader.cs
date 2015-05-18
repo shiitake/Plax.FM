@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Xml;
 using System.Xml.Linq;
 using Excel;
@@ -28,24 +29,33 @@ namespace PlexScrobble.Models
     {
         private readonly ILogger _logger;
         private readonly IAppSettings _appSettings;
-        //public static string _newLog;
-        //public static string _oldLog;
-        public static string LogCopy = "LogCopy.txt";
-        public string BaseUrl = @"http://mediapc:32400";
+        private readonly ICustomConfiguration _customConfiguration;
+        private string LogCopy = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "PlexScrobble\\Logs", "LogCopy.log");
+        public string BaseUrl = @"http://localhost:32400";
 
-        public LogReader(ILogger logger, IAppSettings appSettings)
+        public LogReader(ILogger logger, IAppSettings appSettings, ICustomConfiguration customConfiguration)
         {
             _logger = logger;
             _appSettings = appSettings;
+            _customConfiguration = customConfiguration;
         }
 
-        public List<SongEntry> ReadLog(string newLog, string oldLog)
+        public List<SongEntry> ReadLog(string plexLog, string logCache)
+        {
+            plexLog = CopyLog(plexLog);
+            logCache = VerifyLogCacheExists(logCache);
+            var diff = new FileDiffEngine(typeof(PlexMediaServerLog));
+            var entry = diff.OnlyNewRecords(logCache, plexLog) as PlexMediaServerLog[];
+            return ParseLogsForSongEntries(entry);
+        }
+
+        public void ReadLog(string newLog)
         {
             newLog = CopyLog(newLog);
-            FileDiffEngine diff = new FileDiffEngine(typeof(PlexMediaServerLog));
-            PlexMediaServerLog[] entry = diff.OnlyNewRecords(oldLog, newLog) as PlexMediaServerLog[];
-            //System.IO.File.Copy(newLog, oldLog, true);
-            return ParseLogs(entry);
+            var engine = new FileHelperEngine(typeof (PlexMediaServerLog));
+            var entry = engine.ReadFile(newLog) as PlexMediaServerLog[];
+            ParseLogsForUsername(entry);
         }
 
         private string CopyLog(string log)
@@ -57,12 +67,27 @@ namespace PlexScrobble.Models
             }
             catch (Exception ex)
             {
-                //_logger.Error("There was an error attempting to access the Plex Media Server Log. Error: " + ex.Message);
+                _logger.Error("There was an error attempting to access the Plex Media Server Log. Error: " + ex.Message);
                 throw;
             }
         }
+
+        private string VerifyLogCacheExists(string log)
+        {
+            var logInfo = new FileInfo(log);
+            if (!logInfo.Exists)
+            {
+                var directory = new DirectoryInfo(logInfo.Directory.ToString());
+                if (!directory.Exists)
+                {
+                    directory.Create();
+                }
+                File.Create(log);
+            }
+            return log;
+        }
         
-        private List<SongEntry> ParseLogs(PlexMediaServerLog[] logs)
+        private List<SongEntry> ParseLogsForSongEntries(PlexMediaServerLog[] logs)
         {
             var songList = new List<SongEntry>();
             Regex rgx = new Regex(@".*\sDEBUG\s-\sLibrary\sitem\s(\d+)\s'.*'\sgot\splayed\sby\saccount\s(\d+).*");
@@ -83,12 +108,28 @@ namespace PlexScrobble.Models
                         songList.Add(song);
                     }    
                 }
-                
             }
             return songList.Count > 0 ? GetSongData(songList).Result : songList;
         }
 
-        public async Task<List<SongEntry>> GetSongData(List<SongEntry> songList)
+        private void ParseLogsForUsername(PlexMediaServerLog[] logs)
+        {
+            Regex rgx = new Regex(@".*\sDEBUG\s-\s.*User\sis\s(\w+)\s\(ID:\s(\d+)\)");
+            foreach (PlexMediaServerLog log in logs)
+            {
+                if (rgx.IsMatch(log.LogEntry))
+                {
+                    var line = rgx.Replace(log.LogEntry, "$1,$2");
+                    if (line.Length > 0)
+                    {
+                        var lineArray = line.Split(',');
+                        _customConfiguration.AddUser(lineArray[0],int.Parse(lineArray[1]));
+                    }
+                }
+            }
+        }
+
+        private async Task<List<SongEntry>> GetSongData(List<SongEntry> songList)
         {
             foreach (SongEntry song in songList)
             {
@@ -139,7 +180,7 @@ namespace PlexScrobble.Models
             return songList;
         }
 
-        public async Task<string> GetPlexToken()
+        private async Task<string> GetPlexToken()
         {
             var url = "https://plex.tv/users/sign_in.xml";
             var myplexaccount = "sbarrett00";
@@ -171,7 +212,7 @@ namespace PlexScrobble.Models
             return token;
         }
 
-        public async Task<string> GetPlexResponse(string uri)
+        private async Task<string> GetPlexResponse(string uri)
         {
             using (HttpClient client = new HttpClient())
             {
