@@ -11,7 +11,7 @@ namespace PlexScrobble.Configuration
     {
         //This should contain all of the stuff that needs to happen before the service will run correctly
         //1. get plex username from server and store it in config - possibly from logs?
-        //2. 
+        //2. create log copy and log cache location and files
         public void FindPlexUsers()
         {
             var newLog = @"C:\Users\E002796\AppData\Local\Plex Media Server\Logs\Plex Media Server.log";

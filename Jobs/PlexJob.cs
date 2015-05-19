@@ -23,11 +23,11 @@ namespace PlexScrobble.Jobs
         private readonly ICustomConfiguration _customConfiguration;
         //private string _OldLog = @"C:\temp\OldLog.log";
         private readonly string LogCache = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                "PlexScrobble\\Logs", "PlexLogCache.log"));
+                @"PlexScrobble\Logs\PlexLogCache.log"));
         //private string NewLog = @"C:\Users\E002796\AppData\Local\Plex Media Server\Logs\Plex Media Server.log";
         private readonly string PlexLog =
             Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "Plex Media Server\\Logs", "Plex Media Server.log"));
+                @"Plex Media Server\Logs\Plex Media Server.log"));
 
         public PlexJob(ILogger logger, IAppSettings appSettings, ICustomConfiguration customConfiguration)
         {

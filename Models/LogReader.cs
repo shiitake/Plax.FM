@@ -47,7 +47,7 @@ namespace PlexScrobble.Models
             logCache = VerifyLogCacheExists(logCache);
             var diff = new FileDiffEngine(typeof(PlexMediaServerLog));
             var entry = diff.OnlyNewRecords(logCache, plexLog) as PlexMediaServerLog[];
-            return ParseLogsForSongEntries(entry);
+            return ParseLogsForSongEntries(entry).Result;
         }
 
         public void ReadLog(string newLog)
@@ -86,8 +86,8 @@ namespace PlexScrobble.Models
             }
             return log;
         }
-        
-        private List<SongEntry> ParseLogsForSongEntries(PlexMediaServerLog[] logs)
+
+        private async Task<List<SongEntry>> ParseLogsForSongEntries(PlexMediaServerLog[] logs)
         {
             var songList = new List<SongEntry>();
             Regex rgx = new Regex(@".*\sDEBUG\s-\sLibrary\sitem\s(\d+)\s'.*'\sgot\splayed\sby\saccount\s(\d+).*");
@@ -100,8 +100,8 @@ namespace PlexScrobble.Models
                     {
                         var lineArray = line.Split(',');
                         var song = new SongEntry();
-                        song.MediaId = Int16.Parse(lineArray[0]);
-                        song.UserId = Int16.Parse(lineArray[1]);
+                        song.MediaId = Int32.Parse(lineArray[0]);
+                        song.UserId = Int32.Parse(lineArray[1]);
                         var date = log.DateAdded.Trim();
                         var format = "MMM dd, yyyy HH:mm:ss:fff";
                         song.TimePlayed = DateTime.ParseExact(date, format, CultureInfo.InvariantCulture);
@@ -109,7 +109,12 @@ namespace PlexScrobble.Models
                     }    
                 }
             }
-            return songList.Count > 0 ? GetSongData(songList).Result : songList;
+            if (songList.Count > 0)
+            {
+                var songs = await GetSongData(songList);
+                return songs;
+            }
+            return songList;
         }
 
         private void ParseLogsForUsername(PlexMediaServerLog[] logs)
