@@ -10,6 +10,12 @@ namespace PlexScrobble.Configuration
         public string CronSchedule { get; set; }
         public string LastFmApiKey { get; set; }
         public string LastFmApiSecret { get; set; }
+        public string LogCache { get; set; }
+        public string PlexLog { get; set; }
+        public string WorkingCopy { get; set; }
+        public string ConfigFile { get; set; }
+        public string SchemaFile { get; set; }
+        public string PlexServer { get; set; }
 
         public AppSettings()
         {
@@ -17,6 +23,12 @@ namespace PlexScrobble.Configuration
             CronSchedule = GetAppSetting<string>("CronSchedule");
             LastFmApiKey = GetAppSetting<string>("LastFmApiKey");
             LastFmApiSecret = GetAppSetting<string>("LastFmApiSecret");
+            LogCache = GetAppSetting<string>("LogCache");
+            PlexLog = GetAppSetting<string>("PlexLog");
+            WorkingCopy = GetAppSetting<string>("WorkingCopy");
+            ConfigFile = GetAppSetting<string>("ConfigFile");
+            SchemaFile = GetAppSetting<string>("SchemaFile");
+            PlexServer = GetAppSetting<string>("PlexServer");
         }
 
         private T GetAppSetting<T>(string key)

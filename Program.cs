@@ -41,7 +41,7 @@ namespace PlexScrobble
             }
             catch (Exception ex)
             {
-                //logger.Fatal("My Job service failed to start. {0}", ex.Message);
+                logger.Fatal("My Job service failed to start. {0}", ex.Message);
                 throw;
             }
         }

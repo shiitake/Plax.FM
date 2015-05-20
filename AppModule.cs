@@ -1,4 +1,5 @@
-﻿using Ninject.Modules;
+﻿using Ninject.Extensions.Logging;
+using Ninject.Modules;
 using PlexScrobble.Configuration;
 using PlexScrobble.Models;
 

@@ -30,23 +30,25 @@ namespace PlexScrobble.Models
         private readonly ILogger _logger;
         private readonly IAppSettings _appSettings;
         private readonly ICustomConfiguration _customConfiguration;
-        private string LogCopy = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                "PlexScrobble\\Logs", "LogCopy.log");
-        public string BaseUrl = @"http://localhost:32400";
+        private string _workingCopy;
+        private string _baseUrl;
 
         public LogReader(ILogger logger, IAppSettings appSettings, ICustomConfiguration customConfiguration)
         {
             _logger = logger;
             _appSettings = appSettings;
             _customConfiguration = customConfiguration;
+            _workingCopy = Environment.ExpandEnvironmentVariables(_appSettings.WorkingCopy);
+            _baseUrl = _appSettings.PlexServer;
         }
 
         public List<SongEntry> ReadLog(string plexLog, string logCache)
         {
             plexLog = CopyLog(plexLog);
-            logCache = VerifyLogCacheExists(logCache);
+            logCache = VerifyLogExists(logCache);
             var diff = new FileDiffEngine(typeof(PlexMediaServerLog));
             var entry = diff.OnlyNewRecords(logCache, plexLog) as PlexMediaServerLog[];
+            File.Copy(_workingCopy,logCache,true);
             return ParseLogsForSongEntries(entry).Result;
         }
 
@@ -60,19 +62,30 @@ namespace PlexScrobble.Models
 
         private string CopyLog(string log)
         {
-            try
+            int count = 0;
+            _workingCopy = VerifyLogExists(_workingCopy);
+            while (count <= 5)
             {
-                File.Copy(log, LogCopy, true);
-                return LogCopy;
+                try
+                {
+                    count++;
+                    File.Copy(log, _workingCopy, true);
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (count == 5)
+                    {
+                        _logger.Error("We were unable to access the Plex Media Server log file. Error: " + ex.Message);
+                        throw;
+                    }
+                    _logger.Warn("There was an error attempting to access the Plex Media Server Log. Retry " + count + " of 5. ");
+                }    
             }
-            catch (Exception ex)
-            {
-                _logger.Error("There was an error attempting to access the Plex Media Server Log. Error: " + ex.Message);
-                throw;
-            }
+            return _workingCopy;
         }
 
-        private string VerifyLogCacheExists(string log)
+        private string VerifyLogExists(string log)
         {
             var logInfo = new FileInfo(log);
             if (!logInfo.Exists)
@@ -139,7 +152,7 @@ namespace PlexScrobble.Models
             foreach (SongEntry song in songList)
             {
                 XDocument docResponse = null;
-                var plexUri = BaseUrl + "/library/metadata/" + song.MediaId;
+                var plexUri = string.Format("{0}/library/metadata/{1}", _baseUrl, song.MediaId);
                 Task<string> plexCall = GetPlexResponse(plexUri);
                 string responseRaw = await plexCall;
 

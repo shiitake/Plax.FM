@@ -35,10 +35,10 @@ namespace PlexScrobble.Models
             _customConfiguration = customConfiguration;
         }
 
-        public void Scrobble(List<SongEntry> songList)
+        public async void Scrobble(List<SongEntry> songList)
         {
             _logger.Debug("Let's scrobble something");
-            var session = GetSession();
+            string session = await GetSession();
 
             if (session != "")
             {
@@ -53,16 +53,16 @@ namespace PlexScrobble.Models
             }
         }
 
-        public string GetSession()
+        public async Task<string> GetSession()
         {
             var session = GetUserSessionFromConfig();
             var token = "";
 
-            if (session == "" || session == "n/a")
+            if (session == "")
             {
                 _logger.Debug("Cannot find LastFM session in config. Attempting to download.");
-                token = GetLastFmToken().Result;
-                session = DownloadLastFmSession(token).Result;
+                token = await GetLastFmToken();
+                session = await DownloadLastFmSession(token);
             }
             if (session == "")
             {
@@ -71,7 +71,7 @@ namespace PlexScrobble.Models
                 //try again after authorizing
                 if (auth)
                 {
-                    session = DownloadLastFmSession(token).Result;
+                    session = await DownloadLastFmSession(token);
                 }
             }
             return session;
@@ -160,7 +160,6 @@ namespace PlexScrobble.Models
             var timestamp = (Int32)(song.TimePlayed.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             var request = "api_key" + _appSettings.LastFmApiKey + "artist" + song.Artist + "methodtrack.scrobble" + "sk" +
               session + "timestamp" + timestamp + "track" + song.Title + _appSettings.LastFmApiSecret;
-            //var sig = GenerateLastFmSignature(HttpUtility.UrlEncode(request, Encoding.UTF8));
             var sig = GenerateLastFmSignature(request);
             var builder = new UriBuilder("http://ws.audioscrobbler.com/2.0/");
             var query = HttpUtility.ParseQueryString(builder.Query);
@@ -177,6 +176,7 @@ namespace PlexScrobble.Models
 
             using (HttpClient client = new HttpClient())
             {
+                //blankcontent.Headers.Add("User-Agent", UserAgent);
                 using (HttpResponseMessage response = await client.PostAsync(url, blankcontent))
                 using (HttpContent content = response.Content)
                 {

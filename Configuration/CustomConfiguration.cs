@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Xml.Schema;
+using Ninject.Extensions.Logging;
 
 namespace PlexScrobble.Configuration
 {
@@ -28,18 +29,22 @@ namespace PlexScrobble.Configuration
         //managing app settings - https://msdn.microsoft.com/en-us/library/a65txexh(v=vs.120).aspx
         //store user and session data
 
-        private DataSet _storage = null;
-        private readonly string _configFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                "PlexScrobble\\Config", "CustomConfiguration.xml");
-        private readonly string _schemaFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                "PlexScrobble\\Config", "CustomConfiguration.xsd");
+        private readonly IAppSettings _appSettings;
+        private readonly ILogger _logger;
+        private DataSet _storage;
+        private readonly string _configFile;
+        private readonly string _schemaFile;
 
-        public CustomConfiguration()
+        public CustomConfiguration(IAppSettings appSettings, ILogger logger)
         {
+            _appSettings = appSettings;
+            _logger = logger;
+            _configFile = Environment.ExpandEnvironmentVariables(_appSettings.ConfigFile);
+            _schemaFile = Environment.ExpandEnvironmentVariables(_appSettings.SchemaFile);
             var configInfo = new FileInfo(_configFile);
             if (configInfo.Exists)
             {
-                _storage = new DataSet();
+                _storage = new DataSet("UserConfiguration");
                 _storage.ReadXmlSchema(_schemaFile);
                 _storage.ReadXml(_configFile);
             }
