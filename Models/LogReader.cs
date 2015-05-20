@@ -4,8 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Xml;
@@ -48,7 +50,7 @@ namespace PlexScrobble.Models
             logCache = VerifyLogExists(logCache);
             var diff = new FileDiffEngine(typeof(PlexMediaServerLog));
             var entry = diff.OnlyNewRecords(logCache, plexLog) as PlexMediaServerLog[];
-            File.Copy(_workingCopy,logCache,true);
+            CopyCache(logCache);
             return ParseLogsForSongEntries(entry).Result;
         }
 
@@ -62,29 +64,38 @@ namespace PlexScrobble.Models
 
         private string CopyLog(string log)
         {
-            int count = 0;
             _workingCopy = VerifyLogExists(_workingCopy);
-            while (count <= 5)
+            while (true)
             {
                 try
                 {
-                    count++;
                     File.Copy(log, _workingCopy, true);
                     break;
                 }
-                catch (Exception ex)
+                catch (IOException)
                 {
-                    if (count == 5)
-                    {
-                        _logger.Error("We were unable to access the Plex Media Server log file. Error: " + ex.Message);
-                        throw;
-                    }
-                    _logger.Warn("There was an error attempting to access the Plex Media Server Log. Retry " + count + " of 5. ");
+                   Thread.Sleep(1000);
                 }    
             }
             return _workingCopy;
         }
 
+        private void CopyCache(string logCache)
+        {
+            while (true)
+            {
+                try
+                {
+                    File.Copy(_workingCopy, logCache, true);
+                    break;
+                }
+                catch (IOException)
+                {
+                    Thread.Sleep(1000);
+                }
+            }
+        }
+        
         private string VerifyLogExists(string log)
         {
             var logInfo = new FileInfo(log);

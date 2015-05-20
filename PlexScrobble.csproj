@@ -115,7 +115,6 @@
     <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="Configuration\CustomConfiguration.cs" />
     <Compile Include="Configuration\IAppSettings.cs" />
-    <Compile Include="Configuration\InitialConfig.cs" />
     <Compile Include="Jobs\MyJob.cs" />
     <Compile Include="Jobs\NinjectJobFactory.cs" />
     <Compile Include="Jobs\PlexJob.cs" />

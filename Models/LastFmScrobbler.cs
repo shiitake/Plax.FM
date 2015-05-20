@@ -66,11 +66,12 @@ namespace PlexScrobble.Models
             }
             if (session == "")
             {
-                _logger.Debug("Unable to download LastFM session.");
+                _logger.Debug("Unable to download LastFM session. Pending Authorization");
                 var auth = GetUserAuthorization(token);
                 //try again after authorizing
                 if (auth)
                 {
+                    _logger.Debug("Authorization completed. Attempting to download LastFM session again.");
                     session = await DownloadLastFmSession(token);
                 }
             }

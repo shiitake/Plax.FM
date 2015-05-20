@@ -11,6 +11,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Xml.Schema;
 using Ninject.Extensions.Logging;
+using PlexScrobble.Models;
 
 namespace PlexScrobble.Configuration
 {
@@ -52,6 +53,7 @@ namespace PlexScrobble.Configuration
             {
                 Create();
             }
+            ConfirmSetup();
         }
 
         private void Create()
@@ -62,8 +64,18 @@ namespace PlexScrobble.Configuration
             {
                 directory.Create();
             }
-            //create config file
+            //create config Dataset
             var config = new DataSet("UserConfiguration");
+            
+            //create Setup table
+            var userInit = new DataTable("Setup");
+            var initialized = new DataColumn("Initialized", typeof (bool), "", MappingType.Attribute);
+            userInit.Columns.Add(initialized);
+            var initRow = userInit.NewRow();
+            initRow["Initialized"] = false;
+            userInit.Rows.Add(initRow);
+            
+            //create User table
             var userConfig = new DataTable("User");
             var plexId = new DataColumn("PlexId", typeof(string), "", MappingType.Attribute);
             userConfig.Columns.Add(plexId);
@@ -77,7 +89,12 @@ namespace PlexScrobble.Configuration
             row["LastFmUsername"] = string.Empty;
             row["SessionId"] = string.Empty;         
             userConfig.Rows.Add(row);
+            
+            //add tables to dataset
+            config.Tables.Add(userInit);
             config.Tables.Add(userConfig);
+            
+            //write dataset to config files
             config.WriteXmlSchema(_schemaFile);
             config.WriteXml(_configFile);
             _storage = config;
@@ -87,6 +104,27 @@ namespace PlexScrobble.Configuration
         {
             _storage.WriteXmlSchema(_schemaFile);
             _storage.WriteXml(_configFile);
+        }
+
+        private async void ConfirmSetup()
+        {
+            var setup = _storage.Tables["Setup"].Rows[0]["Initialized"].Equals(true);
+            if (!setup)
+            {
+                _logger.Info("Beginning initial setup. ");
+                var lastFm = new LastFmScrobbler(_logger, _appSettings, this);
+                var session = await lastFm.GetSession();
+                if (session != "")
+                {
+                    _logger.Info("Initial setup completed successfully!");
+                    _storage.Tables["Setup"].Rows[0]["Initialized"] = true;
+                    Save();
+                }
+                else
+                {
+                    _logger.Error("There was a problem setting up your account. Please stop and restart the service.");
+                }
+            }
         }
 
         public void AddUser(string username, int plexId)
