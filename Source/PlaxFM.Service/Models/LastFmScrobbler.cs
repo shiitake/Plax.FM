@@ -12,7 +12,7 @@ using System.Xml.Linq;
 using System.Web;
 using Ninject.Extensions.Logging;
 using PlaxFm.Configuration;
-using PlaxFm.Utilities;
+using PlaxFm.Core.Utilities;
 using Quartz.Impl.Matchers;
 
 namespace PlaxFm.Models
@@ -35,10 +35,10 @@ namespace PlaxFm.Models
             _customConfiguration = customConfiguration;
         }
 
-        public async void Scrobble(List<SongEntry> songList)
+        public void Scrobble(List<SongEntry> songList)
         {
             _logger.Debug("Let's scrobble something");
-            string session = await GetSession();
+            string session = _customConfiguration.GetValue("SessionId");
 
             if (session != "")
             {
@@ -51,109 +51,6 @@ namespace PlaxFm.Models
             {
                 _logger.Debug("Unable to get LastFM session Id.");
             }
-        }
-
-        public async Task<string> GetSession()
-        {
-            var session = GetUserSessionFromConfig();
-            var token = "";
-
-            if (session == "")
-            {
-                _logger.Debug("Cannot find LastFM session in config. Attempting to download.");
-                token = await GetLastFmToken();
-                session = await DownloadLastFmSession(token);
-            }
-            if (session == "")
-            {
-                _logger.Debug("Unable to download LastFM session. Pending Authorization");
-                var auth = GetUserAuthorization(token);
-                //try again after authorizing
-                if (auth)
-                {
-                    _logger.Debug("Authorization completed. Attempting to download LastFM session again.");
-                    session = await DownloadLastFmSession(token);
-                }
-            }
-            return session;
-        }
-        
-        public string GetUserSessionFromConfig()
-        {
-            var sessionId = _customConfiguration.GetValue("SessionId");
-            return sessionId;
-        }
-
-        public async Task<string> GetLastFmToken()
-        {
-            var token = "";
-            var builder = new UriBuilder("http://ws.audioscrobbler.com/2.0/");
-            var query = HttpUtility.ParseQueryString(builder.Query);
-            query["method"] = "auth.getToken";
-            query["api_key"] = _appSettings.LastFmApiKey;
-            builder.Query = query.ToString();
-            var url = builder.ToString();
-
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.GetAsync(url))
-                using (HttpContent content = response.Content)
-                {
-                    string result = await content.ReadAsStringAsync();
-                    if (result != null)
-                    {
-                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
-                        {
-                            var data = XDocument.Load(reader);
-                            token = data.ElementOrEmpty("lfm").ElementOrEmpty("token").Value;
-                        }
-
-                    }
-                }
-            }
-            return token;
-        }
-
-        public async Task<string> DownloadLastFmSession(string token)
-        {
-            var session = "";
-            var builder = new UriBuilder("http://ws.audioscrobbler.com/2.0/");
-            var param = "api_key" + _appSettings.LastFmApiKey + "methodauth.getSessiontoken" + token +
-                            _appSettings.LastFmApiSecret;
-            var signature = GenerateLastFmSignature(param);
-            var query = HttpUtility.ParseQueryString(builder.Query);
-            query["method"] = "auth.getSession";
-            query["token"] = token;
-            query["api_key"] = _appSettings.LastFmApiKey;
-            query["api_sig"] = signature;
-            builder.Query = query.ToString();
-            var url = builder.ToString();
-
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.GetAsync(url))
-                using (HttpContent content = response.Content)
-                {
-                    string result = await content.ReadAsStringAsync();
-                    if (result != null)
-                    {
-                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
-                        {
-                            var data = XDocument.Load(reader);
-                            session =
-                                data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("key").Value;
-                            var user = data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("name").Value;
-                            //save config
-                            if (session != "" && user != "")
-                            {
-                                _customConfiguration.SetValue("LastFmUsername", user);
-                                _customConfiguration.SetValue("SessionId", session);
-                            }
-                        }
-                    }
-                }
-            }
-            return session;
         }
 
         public async void ScrobbleTrack(string session, SongEntry song)
@@ -213,10 +110,5 @@ namespace PlaxFm.Models
             return Hashing.CalculateMD5Hash(param);
         }
 
-        public bool GetUserAuthorization(string token)
-        {
-            PopUp msg = new PopUp();
-            return msg.Message(_appSettings.LastFmApiKey, token);
-        }
     }
 }

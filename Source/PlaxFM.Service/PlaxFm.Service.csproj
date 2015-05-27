@@ -125,9 +125,6 @@
     <Compile Include="Models\PlexMediaServerLog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\Hashing.cs" />
-    <Compile Include="Utilities\PopUp.cs" />
-    <Compile Include="Utilities\XDocumentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -151,6 +148,12 @@
     <Content Include="removeService.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlaxFm.Core\PlaxFm.Core.csproj">
+      <Project>{17001c1b-0edc-469a-b99d-3b64c2fab6f0}</Project>
+      <Name>PlaxFm.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

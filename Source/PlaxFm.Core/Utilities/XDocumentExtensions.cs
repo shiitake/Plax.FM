@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace PlaxFm.Utilities
+namespace PlaxFm.Core.Utilities
 {
     public static class XDocumentExtensions
     {

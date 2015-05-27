@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlaxFm.Utilities
+namespace PlaxFm.Core.Utilities
 {
     public class Hashing
     {

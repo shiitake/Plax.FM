@@ -51,20 +51,30 @@ namespace PlaxFm.Jobs
 
         public void Start()
         {
-            _logger.Info("Job starting.");
-            var reader = new LogReader(_logger, _appSettings, _customConfiguration);
-            var songList = reader.ReadLog(PlexLog, LogCache);
-            if (songList.Count > 0)
+            //check for initialization
+            var initialized = _customConfiguration.GetValue()
+            if (!initialized)
             {
-                _logger.Info(songList.Count + " new song(s) found.");
-                var scrobbler = new LastFmScrobbler(_logger, _appSettings, _customConfiguration);
-                scrobbler.Scrobble(songList);
+                //initialy starting the service will create the config files so that system tray app can generate the session key
+                _logger.Info("Account needs to be initialized before songs can be scrobbled.");
             }
             else
             {
-                _logger.Info("No new songs found.");
+                _logger.Info("Job starting.");
+                var reader = new LogReader(_logger, _appSettings, _customConfiguration);
+                var songList = reader.ReadLog(PlexLog, LogCache);
+                if (songList.Count > 0)
+                {
+                    _logger.Info(songList.Count + " new song(s) found.");
+                    var scrobbler = new LastFmScrobbler(_logger, _appSettings, _customConfiguration);
+                    scrobbler.Scrobble(songList);
+                }
+                else
+                {
+                    _logger.Info("No new songs found.");
+                }
+                _logger.Info("Job finished.");
             }
-            _logger.Info("Job finished.");
         }
     }
 }

@@ -17,7 +17,7 @@ using FileHelpers;
 using System.IO;
 using Ninject.Extensions.Logging;
 using PlaxFm.Configuration;
-using PlaxFm.Utilities;
+using PlaxFm.Core.Utilities;
 using Quartz;
 
 namespace PlaxFm.Models

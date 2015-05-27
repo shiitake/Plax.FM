@@ -77,11 +77,13 @@ namespace PlaxFm.Configuration
             userConfig.Columns.Add(plexUsername);
             userConfig.Columns.Add("LastFmUsername");
             userConfig.Columns.Add("SessionId");
+            userConfig.Columns.Add("Token");
             var row = userConfig.NewRow();
             row["PlexId"] = "1";
             row["PlexUsername"] = string.Empty;
             row["LastFmUsername"] = string.Empty;
-            row["SessionId"] = string.Empty;         
+            row["SessionId"] = string.Empty;
+            row["Token"] = string.Empty;
             userConfig.Rows.Add(row);
             
             //add tables to dataset

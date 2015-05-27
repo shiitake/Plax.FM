@@ -12,6 +12,8 @@ Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "PlaxFm.Installer", "Source\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.SystemTray", "Source\PlaxFM.SystemTray\PlaxFm.SystemTray.csproj", "{4F7DE0A3-A2B7-4150-80EE-661B8F3A57C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.Core", "Source\PlaxFm.Core\PlaxFm.Core.csproj", "{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -51,6 +53,16 @@ Global
 		{4F7DE0A3-A2B7-4150-80EE-661B8F3A57C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F7DE0A3-A2B7-4150-80EE-661B8F3A57C4}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{4F7DE0A3-A2B7-4150-80EE-661B8F3A57C4}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
