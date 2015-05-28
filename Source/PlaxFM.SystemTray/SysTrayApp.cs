@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ServiceProcess;
+using PlaxFm.SystemTray.Config;
 
 namespace PlaxFm.SystemTray
 {
@@ -14,16 +15,22 @@ namespace PlaxFm.SystemTray
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
         private readonly ServiceController _service;
+        private Initialization _init;
         
         public SysTrayApp()
         {
             _service = new ServiceController("Plax.FM");
-            
+            _init = new Initialization();
+            var lastFmSetup = _init.ConfirmLastFmSetup();
+            var plexSetup = _init.ConfirmPlexSetup();
+
             trayMenu = new ContextMenu();
+            var setupMenu = new MenuItem("Initial Setup", InitialSetup);
+            setupMenu.Enabled = (!lastFmSetup || !plexSetup);
+            trayMenu.MenuItems.Add(setupMenu);
             trayMenu.MenuItems.Add("Start Plax.FM", StartService);
             trayMenu.MenuItems.Add("Stop Plax.FM", StopService);
             trayMenu.MenuItems.Add("Exit", OnExit);
-
             
             trayIcon = new NotifyIcon();
             trayIcon.Text = "Plax.FM";
@@ -46,6 +53,26 @@ namespace PlaxFm.SystemTray
             Application.Exit();
         }
 
+        private void InitialSetup(object sender, EventArgs e)
+        {
+            var plexSetup = _init.ConfirmPlexSetup();
+            if (!plexSetup)
+            {
+                using (var popup = new PlaxConfig())
+                {
+                    if (popup.ShowDialog(this) == DialogResult.OK)
+                    {
+                        var userInfo = popup.UserInfo;
+                        _init.Setup(userInfo[0], userInfo[1]);
+                    }
+                }
+            }
+            else
+            {
+                _init.Setup();
+            }
+        }
+        
         private void StopService(object sender, EventArgs e)
         {
             try

@@ -44,16 +44,64 @@ namespace PlaxFm.SystemTray.Config
             _config = new ConfigHelper(_storage, _configFile, _schemaFile);
         }
 
-        public bool GetAuthorizationUrl()
+        public void Setup(string userName, string password)
         {
-            var token = _config.GetValue("token");
+            //setup PlexToken
+            var plexToken = ConfirmPlexSetup();
+            if (!plexToken)
+            {
+                GetPlexToken(userName, password);
+            }
+            Setup();
+        }
+        
+        public async void Setup()
+        {
+            var token = await GetLastFmToken();
+            _config.SetValue("Token", token);
+            var authorized = GetAuthorization(token);
+            if (authorized)
+            {
+                _config.SetValue("Authorized", true);
+                var session = await DownloadLastFmSession(token);
+                if (session != "")
+                {
+                    _config.SetValue("Setup", "Initialized", true);
+                    _config.SetValue("Token", "");
+                }
+                var ready = ConfirmLastFmSetup();
+                if (ready)
+                {
+                    PopUp msg = new PopUp();
+                    msg.Message("Setup has completed successfully");
+                }
+            }
+        }
+        
+        public bool ConfirmLastFmSetup()
+        {
+            _storage = _config.LoadConfig();
+            var init = _config.GetValue("Setup", "Initialized").ToLower() == "true";
+            var auth = _config.GetValue("Authorized").ToLower() == "true";
+            return (init && auth);
+        }
+
+        public bool ConfirmPlexSetup()
+        {
+            return _config.GetValue("PlexToken") != "";
+        }
+        
+        public bool GetAuthorization(string token)
+        {
             PopUp msg = new PopUp();
             return msg.Message(LastFmApiKey, token);
         }
 
         public async Task<string> GetLastFmToken()
         {
-            var token = "";
+            //check for saved token
+            var token = _config.GetValue("Token");
+            if (token != "") return token;
             var builder = new UriBuilder("http://ws.audioscrobbler.com/2.0/");
             var query = HttpUtility.ParseQueryString(builder.Query);
             query["method"] = "auth.getToken";
@@ -129,8 +177,36 @@ namespace PlaxFm.SystemTray.Config
             return Hashing.CalculateMD5Hash(param);
         }
 
-        //get user auth from popup
-        //use token to get session Id
-        //save session data to config
+        private async void GetPlexToken(string userName, string password)
+        {
+            var url = "https://plex.tv/users/sign_in.xml";
+            var myplexaccount = userName;
+            var mypassword = password;
+            var token = "";
+            byte[] accountBytes = Encoding.UTF8.GetBytes(myplexaccount + ":" + mypassword);
+            var encodedPassword = Convert.ToBase64String(accountBytes);
+            //todo: test this
+            //var encodedPassword = "c2JhcnJldHQwMDpjZ2laTkpqSkM4Vmg=";
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("X-Plex-Client-Identifier", "PlexScrobble");
+                client.DefaultRequestHeaders.Add("Authorization", "Basic " + encodedPassword);
+                HttpContent blankcontent = new StringContent("");
+                using (HttpResponseMessage response = await client.PostAsync(url, blankcontent))
+                using (HttpContent content = response.Content)
+                {
+                    string result = await content.ReadAsStringAsync();
+                    if (result != null)
+                    {
+                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
+                        {
+                            var data = XDocument.Load(reader);
+                            token = data.ElementOrEmpty("user").ElementOrEmpty("authentication-token").Value;
+                            _config.SetValue("PlexToken", token);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

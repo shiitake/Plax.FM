@@ -31,5 +31,10 @@ namespace PlaxFm.Core.Utilities
             }
             return false;
         }
+
+        public void Message(string message)
+        {
+            var result = MessageBox.Show(message, "Status");
+        }
     }
 }

@@ -51,11 +51,9 @@ namespace PlaxFm.Jobs
 
         public void Start()
         {
-            //check for initialization
-            var initialized = _customConfiguration.GetValue()
+            var initialized = _customConfiguration.UserConfirmed();
             if (!initialized)
             {
-                //initialy starting the service will create the config files so that system tray app can generate the session key
                 _logger.Info("Account needs to be initialized before songs can be scrobbled.");
             }
             else

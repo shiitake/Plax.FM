@@ -208,44 +208,12 @@ namespace PlaxFm.Models
             }
             return songList;
         }
-
-        private async Task<string> GetPlexToken()
-        {
-            var url = "https://plex.tv/users/sign_in.xml";
-            var myplexaccount = "sbarrett00";
-            var mypassword = "123456";
-            var token = "";
-            byte[] accountBytes = Encoding.UTF8.GetBytes(myplexaccount +":"+ mypassword);
-            //var encodedPassword = Convert.ToBase64String(accountBytes);
-            var encodedPassword = "c2JhcnJldHQwMDpjZ2laTkpqSkM4Vmg=";
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("X-Plex-Client-Identifier","PlexScrobble");
-                client.DefaultRequestHeaders.Add("Authorization", "Basic " + encodedPassword);
-                HttpContent blankcontent = new StringContent("");
-                using (HttpResponseMessage response = await client.PostAsync(url, blankcontent))
-                using (HttpContent content = response.Content)
-                {
-                    string result = await content.ReadAsStringAsync();
-                    if (result != null)
-                    {
-                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
-                        {
-                            var data = XDocument.Load(reader);
-                            token = data.ElementOrEmpty("user").ElementOrEmpty("authentication-token").Value;
-                        }
-                        
-                    }
-                }
-            }
-            return token;
-        }
-
+        
         private async Task<string> GetPlexResponse(string uri)
         {
             using (HttpClient client = new HttpClient())
             {
-                var token = await GetPlexToken();
+                var token = _customConfiguration.GetValue("PlexToken");
                 var request = new HttpRequestMessage();
                 request.RequestUri = new Uri(uri);
                 request.Method = HttpMethod.Get;
