@@ -58,8 +58,8 @@ namespace PlaxFm.Configuration
         {
             Init();
             var plex = _config.GetValue("PlexToken") != "";
-            var init = _config.GetValue("Setup", "Initialized") == "true";
-            var auth = _config.GetValue("Authorized") == "true";
+            var init = _config.GetValue("Setup", "Initialized").ToLower() == "true";
+            var auth = _config.GetValue("Authorized").ToLower() == "true";
             return (plex && init && auth);
         }
         
