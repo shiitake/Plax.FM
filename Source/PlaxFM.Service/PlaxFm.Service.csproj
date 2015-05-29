@@ -40,46 +40,46 @@
   <ItemGroup>
     <Reference Include="Common.Logging, Version=2.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Common.Logging.2.2.0\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Common.Logging.2.2.0\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Common.Logging.Core.2.2.0\lib\net40\Common.Logging.Core.dll</HintPath>
+      <HintPath>..\..\packages\Common.Logging.Core.2.2.0\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
     <Reference Include="FileHelpers">
-      <HintPath>packages\FileHelpers.2.0.0.0\lib\FileHelpers.dll</HintPath>
+      <HintPath>..\..\packages\FileHelpers.2.0.0.0\lib\FileHelpers.dll</HintPath>
     </Reference>
     <Reference Include="FileHelpers.ExcelStorage">
-      <HintPath>packages\FileHelpers.2.0.0.0\lib\FileHelpers.ExcelStorage.dll</HintPath>
+      <HintPath>..\..\packages\FileHelpers.2.0.0.0\lib\FileHelpers.ExcelStorage.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Excel">
-      <HintPath>packages\FileHelpers.2.0.0.0\lib\Interop.Excel.dll</HintPath>
+      <HintPath>..\..\packages\FileHelpers.2.0.0.0\lib\Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.Office">
-      <HintPath>packages\FileHelpers.2.0.0.0\lib\Interop.Office.dll</HintPath>
+      <HintPath>..\..\packages\FileHelpers.2.0.0.0\lib\Interop.Office.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Ninject">
-      <HintPath>packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <HintPath>..\..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Extensions.Logging">
-      <HintPath>packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Extensions.Logging.NLog2">
-      <HintPath>packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.dll</HintPath>
+      <HintPath>..\..\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Extensions.Quartz, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Ninject.Extensions.Quartz.0.2.0.0\lib\net45\Ninject.Extensions.Quartz.dll</HintPath>
+      <HintPath>..\..\packages\Ninject.Extensions.Quartz.0.2.0.0\lib\net45\Ninject.Extensions.Quartz.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Quartz, Version=2.1.2.400, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Quartz.2.1.2\lib\net40\Quartz.dll</HintPath>
+      <HintPath>..\..\packages\Quartz.2.1.2\lib\net40\Quartz.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -95,22 +95,22 @@
     <Reference Include="System.Xml" />
     <Reference Include="Topshelf, Version=3.1.135.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Topshelf.3.1.4\lib\net40-full\Topshelf.dll</HintPath>
+      <HintPath>..\..\packages\Topshelf.3.1.4\lib\net40-full\Topshelf.dll</HintPath>
     </Reference>
     <Reference Include="Topshelf.Ninject, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Topshelf.Ninject.0.3.0.0\lib\net45\Topshelf.Ninject.dll</HintPath>
+      <HintPath>..\..\packages\Topshelf.Ninject.0.3.0.0\lib\net45\Topshelf.Ninject.dll</HintPath>
     </Reference>
     <Reference Include="Topshelf.NLog, Version=3.1.122.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Topshelf.NLog.3.1.3\lib\net40-full\Topshelf.NLog.dll</HintPath>
+      <HintPath>..\..\packages\Topshelf.NLog.3.1.3\lib\net40-full\Topshelf.NLog.dll</HintPath>
     </Reference>
     <Reference Include="Topshelf.Quartz">
-      <HintPath>packages\Topshelf.Quartz.0.1.0.0\lib\net45\Topshelf.Quartz.dll</HintPath>
+      <HintPath>..\..\packages\Topshelf.Quartz.0.1.0.0\lib\net45\Topshelf.Quartz.dll</HintPath>
     </Reference>
     <Reference Include="Topshelf.Quartz.Ninject, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Topshelf.Quartz.Ninject.0.3.0.0\lib\net45\Topshelf.Quartz.Ninject.dll</HintPath>
+      <HintPath>..\..\packages\Topshelf.Quartz.Ninject.0.3.0.0\lib\net45\Topshelf.Quartz.Ninject.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
