@@ -54,14 +54,6 @@ namespace PlaxFm.Models
             return ParseLogsForSongEntries(entry).Result;
         }
 
-        public void ReadLog(string newLog)
-        {
-            newLog = CopyLog(newLog);
-            var engine = new FileHelperEngine(typeof (PlexMediaServerLog));
-            var entry = engine.ReadFile(newLog) as PlexMediaServerLog[];
-            ParseLogsForUsername(entry);
-        }
-
         private string CopyLog(string log)
         {
             _workingCopy = VerifyLogExists(_workingCopy);
@@ -139,23 +131,6 @@ namespace PlaxFm.Models
                 return songs;
             }
             return songList;
-        }
-
-        private void ParseLogsForUsername(PlexMediaServerLog[] logs)
-        {
-            Regex rgx = new Regex(@".*\sDEBUG\s-\s.*User\sis\s(\w+)\s\(ID:\s(\d+)\)");
-            foreach (PlexMediaServerLog log in logs)
-            {
-                if (rgx.IsMatch(log.LogEntry))
-                {
-                    var line = rgx.Replace(log.LogEntry, "$1,$2");
-                    if (line.Length > 0)
-                    {
-                        var lineArray = line.Split(',');
-                        _customConfiguration.AddUser(lineArray[0],int.Parse(lineArray[1]));
-                    }
-                }
-            }
         }
 
         private async Task<List<SongEntry>> GetSongData(List<SongEntry> songList)
