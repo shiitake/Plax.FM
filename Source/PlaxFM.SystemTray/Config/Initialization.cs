@@ -26,22 +26,26 @@ namespace PlaxFm.SystemTray.Config
         private DataSet _storage;
         private ConfigHelper _config;
 
-        //service can check for session
-        //if it doesn't exist then it can save the auth url to the config file
-
-        //systray can check for this URL
         public Initialization()
         {
-            _configFile = Environment.ExpandEnvironmentVariables(ConfigFile);
-            _schemaFile = Environment.ExpandEnvironmentVariables(SchemaFile);
-            var configInfo = new FileInfo(_configFile);
-            if (configInfo.Exists)
+            try
             {
-                _storage = new DataSet("UserConfiguration");
-                _storage.ReadXmlSchema(_schemaFile);
-                _storage.ReadXml(_configFile);
+
+                _configFile = Environment.ExpandEnvironmentVariables(ConfigFile);
+                _schemaFile = Environment.ExpandEnvironmentVariables(SchemaFile);
+                var configInfo = new FileInfo(_configFile);
+                if (configInfo.Exists)
+                {
+                    _storage = new DataSet("UserConfiguration");
+                    _storage.ReadXmlSchema(_schemaFile);
+                    _storage.ReadXml(_configFile);
+                }
+                _config = new ConfigHelper(_storage, _configFile, _schemaFile);
             }
-            _config = new ConfigHelper(_storage, _configFile, _schemaFile);
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         public void Setup(string userName, string password)
