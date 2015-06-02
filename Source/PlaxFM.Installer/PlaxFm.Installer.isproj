@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
 		<!-- Select a Product Configuration -->
 		<InstallShieldProductConfiguration>Express</InstallShieldProductConfiguration>
@@ -29,6 +29,10 @@
 	</ItemGroup>
 	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2013Limited\InstallShield.targets"/>
 	<ItemGroup>
+		<ProjectReference Include="..\PlaxFm.Core\PlaxFm.Core.csproj">
+			<Name>PlaxFm.Core</Name>
+			<Project>{17001C1B-0EDC-469A-B99D-3B64C2FAB6F0}</Project>
+		</ProjectReference>
 		<ProjectReference Include="..\PlaxFM.Service\PlaxFm.Service.csproj">
 			<Name>PlaxFm.Service</Name>
 			<Project>{07DA0509-E3F6-4926-9198-A4AC4F2E1564}</Project>

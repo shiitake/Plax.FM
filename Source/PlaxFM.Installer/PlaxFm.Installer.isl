@@ -349,6 +349,8 @@
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{398F7B60-E2B2-451F-82CA-EE30CCE74770}</td><td>LOGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{E280CD7C-5A53-44C9-B6AA-4D89D538B76B}</td><td>TRAY</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{2A99659C-A1C2-4242-A3F9-65B139B2A84A}</td><td>ARCHIVES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>PlaxFm.Core.Primary_output</td><td>{6794475A-0150-4BF1-A920-FF57C5294E87}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.core.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>PlaxFm.Core.Primary_output1</td><td>{C8ECFF52-949D-4F01-8374-6C84D15A91C4}</td><td>TRAY</td><td>2</td><td/><td>plaxfm.core.primary_output1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlaxFm.Service.Content_Files</td><td>{D3AFD532-0287-4DE8-BCB7-1FB03CA2DAB8}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.service.content_files</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlaxFm.Service.Primary_output</td><td>{932A1539-7B32-4977-82DF-B7EDBFB30BB4}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.service.primary_outpu</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlaxFm.SystemTray.Content_Files</td><td>{13EABB31-B941-4C29-A345-277965123B96}</td><td>TRAY</td><td>2</td><td/><td>plaxfm.systemtray.content_fi</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1903,6 +1905,8 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT5</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT7</td></row>
+		<row><td>AlwaysInstall</td><td>PlaxFm.Core.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>PlaxFm.Core.Primary_output1</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.Service.Content_Files</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.Service.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.SystemTray.Content_Files</td></row>
@@ -1922,6 +1926,8 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
+		<row><td>plaxfm.core.primary_output</td><td>PlaxFm.Core.Primary_output</td><td>PlaxFm.Core.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Core&gt;|Built</td><td>3</td><td/></row>
+		<row><td>plaxfm.core.primary_output1</td><td>PlaxFm.Core.Primary_output1</td><td>PlaxFm.Core.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Core&gt;|Built</td><td>3</td><td/></row>
 		<row><td>plaxfm.service.content_files</td><td>PlaxFm.Service.Content_Files</td><td>PlaxFm.Service.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Service&gt;|ContentFiles</td><td>3</td><td/></row>
 		<row><td>plaxfm.service.primary_outpu</td><td>PlaxFm.Service.Primary_output</td><td>PlaxFm.Service.Primary output</td><td>0</td><td/><td/><td>0</td><td>1</td><td>&lt;PlaxFm.Service&gt;|Built</td><td>3</td><td/></row>
 		<row><td>plaxfm.systemtray.content_fi</td><td>PlaxFm.SystemTray.Content_Files</td><td>PlaxFm.SystemTray.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.SystemTray&gt;|ContentFiles</td><td>3</td><td/></row>
@@ -2078,6 +2084,8 @@
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_35473899_1453_491D_889A_57D35C5381E6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_FA42E5A4_6EEF_45AA_8F03_B795FC072F90_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_FF60F23A_A4A4_4414_883B_9814B1B56BB9_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>PlaxFm.Core.Primary_output</td><td/><td/><td>_82A1928D_E93A_4EA2_8F82_B8833955D56D_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>PlaxFm.Core.Primary_output1</td><td/><td/><td>_D1AD890F_A53B_4B65_84A1_736958AA236E_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlaxFm.Service.Content_Files</td><td/><td/><td>_F3FBFBB0_4CC9_4C4E_890A_75085B985EA1_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlaxFm.Service.Primary_output</td><td/><td/><td>_9A92A3D8_3D45_477E_BFBF_7E693D12204A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlaxFm.SystemTray.Content_Files</td><td/><td/><td>_FEC9205B_9DCD_4117_9844_4E3401382A70_FILTER</td><td/><td/><td/><td/></row>
@@ -2388,6 +2396,7 @@
 		<row><td>ISProductFolder</td><td/><td/><td>1</td></row>
 		<row><td>ISProjectDataFolder</td><td/><td/><td>1</td></row>
 		<row><td>ISProjectFolder</td><td/><td/><td>1</td></row>
+		<row><td>PlaxFm.Core</td><td>Source\PlaxFm.Core\PlaxFm.Core.csproj</td><td/><td>2</td></row>
 		<row><td>PlaxFm.Service</td><td>Source\PlaxFM.Service\PlaxFm.Service.csproj</td><td/><td>2</td></row>
 		<row><td>PlaxFm.SystemTray</td><td>Source\PlaxFM.SystemTray\PlaxFm.SystemTray.csproj</td><td/><td>2</td></row>
 		<row><td>ProgramFilesFolder</td><td/><td/><td>1</td></row>
@@ -3926,9 +3935,17 @@
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.SystemTray\favicon.ico</td><td>0</td></row>
 		<row><td>PlexScrobble.vshos_0D4E482CE5AB4B148A9B662D65E6B06F.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>_5A83B54868C141BEA2D4FE331978C906.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_5ACA36576D4D4C3292D21BD6880BAB66.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_60BE39F08024446191DC55517E6AF131.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_702C6B9E649344D1B5EB7CFED1E70692.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_80CCD96D26024F76B416DFB08D17C874.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_816ADF383C8344C6B79394C3407F704D.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_979CFCDBD48A4D92AB92634300EF18DA.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_A2038BD8B0364276AA238D3A82B015D3.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_B792EFFFEDF24563A55F2054DC8F9645.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_B9577448F8FA47E98975B46DB9938CE0.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_B9A32D3764D6476284D14D5C267FF676.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_C56DE4E3C4BC4C478A1B92589CDDF78D.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">

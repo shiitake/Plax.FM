@@ -16,9 +16,17 @@ namespace PlaxFm.SystemTray
         private ContextMenu trayMenu;
         private readonly ServiceController _service;
         private Initialization _init;
+        private readonly string ServiceName = "Plax.FM";
         
         public SysTrayApp()
         {
+            //if service isn't installed go ahead and install it
+            var installed = ServiceCheck.DoesServiceExist(ServiceName);
+            if (!installed)
+            {
+                ServiceCheck.InstallService();
+            }
+
             _service = new ServiceController("Plax.FM");
             _init = new Initialization();
             var lastFmSetup = _init.ConfirmLastFmSetup();
@@ -50,6 +58,11 @@ namespace PlaxFm.SystemTray
 
         private void OnExit(object sender, EventArgs e)
         {
+            var installed = ServiceCheck.DoesServiceExist(ServiceName);
+            if (installed)
+            {
+                ServiceCheck.UnInstallService();
+            }
             Application.Exit();
         }
 

@@ -15,7 +15,11 @@ namespace PlaxFm
     {
         static void Main(string[] args)
         {
-            var logger = LogManager.GetCurrentClassLogger();
+#if DEBUG
+            var logger = LogManager.GetLogger("debug");
+#else
+            var logger = LogManager.GetLogger("release");
+#endif
             IAppSettings appSettings = new AppSettings();
 
             try

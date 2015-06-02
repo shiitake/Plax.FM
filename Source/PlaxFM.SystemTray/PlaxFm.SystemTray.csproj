@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceCheck.cs" />
     <Compile Include="SysTrayApp.cs">
       <SubType>Form</SubType>
     </Compile>
