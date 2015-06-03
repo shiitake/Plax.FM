@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ServiceProcess;
 using PlaxFm.SystemTray.Config;
+using NLog;
 
 namespace PlaxFm.SystemTray
 {
@@ -17,14 +18,23 @@ namespace PlaxFm.SystemTray
         private readonly ServiceController _service;
         private Initialization _init;
         private readonly string ServiceName = "Plax.FM";
+        private static Logger logger;
+        private ServiceHandler _handler;
         
         public SysTrayApp()
         {
+#if DEBUG
+            logger = LogManager.GetLogger("debug");
+#else
+            logger = LogManager.GetLogger("release");
+#endif
+            logger.Info("Starting PlaxFm System Tray");
+            _handler = new ServiceHandler(logger);
             //if service isn't installed go ahead and install it
-            var installed = ServiceCheck.DoesServiceExist(ServiceName);
+            var installed = ServiceHandler.DoesServiceExist(ServiceName);
             if (!installed)
             {
-                ServiceCheck.InstallService();
+                ServiceHandler.InstallService();
             }
 
             _service = new ServiceController("Plax.FM");
@@ -58,10 +68,10 @@ namespace PlaxFm.SystemTray
 
         private void OnExit(object sender, EventArgs e)
         {
-            var installed = ServiceCheck.DoesServiceExist(ServiceName);
+            var installed = ServiceHandler.DoesServiceExist(ServiceName);
             if (installed)
             {
-                ServiceCheck.UnInstallService();
+                ServiceHandler.UnInstallService();
             }
             Application.Exit();
         }
