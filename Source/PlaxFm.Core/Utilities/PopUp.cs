@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PlaxFm.Core.CustomExceptions;
 
 
 namespace PlaxFm.Core.Utilities
@@ -28,8 +29,9 @@ namespace PlaxFm.Core.Utilities
                 {
                     return true;
                 }
+                throw new IncompleteAuthorization();
             }
-            return false;
+            throw new IncompleteAuthorization();
         }
 
         public void Message(string message)

@@ -1,61 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
-using System.ServiceProcess;
+using Ninject;
+using Ninject.Extensions.Logging;
 using PlaxFm.SystemTray.Config;
+using Ninject.Extensions.Logging.NLog2;
 using NLog;
 
 namespace PlaxFm.SystemTray
 {
     public class SysTrayApp : Form
     {
-        private NotifyIcon trayIcon;
-        private ContextMenu trayMenu;
-        private readonly ServiceController _service;
-        private Initialization _init;
-        private readonly string ServiceName = "Plax.FM";
-        private static Logger logger;
-        private ServiceHandler _handler;
+        private readonly NotifyIcon _trayIcon;
+        private readonly Initialization _init;
+        private const string ServiceName = "Plax.FM";
+        private readonly Logger _logger;
+        private readonly ServiceHandler _handler;
+        private MenuItem _setupMenuItem;
+        private MenuItem _startServiceMenuItem;
+        private MenuItem _stopServiceMenuItem;
         
         public SysTrayApp()
         {
+            var kernel = new StandardKernel(new AppModule());
+
 #if DEBUG
-            logger = LogManager.GetLogger("debug");
+            _logger = LogManager.GetLogger("debug");
 #else
-            logger = LogManager.GetLogger("release");
+            _logger = LogManager.GetLogger("release");
 #endif
-            logger.Info("Starting PlaxFm System Tray");
-            _handler = new ServiceHandler(logger);
+            _logger.Info("Starting PlaxFm System Tray");
+
+            _handler = kernel.Get<ServiceHandler>();
             //if service isn't installed go ahead and install it
-            var installed = ServiceHandler.DoesServiceExist(ServiceName);
+            var installed = _handler.DoesServiceExist(ServiceName);
             if (!installed)
             {
-                ServiceHandler.InstallService();
+                _handler.InstallService();
             }
 
-            _service = new ServiceController("Plax.FM");
-            _init = new Initialization();
+            _init = new Initialization(_logger);
             var lastFmSetup = _init.ConfirmLastFmSetup();
             var plexSetup = _init.ConfirmPlexSetup();
 
-            trayMenu = new ContextMenu();
-            var setupMenu = new MenuItem("Initial Setup", InitialSetup);
-            setupMenu.Enabled = (!lastFmSetup || !plexSetup);
-            trayMenu.MenuItems.Add(setupMenu);
-            trayMenu.MenuItems.Add("Start Plax.FM", StartService);
-            trayMenu.MenuItems.Add("Stop Plax.FM", StopService);
+            var trayMenu = new ContextMenu();
+            _setupMenuItem = new MenuItem("Initial Setup", InitialSetup);
+            _setupMenuItem.Enabled = (!lastFmSetup || !plexSetup);
+            trayMenu.MenuItems.Add(_setupMenuItem);
+
+            _startServiceMenuItem = new MenuItem("Start Plax.FM", StartService);
+            _startServiceMenuItem.Enabled = !_handler.IsServiceStarted();
+            trayMenu.MenuItems.Add(_startServiceMenuItem);
+
+            _stopServiceMenuItem = new MenuItem("Stop Plax.FM", StopService);
+            _stopServiceMenuItem.Enabled = _handler.IsServiceStarted();
+            trayMenu.MenuItems.Add(_stopServiceMenuItem);
+
             trayMenu.MenuItems.Add("Exit", OnExit);
             
-            trayIcon = new NotifyIcon();
-            trayIcon.Text = "Plax.FM";
-            trayIcon.Icon = new Icon("favicon.ico", 40, 40);
+            _trayIcon = new NotifyIcon();
+            _trayIcon.Text = "Plax.FM";
+            _trayIcon.Icon = new Icon("favicon.ico", 40, 40);
 
-            trayIcon.ContextMenu = trayMenu;
-            trayIcon.Visible = true;
+            _trayIcon.ContextMenu = trayMenu;
+            _trayIcon.Visible = true;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -68,10 +76,10 @@ namespace PlaxFm.SystemTray
 
         private void OnExit(object sender, EventArgs e)
         {
-            var installed = ServiceHandler.DoesServiceExist(ServiceName);
+            var installed = _handler.DoesServiceExist(ServiceName);
             if (installed)
             {
-                ServiceHandler.UnInstallService();
+                _handler.UnInstallService();
             }
             Application.Exit();
         }
@@ -79,51 +87,47 @@ namespace PlaxFm.SystemTray
         private void InitialSetup(object sender, EventArgs e)
         {
             var plexSetup = _init.ConfirmPlexSetup();
-            if (!plexSetup)
+            try
             {
-                using (var popup = new PlaxConfig())
+                if (!plexSetup)
                 {
-                    if (popup.ShowDialog(this) == DialogResult.OK)
+                    using (var popup = new PlaxConfig())
                     {
-                        var userInfo = popup.UserInfo;
-                        _init.Setup(userInfo[0], userInfo[1]);
+                        if (popup.ShowDialog(this) == DialogResult.OK)
+                        {
+                            var userInfo = popup.UserInfo;
+                            _init.Setup(userInfo[0], userInfo[1]);
+                        }
                     }
                 }
+                else
+                {
+                    _init.Setup();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _init.Setup();
+                _logger.Error("Initial configuration did not complete. " + ex);
+                throw;
+            }
+            finally
+            {
+                _setupMenuItem.Enabled = false;    
             }
         }
         
         private void StopService(object sender, EventArgs e)
         {
-            try
-            {
-                var timeout = TimeSpan.FromMilliseconds(60000);
-
-                _service.Stop();
-                _service.WaitForStatus(ServiceControllerStatus.Running, timeout);
-            }
-            catch
-            {
-                // ...
-            }
+            _handler.StopService();
+            _stopServiceMenuItem.Enabled = false;
+            _startServiceMenuItem.Enabled = true;
         }
 
         private void StartService(object sender, EventArgs e)
         {
-            try
-            {
-                var timeout = TimeSpan.FromMilliseconds(60000);
-
-                _service.Start();
-                _service.WaitForStatus(ServiceControllerStatus.Running, timeout);
-            }
-            catch
-            {
-                // ...
-            } 
+            _handler.StartService();
+            _startServiceMenuItem.Enabled = false;
+            _stopServiceMenuItem.Enabled = true;
         }
         
         protected override void Dispose(bool isDisposing)
@@ -131,7 +135,7 @@ namespace PlaxFm.SystemTray
             if (isDisposing)
             {
                 // Release the icon resource.
-                trayIcon.Dispose();
+                _trayIcon.Dispose();
             }
 
             base.Dispose(isDisposing);

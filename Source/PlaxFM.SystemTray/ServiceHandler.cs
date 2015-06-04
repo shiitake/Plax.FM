@@ -4,31 +4,35 @@ using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using Ninject.Extensions.Logging;
+using Ninject;
+using NLog;
 
 namespace PlaxFm.SystemTray
 {
-    public class ServiceHandler
+    public interface IServiceHandler
+    { }
+    
+    public class ServiceHandler : IServiceHandler
     {
         private static ILogger _logger;
+        private static ServiceController _service;
         private const string BasePath64 = @"C:\Program Files (x86)";
         private const string BasePath32 = @"C:\Program Files";
         private const string FileLocation = @"\Shiitake Studios\Plax.Fm\PlaxFM.exe";
+        private static string _command;
 
-#if DEBUG
-        private static string _command = @"..\..\..\PlaxFM.Service\bin\Debug\plaxfm.exe";
-#else
-        private static string _command
-        {
-            get { return GetServiceFilePath(); }
-        }
-#endif
-
-        ServiceHandler(ILogger logger)
+        public ServiceHandler(ILogger logger)
         {
             _logger = logger;
+            _service = new ServiceController("Plax.FM");
+#if DEBUG
+            _command = @"..\..\..\PlaxFM.Service\bin\Debug\plaxfm.exe";
+#else
+            _command = GetServiceFilePath();
+#endif
         }
         
-        public static bool DoesServiceExist(string serviceName)
+        public bool DoesServiceExist(string serviceName)
         {
             _logger.Info("Checking if PlaxFM service has been installed");
             ServiceController[] services = ServiceController.GetServices();
@@ -36,7 +40,12 @@ namespace PlaxFm.SystemTray
             return service != null;
         }
 
-        public static void InstallService()
+        public bool IsServiceStarted()
+        {
+            return _service.Status.Equals(ServiceControllerStatus.Running);
+        }
+        
+        public void InstallService()
         {
             try
             {
@@ -58,10 +67,11 @@ namespace PlaxFm.SystemTray
             }
         }
 
-        public static void UnInstallService()
+        public void UnInstallService()
         {
             try
             {
+                StopService();
                 _logger.Info("Uninstalling PlaxFM service");
                 var procStartInfo = new ProcessStartInfo(_command, "uninstall");
                 procStartInfo.RedirectStandardOutput = true;
@@ -79,17 +89,7 @@ namespace PlaxFm.SystemTray
             }
         }
 
-        public static string GetServiceFilePath()
-        {
-            var fileInfo = new FileInfo(BasePath64 + FileLocation);
-            if (!fileInfo.Exists)
-            {
-                return BasePath32 + FileLocation;
-            }
-            return BasePath64 + FileLocation;
-        }
-
-        public static void StopService()
+        public void StopService()
         {
             try
             {
@@ -103,6 +103,8 @@ namespace PlaxFm.SystemTray
                 proc.Start();
                 string result = proc.StandardOutput.ReadToEnd();
                 _logger.Info(result);
+                var timeout = TimeSpan.FromMilliseconds(60000);
+                _service.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
             }
             catch (Exception ex)
             {
@@ -110,7 +112,7 @@ namespace PlaxFm.SystemTray
             }
         }
 
-        public static void StartService()
+        public void StartService()
         {
             try
             {
@@ -129,6 +131,16 @@ namespace PlaxFm.SystemTray
             {
                 _logger.Error("Error when starting service. Error: " + ex);
             }
+        }
+
+        private static string GetServiceFilePath()
+        {
+            var fileInfo = new FileInfo(BasePath64 + FileLocation);
+            if (!fileInfo.Exists)
+            {
+                return BasePath32 + FileLocation;
+            }
+            return BasePath64 + FileLocation;
         }
     }
 }

@@ -1,50 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Text;
-using System.Linq;
+using System.IO;
+using System.Net.Configuration;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Http;
-using System.IO;
+using System.Web;
 using System.Xml;
 using System.Xml.Linq;
-using System.Web;
-using PlaxFm.Core;
 using PlaxFm.Core.Utilities;
+using NLog;
+using PlaxFm.Core.CustomExceptions;
 
 namespace PlaxFm.SystemTray.Config
 {
     class Initialization
     {
-        private string LastFmApiKey = "266155149c516542879ee1ec55c93697";
-        private string LastFmApiSecret = "035cf4de6dc150fff952fbf3108d10b1";
-        private string ConfigFile = @"%ProgramData%\PlaxFM\Config\CustomConfiguration.xml";
-        private string _configFile;
-        private string SchemaFile = @"%ProgramData%\PlaxFM\Config\CustomConfiguration.xsd";
-        private string _schemaFile;
+        private static Logger _logger;
+        private readonly string LastFmApiKey = "266155149c516542879ee1ec55c93697";
+        private readonly string LastFmApiSecret = "035cf4de6dc150fff952fbf3108d10b1";
+        private readonly string ConfigFile = @"%ProgramData%\PlaxFM\Config\CustomConfiguration.xml";
+        private readonly string SchemaFile = @"%ProgramData%\PlaxFM\Config\CustomConfiguration.xsd";
         private DataSet _storage;
-        private ConfigHelper _config;
+        private readonly ConfigHelper _config;
 
-        public Initialization()
+        public Initialization(Logger logger)
         {
+            _logger = logger;
             try
             {
-
-                _configFile = Environment.ExpandEnvironmentVariables(ConfigFile);
-                _schemaFile = Environment.ExpandEnvironmentVariables(SchemaFile);
-                var configInfo = new FileInfo(_configFile);
+                _logger.Debug("Looking for configuration information.");
+                var configFile = Environment.ExpandEnvironmentVariables(ConfigFile);
+                var schemaFile = Environment.ExpandEnvironmentVariables(SchemaFile);
+                var configInfo = new FileInfo(configFile);
                 if (configInfo.Exists)
                 {
                     _storage = new DataSet("UserConfiguration");
-                    _storage.ReadXmlSchema(_schemaFile);
-                    _storage.ReadXml(_configFile);
+                    _storage.ReadXmlSchema(schemaFile);
+                    _storage.ReadXml(configFile);
                 }
-                _config = new ConfigHelper(_storage, _configFile, _schemaFile);
+                _config = new ConfigHelper(_storage, configFile, schemaFile);
             }
             catch (FileNotFoundException ex)
             {
-                Console.WriteLine(ex);
+                _logger.Error("Error during initialization. "+ ex);
+                
             }
         }
 
@@ -73,12 +73,28 @@ namespace PlaxFm.SystemTray.Config
                     _config.SetValue("Setup", "Initialized", true);
                     _config.SetValue("Token", "");
                 }
-                var ready = ConfirmLastFmSetup();
-                if (ready)
+                else
                 {
-                    PopUp msg = new PopUp();
-                    msg.Message("Setup has completed successfully");
+                    _logger.Warn("No Session Id found.");
                 }
+            }
+            else
+            {
+                _logger.Warn("Account has not been authorized.");
+            }
+
+            var ready = ConfirmLastFmSetup();
+            if (ready)
+            {
+                PopUp msg = new PopUp();
+                msg.Message("Setup has completed successfully");
+                _logger.Info("Setup has completed successfully.");
+            }
+            else
+            {
+                PopUp msg = new PopUp();
+                msg.Message("There was a problem with your setup. Please try again.");
+                _logger.Warn("Setup did not complete successfully. See logs for details.");
             }
         }
         
@@ -97,44 +113,61 @@ namespace PlaxFm.SystemTray.Config
         
         public bool GetAuthorization(string token)
         {
-            PopUp msg = new PopUp();
-            return msg.Message(LastFmApiKey, token);
+            try
+            {
+                _logger.Debug("Getting LastFM Authorization");
+                PopUp msg = new PopUp();
+                return msg.Message(LastFmApiKey, token);
+            }
+            catch (IncompleteAuthorization ex)
+            {
+                _logger.Warn(ex);
+            }
+            return false;
         }
 
         public async Task<string> GetLastFmToken()
         {
             //check for saved token
+            _logger.Info("Getting Last.Fm Token");
             var token = _config.GetValue("Token");
             if (token != "") return token;
+            _logger.Info("No local token found. Attempting to download from Last.Fm.");
             var builder = new UriBuilder("http://ws.audioscrobbler.com/2.0/");
             var query = HttpUtility.ParseQueryString(builder.Query);
             query["method"] = "auth.getToken";
             query["api_key"] = LastFmApiKey;
             builder.Query = query.ToString();
             var url = builder.ToString();
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                using (HttpResponseMessage response = await client.GetAsync(url))
-                using (HttpContent content = response.Content)
+                using (HttpClient client = new HttpClient())
                 {
-                    string result = await content.ReadAsStringAsync();
-                    if (result != null)
+                    using (HttpResponseMessage response = await client.GetAsync(url))
+                    using (HttpContent content = response.Content)
                     {
-                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
+                        string result = await content.ReadAsStringAsync();
+                        if (result != null)
                         {
-                            var data = XDocument.Load(reader);
-                            token = data.ElementOrEmpty("lfm").ElementOrEmpty("token").Value;
+                            using (XmlReader reader = XmlReader.Create(new StringReader(result)))
+                            {
+                                var data = XDocument.Load(reader);
+                                token = data.ElementOrEmpty("lfm").ElementOrEmpty("token").Value;
+                            }
                         }
-
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error downloading Last.Fm Token. " + ex);
             }
             return token;
         }
         
         public async Task<string> DownloadLastFmSession(string token)
         {
+            _logger.Info("Downloading Session Id from Last.FM");
             var session = "";
             var builder = new UriBuilder("http://ws.audioscrobbler.com/2.0/");
             var param = "api_key" + LastFmApiKey + "methodauth.getSessiontoken" + token +
@@ -147,31 +180,37 @@ namespace PlaxFm.SystemTray.Config
             query["api_sig"] = signature;
             builder.Query = query.ToString();
             var url = builder.ToString();
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                using (HttpResponseMessage response = await client.GetAsync(url))
-                using (HttpContent content = response.Content)
+                using (HttpClient client = new HttpClient())
                 {
-                    string result = await content.ReadAsStringAsync();
-                    if (result != null)
+                    using (HttpResponseMessage response = await client.GetAsync(url))
+                    using (HttpContent content = response.Content)
                     {
-                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
+                        string result = await content.ReadAsStringAsync();
+                        if (result != null)
                         {
-                            var data = XDocument.Load(reader);
-                            session =
-                                data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("key").Value;
-                            var user = data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("name").Value;
-                            //save config
-                            if (session != "" && user != "")
+                            using (XmlReader reader = XmlReader.Create(new StringReader(result)))
                             {
-                                _config.SetValue("LastFmUsername", user);
-                                _config.SetValue("SessionId", session);
-                                _config.Save();
+                                var data = XDocument.Load(reader);
+                                session =
+                                    data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("key").Value;
+                                var user = data.ElementOrEmpty("lfm").ElementOrEmpty("session").ElementOrEmpty("name").Value;
+                                //save config
+                                if (session != "" && user != "")
+                                {
+                                    _config.SetValue("LastFmUsername", user);
+                                    _config.SetValue("SessionId", session);
+                                    _config.Save();
+                                }
                             }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error downloading Last.Fm Session Id. " + ex);
             }
             return session;
         }
@@ -183,14 +222,12 @@ namespace PlaxFm.SystemTray.Config
 
         private async void GetPlexToken(string userName, string password)
         {
+            _logger.Info("Downloading Plex user token.");
             var url = "https://plex.tv/users/sign_in.xml";
             var myplexaccount = userName;
             var mypassword = password;
-            var token = "";
             byte[] accountBytes = Encoding.UTF8.GetBytes(myplexaccount + ":" + mypassword);
             var encodedPassword = Convert.ToBase64String(accountBytes);
-            //todo: test this
-            //var encodedPassword = "c2JhcnJldHQwMDpjZ2laTkpqSkM4Vmg=";
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("X-Plex-Client-Identifier", "PlexScrobble");
@@ -205,7 +242,7 @@ namespace PlaxFm.SystemTray.Config
                         using (XmlReader reader = XmlReader.Create(new StringReader(result)))
                         {
                             var data = XDocument.Load(reader);
-                            token = data.ElementOrEmpty("user").ElementOrEmpty("authentication-token").Value;
+                            var token = data.ElementOrEmpty("user").ElementOrEmpty("authentication-token").Value;
                             _config.SetValue("PlexToken", token);
                         }
                     }

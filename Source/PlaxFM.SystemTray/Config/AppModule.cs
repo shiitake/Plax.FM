@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ninject.Modules;
-using Ninject.Extensions.Logging;
 
-namespace PlaxFm.SystemTray
+namespace PlaxFm.SystemTray.Config
 {
     public class AppModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<Ilo>()
+            Bind<IServiceHandler>().To<ServiceHandler>();
         }
     }
 }
