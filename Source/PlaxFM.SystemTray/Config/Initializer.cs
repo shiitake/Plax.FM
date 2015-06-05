@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Data;
 using System.IO;
-using System.Net.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
-using PlaxFm.Core.Utilities;
-using NLog;
 using Ninject.Extensions.Logging;
-using Ninject.Extensions.Logging.NLog2;
-using Ninject;
 using PlaxFm.Core.CustomExceptions;
+using PlaxFm.Core.Utilities;
 
 namespace PlaxFm.SystemTray.Config
 {
     public interface IInitializer
     { }
       
-    class Initializer : IInitializer
+    public class Initializer : IInitializer
     {
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
         private readonly string LastFmApiKey = "266155149c516542879ee1ec55c93697";
         private readonly string LastFmApiSecret = "035cf4de6dc150fff952fbf3108d10b1";
         private readonly string ConfigFile = @"%ProgramData%\PlaxFM\Config\CustomConfiguration.xml";
@@ -30,7 +26,7 @@ namespace PlaxFm.SystemTray.Config
         private DataSet _storage;
         private readonly ConfigHelper _config;
 
-        public Initializer(Logger logger)
+        public Initializer(ILogger logger)
         {
             _logger = logger;
             try
@@ -127,7 +123,7 @@ namespace PlaxFm.SystemTray.Config
             }
             catch (IncompleteAuthorization ex)
             {
-                _logger.Warn(ex);
+                _logger.Warn(ex.Message);
             }
             return false;
         }

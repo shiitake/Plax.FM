@@ -349,12 +349,24 @@
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{398F7B60-E2B2-451F-82CA-EE30CCE74770}</td><td>LOGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{E280CD7C-5A53-44C9-B6AA-4D89D538B76B}</td><td>TRAY</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{2A99659C-A1C2-4242-A3F9-65B139B2A84A}</td><td>ARCHIVES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>PlaxFm.Core.Primary_output</td><td>{6794475A-0150-4BF1-A920-FF57C5294E87}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.core.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>NLog.dll</td><td>{137F3AE3-D937-4FD3-86F6-A58CDC5F4D3F}</td><td>INSTALLDIR</td><td>2</td><td/><td>nlog.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>NLog.dll1</td><td>{7F30AA5E-9A1C-4BBC-8154-671818BFAC6F}</td><td>TRAY</td><td>2</td><td/><td>nlog.dll1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Ninject.Extensions.Logging.NLog2.dll</td><td>{35C160AF-9A41-4C0A-B04B-F10C6DE08D3A}</td><td>TRAY</td><td>2</td><td/><td>ninject.extensions.logging.n</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Ninject.Extensions.Logging.NLog2.dll1</td><td>{E4DE9F4E-7A09-4F21-B465-E6348498AFBC}</td><td>INSTALLDIR</td><td>2</td><td/><td>ninject.extensions.logging.n2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Ninject.Extensions.Logging.dll</td><td>{0D752093-1524-47B7-A266-239C872079A5}</td><td>TRAY</td><td>2</td><td/><td>ninject.extensions.logging.d</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Ninject.Extensions.Logging.dll1</td><td>{AE7547D1-89DC-4A7D-A148-2C4B0CA4542B}</td><td>INSTALLDIR</td><td>2</td><td/><td>ninject.extensions.logging.d1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Ninject.dll</td><td>{6111BFD4-25DB-4BEA-879B-27971E77366D}</td><td>TRAY</td><td>2</td><td/><td>ninject.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Ninject.dll1</td><td>{EB653980-496F-4B96-ADCD-EE78F7696468}</td><td>INSTALLDIR</td><td>2</td><td/><td>ninject.dll1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>PlaxFm.Core.Primary_output</td><td>{4855FEAA-1965-4DBE-9581-79279BAFFF83}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.core.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlaxFm.Core.Primary_output1</td><td>{C8ECFF52-949D-4F01-8374-6C84D15A91C4}</td><td>TRAY</td><td>2</td><td/><td>plaxfm.core.primary_output1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlaxFm.Service.Content_Files</td><td>{D3AFD532-0287-4DE8-BCB7-1FB03CA2DAB8}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.service.content_files</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>PlaxFm.Service.Content_Files1</td><td>{2D0004B4-9DC1-451B-9416-4027896BB5BB}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.service.content_files</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlaxFm.Service.Primary_output</td><td>{932A1539-7B32-4977-82DF-B7EDBFB30BB4}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.service.primary_outpu</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>PlaxFm.Service.Primary_output1</td><td>{95EC4E92-04D4-411E-AAC9-7D8E8E0F71AC}</td><td>INSTALLDIR</td><td>2</td><td/><td>plaxfm.service.primary_outpu</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlaxFm.SystemTray.Content_Files</td><td>{13EABB31-B941-4C29-A345-277965123B96}</td><td>TRAY</td><td>2</td><td/><td>plaxfm.systemtray.content_fi</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>PlaxFm.SystemTray.Content_Files1</td><td>{FFC8B703-8A19-4F3C-9017-D17E6E2B582C}</td><td>TRAY</td><td>2</td><td/><td>plaxfm.systemtray.content_fi</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>PlaxFm.SystemTray.Primary_output</td><td>{E1391279-E346-4E53-BE28-0C6E08D07110}</td><td>TRAY</td><td>2</td><td/><td>plaxfm.systemtray.primary_ou</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>PlaxFm.SystemTray.Primary_output1</td><td>{93D89B64-01E2-4CD6-949D-A46B9C76E190}</td><td>TRAY</td><td>2</td><td/><td>plaxfm.systemtray.primary_ou</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Quartz.dll</td><td>{470462BF-4102-4763-878C-09F24C49B04A}</td><td>INSTALLDIR</td><td>2</td><td/><td>quartz.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
@@ -1068,11 +1080,9 @@
 		<row><td>ARCHIVES</td><td>ISX_DEFAULTCOMPONENT7</td></row>
 		<row><td>CONFIG</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>CommonAppDataFolder</td><td>ISX_DEFAULTCOMPONENT1</td></row>
-		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>LOGS</td><td>ISX_DEFAULTCOMPONENT5</td></row>
 		<row><td>LocalAppDataFolder</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>PLAXFM</td><td>ISX_DEFAULTCOMPONENT4</td></row>
-		<row><td>TRAY</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1905,12 +1915,24 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT5</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT7</td></row>
+		<row><td>AlwaysInstall</td><td>NLog.dll</td></row>
+		<row><td>AlwaysInstall</td><td>NLog.dll1</td></row>
+		<row><td>AlwaysInstall</td><td>Ninject.Extensions.Logging.NLog2.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Ninject.Extensions.Logging.NLog2.dll1</td></row>
+		<row><td>AlwaysInstall</td><td>Ninject.Extensions.Logging.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Ninject.Extensions.Logging.dll1</td></row>
+		<row><td>AlwaysInstall</td><td>Ninject.dll</td></row>
+		<row><td>AlwaysInstall</td><td>Ninject.dll1</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.Core.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.Core.Primary_output1</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.Service.Content_Files</td></row>
+		<row><td>AlwaysInstall</td><td>PlaxFm.Service.Content_Files1</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.Service.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>PlaxFm.Service.Primary_output1</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.SystemTray.Content_Files</td></row>
+		<row><td>AlwaysInstall</td><td>PlaxFm.SystemTray.Content_Files1</td></row>
 		<row><td>AlwaysInstall</td><td>PlaxFm.SystemTray.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>PlaxFm.SystemTray.Primary_output1</td></row>
 		<row><td>AlwaysInstall</td><td>Quartz.dll</td></row>
 	</table>
 
@@ -1926,12 +1948,27 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
+		<row><td>ninject.dll</td><td>Ninject.dll</td><td>Ninject.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</td><td>1</td><td/></row>
+		<row><td>ninject.dll1</td><td>Ninject.dll1</td><td>Ninject.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.d</td><td>Ninject.Extensions.Logging.dll</td><td>Ninject.Extensions.Logging.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.d1</td><td>Ninject.Extensions.Logging.dll1</td><td>Ninject.Extensions.Logging.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.n</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.n1</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.Extensions.Logging.NLog2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.xml</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.n2</td><td>Ninject.Extensions.Logging.NLog2.dll1</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.n3</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.Extensions.Logging.NLog2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.xml</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.x</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.Extensions.Logging.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.xml</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.x2</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.Extensions.Logging.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.xml</td><td>1</td><td/></row>
+		<row><td>ninject.xml</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.xml</td><td>1</td><td/></row>
+		<row><td>ninject.xml1</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.xml</td><td>1</td><td/></row>
+		<row><td>nlog.dll</td><td>NLog.dll</td><td>NLog.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\NLog.2.1.0\lib\net45\NLog.dll</td><td>1</td><td/></row>
+		<row><td>nlog.dll1</td><td>NLog.dll1</td><td>NLog.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\NLog.2.0.1.2\lib\net45\NLog.dll</td><td>1</td><td/></row>
+		<row><td>nlog.xml</td><td>ISX_DEFAULTCOMPONENT6</td><td>NLog.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\NLog.2.0.1.2\lib\net45\NLog.xml</td><td>1</td><td/></row>
 		<row><td>plaxfm.core.primary_output</td><td>PlaxFm.Core.Primary_output</td><td>PlaxFm.Core.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Core&gt;|Built</td><td>3</td><td/></row>
 		<row><td>plaxfm.core.primary_output1</td><td>PlaxFm.Core.Primary_output1</td><td>PlaxFm.Core.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Core&gt;|Built</td><td>3</td><td/></row>
-		<row><td>plaxfm.service.content_files</td><td>PlaxFm.Service.Content_Files</td><td>PlaxFm.Service.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Service&gt;|ContentFiles</td><td>3</td><td/></row>
-		<row><td>plaxfm.service.primary_outpu</td><td>PlaxFm.Service.Primary_output</td><td>PlaxFm.Service.Primary output</td><td>0</td><td/><td/><td>0</td><td>1</td><td>&lt;PlaxFm.Service&gt;|Built</td><td>3</td><td/></row>
-		<row><td>plaxfm.systemtray.content_fi</td><td>PlaxFm.SystemTray.Content_Files</td><td>PlaxFm.SystemTray.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.SystemTray&gt;|ContentFiles</td><td>3</td><td/></row>
-		<row><td>plaxfm.systemtray.primary_ou</td><td>PlaxFm.SystemTray.Primary_output</td><td>PlaxFm.SystemTray.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.SystemTray&gt;|Built</td><td>3</td><td/></row>
+		<row><td>plaxfm.service.content_files</td><td>PlaxFm.Service.Content_Files1</td><td>PlaxFm.Service.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Service&gt;|ContentFiles</td><td>3</td><td/></row>
+		<row><td>plaxfm.service.primary_outpu</td><td>PlaxFm.Service.Primary_output1</td><td>PlaxFm.Service.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Service&gt;|Built</td><td>3</td><td/></row>
+		<row><td>plaxfm.systemtray.content_fi</td><td>PlaxFm.SystemTray.Content_Files1</td><td>PlaxFm.SystemTray.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.SystemTray&gt;|ContentFiles</td><td>3</td><td/></row>
+		<row><td>plaxfm.systemtray.primary_ou</td><td>PlaxFm.SystemTray.Primary_output1</td><td>PlaxFm.SystemTray.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.SystemTray&gt;|Built</td><td>3</td><td/></row>
 		<row><td>quartz.dll</td><td>Quartz.dll</td><td>Quartz.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Quartz.2.1.2\lib\net40-client\Quartz.dll</td><td>1</td><td/></row>
 	</table>
 
@@ -2084,12 +2121,24 @@
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_35473899_1453_491D_889A_57D35C5381E6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_FA42E5A4_6EEF_45AA_8F03_B795FC072F90_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td/><td/><td>_FF60F23A_A4A4_4414_883B_9814B1B56BB9_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>PlaxFm.Core.Primary_output</td><td/><td/><td>_82A1928D_E93A_4EA2_8F82_B8833955D56D_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>NLog.dll</td><td/><td/><td>_B39AB283_6EF5_4FD1_9AC4_893177EF86D7_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>NLog.dll1</td><td/><td/><td>_1E03A180_9211_4D4D_8EB6_253F380A6F55_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Ninject.Extensions.Logging.NLog2.dll</td><td/><td/><td>_6C3C761C_3001_42F7_A798_3FF522773F39_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Ninject.Extensions.Logging.NLog2.dll1</td><td/><td/><td>_B38565DF_5E28_4BC3_972D_110DA8FF3C16_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Ninject.Extensions.Logging.dll</td><td/><td/><td>_BCCDD49E_18AD_499A_9F53_1BA58BF7D84C_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Ninject.Extensions.Logging.dll1</td><td/><td/><td>_74AB8A8D_69F4_4C11_8FFF_F3F44747CFF0_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Ninject.dll</td><td/><td/><td>_B6979092_F0C1_479E_AB98_EE8C4B7E6D3F_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Ninject.dll1</td><td/><td/><td>_E899543D_DE3C_4757_92DD_04D140212C1C_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>PlaxFm.Core.Primary_output</td><td/><td/><td>_B03F5151_F23C_48EF_AC2B_648311C07676_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlaxFm.Core.Primary_output1</td><td/><td/><td>_D1AD890F_A53B_4B65_84A1_736958AA236E_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlaxFm.Service.Content_Files</td><td/><td/><td>_F3FBFBB0_4CC9_4C4E_890A_75085B985EA1_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>PlaxFm.Service.Content_Files1</td><td/><td/><td>_A083D05A_885E_4950_BAD4_48659D3D66A6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlaxFm.Service.Primary_output</td><td/><td/><td>_9A92A3D8_3D45_477E_BFBF_7E693D12204A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>PlaxFm.Service.Primary_output1</td><td/><td/><td>_F92B9A69_ED1F_40FF_B566_718F05D54EE6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlaxFm.SystemTray.Content_Files</td><td/><td/><td>_FEC9205B_9DCD_4117_9844_4E3401382A70_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>PlaxFm.SystemTray.Content_Files1</td><td/><td/><td>_5AEC8E59_00DC_4D61_8BF8_A6FE6E1C8E75_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>PlaxFm.SystemTray.Primary_output</td><td/><td/><td>_F827009F_AF40_4B6E_BD24_5F325F400EBD_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>PlaxFm.SystemTray.Primary_output1</td><td/><td/><td>_9141707C_61DB_4734_BB56_F0F053E0FB77_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Quartz.dll</td><td/><td/><td>_7789404E_AA69_40F1_8D07_726F5DB6A607_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
@@ -3946,6 +3995,7 @@
 		<row><td>_B9577448F8FA47E98975B46DB9938CE0.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_B9A32D3764D6476284D14D5C267FF676.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_C56DE4E3C4BC4C478A1B92589CDDF78D.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_C8E28ACF76464A84AFA11FFFF8BE9D9C.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">

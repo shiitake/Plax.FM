@@ -13,33 +13,27 @@ namespace PlaxFm.SystemTray
     {
         private readonly NotifyIcon _trayIcon;
         private readonly Initializer _init;
-        private const string ServiceName = "Plax.FM";
-        private readonly Logger _logger;
         private readonly ServiceHandler _handler;
+        private const string ServiceName = "Plax.FM";
+        private readonly ILogger _logger;
         private MenuItem _setupMenuItem;
         private MenuItem _startServiceMenuItem;
         private MenuItem _stopServiceMenuItem;
         
-        public SysTrayApp()
+        public SysTrayApp(ILogger logger, ServiceHandler handler, Initializer init)
         {
-            var kernel = new StandardKernel(new AppModule());
-
-#if DEBUG
-            _logger = LogManager.GetLogger("debug");
-#else
-            _logger = LogManager.GetLogger("release");
-#endif
+            _logger = logger;
+            _handler = handler;
+            _init = init;
             _logger.Info("Starting PlaxFm System Tray");
 
-            _handler = kernel.Get<ServiceHandler>();
+            
             //if service isn't installed go ahead and install it
             var installed = _handler.DoesServiceExist(ServiceName);
             if (!installed)
             {
                 _handler.InstallService();
             }
-
-            _init = kernel.Get<Initializer>();
             
             var lastFmSetup = _init.ConfirmLastFmSetup();
             var plexSetup = _init.ConfirmPlexSetup();

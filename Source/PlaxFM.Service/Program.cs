@@ -7,7 +7,6 @@ using Topshelf;
 using Topshelf.Ninject;
 using Topshelf.Quartz;
 using Topshelf.Quartz.Ninject;
-using Ninject.Modules;
 
 namespace PlaxFm
 {
@@ -15,11 +14,7 @@ namespace PlaxFm
     {
         static void Main(string[] args)
         {
-#if DEBUG
-            var logger = LogManager.GetLogger("debug");
-#else
-            var logger = LogManager.GetLogger("release");
-#endif
+            var logger = LogManager.GetCurrentClassLogger();
             IAppSettings appSettings = new AppSettings();
 
             try

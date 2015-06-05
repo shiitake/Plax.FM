@@ -11,6 +11,7 @@ namespace PlaxFm.SystemTray.Config
     {
         public override void Load()
         {
+            Bind<SysTrayApp>().ToSelf();
             Bind<IServiceHandler>().To<ServiceHandler>().InSingletonScope();
             Bind<IInitializer>().To<Initializer>().InSingletonScope();
         }

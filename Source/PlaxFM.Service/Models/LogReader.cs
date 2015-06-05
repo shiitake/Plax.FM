@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Xml;
 using System.Xml.Linq;
-using Excel;
 using FileHelpers;
-using System.IO;
 using Ninject.Extensions.Logging;
 using PlaxFm.Configuration;
 using PlaxFm.Core.Utilities;
-using Quartz;
 
 namespace PlaxFm.Models
 {
@@ -30,18 +24,17 @@ namespace PlaxFm.Models
     public class LogReader : ILogReader
     {
         private readonly ILogger _logger;
-        private readonly IAppSettings _appSettings;
-        private readonly ICustomConfiguration _customConfiguration;
+        private readonly CustomConfiguration _customConfiguration;
         private string _workingCopy;
         private string _baseUrl;
 
-        public LogReader(ILogger logger, IAppSettings appSettings, ICustomConfiguration customConfiguration)
+        public LogReader(ILogger logger, IAppSettings appSettings, CustomConfiguration customConfiguration)
         {
             _logger = logger;
-            _appSettings = appSettings;
+            var settings = appSettings;
             _customConfiguration = customConfiguration;
-            _workingCopy = Environment.ExpandEnvironmentVariables(_appSettings.WorkingCopy);
-            _baseUrl = _appSettings.PlexServer;
+            _workingCopy = Environment.ExpandEnvironmentVariables(settings.WorkingCopy);
+            _baseUrl = settings.PlexServer;
         }
 
         public List<SongEntry> ReadLog(string plexLog, string logCache)
@@ -56,47 +49,69 @@ namespace PlaxFm.Models
 
         private string CopyLog(string log)
         {
+            _logger.Info("Making working copy of Plex log.");
             _workingCopy = VerifyLogExists(_workingCopy);
-            while (true)
+            int retryCount = 1;
+            while (retryCount <= 6)
             {
                 try
                 {
                     File.Copy(log, _workingCopy, true);
                     break;
                 }
-                catch (IOException)
+                catch (Exception ex)
                 {
-                   Thread.Sleep(1000);
+                    _logger.Warn("There was an exception while attempting to make the copy: " + ex);
+                    _logger.Info("Retry attempt " + retryCount + "of 5" );
+                    retryCount++;
+                    Thread.Sleep(2000);
                 }    
+            }
+            if (retryCount == 5)
+            {
+                _logger.Error("Exceeded maximum number of attempts to copy the log.");
             }
             return _workingCopy;
         }
 
         private void CopyCache(string logCache)
         {
-            while (true)
+            _logger.Info("Caching working copy of log");
+            int retryCount = 1;
+            while (retryCount <= 5)
             {
                 try
                 {
                     File.Copy(_workingCopy, logCache, true);
                     break;
                 }
-                catch (IOException)
+                catch (Exception ex)
                 {
-                    Thread.Sleep(1000);
+                    _logger.Warn("There was an exception while attempting to make the copy: " + ex);
+                    _logger.Info("Retry attempt " + retryCount + "of 5");
+                    retryCount++;
+                    Thread.Sleep(2000);
                 }
+            }
+            if (retryCount == 5)
+            {
+                _logger.Error("Exceeded maximum number of attempts to copy the log.");
             }
         }
         
         private string VerifyLogExists(string log)
         {
+            
             var logInfo = new FileInfo(log);
             if (!logInfo.Exists)
             {
-                var directory = new DirectoryInfo(logInfo.Directory.ToString());
-                if (!directory.Exists)
+                if (logInfo.Directory != null)
                 {
-                    directory.Create();
+                    var directory = new DirectoryInfo(logInfo.Directory.ToString());
+                    if (!directory.Exists)
+                    {
+                        directory.Create();
+                    }
                 }
                 File.Create(log);
             }
@@ -105,6 +120,7 @@ namespace PlaxFm.Models
 
         private async Task<List<SongEntry>> ParseLogsForSongEntries(PlexMediaServerLog[] logs)
         {
+            _logger.Info("Parsing logs for song entries.");
             var songList = new List<SongEntry>();
             Regex rgx = new Regex(@".*\sDEBUG\s-\sLibrary\sitem\s(\d+)\s'.*'\sgot\splayed\sby\saccount\s(\d+).*");
             foreach (PlexMediaServerLog log in logs)
@@ -127,14 +143,21 @@ namespace PlaxFm.Models
             }
             if (songList.Count > 0)
             {
+                songList = RemoveDuplicates(songList);
                 var songs = await GetSongData(songList);
                 return songs;
             }
             return songList;
         }
 
+        private List<SongEntry> RemoveDuplicates(List<SongEntry> songList)
+        {
+            return new HashSet<SongEntry>(songList).ToList();
+        }
+        
         private async Task<List<SongEntry>> GetSongData(List<SongEntry> songList)
         {
+            _logger.Info("Retrieving song data from songlist.");
             foreach (SongEntry song in songList)
             {
                 XDocument docResponse = null;
@@ -186,20 +209,28 @@ namespace PlaxFm.Models
         
         private async Task<string> GetPlexResponse(string uri)
         {
-            using (HttpClient client = new HttpClient())
+            string result = "";
+            try
             {
-                var token = _customConfiguration.GetValue("PlexToken");
-                var request = new HttpRequestMessage();
-                request.RequestUri = new Uri(uri);
-                request.Method = HttpMethod.Get;
-                request.Headers.Add("X-Plex-Token", token.ToString());
-                using (HttpResponseMessage response = await client.GetAsync(uri))
-                using (HttpContent content = response.Content)
+                using (HttpClient client = new HttpClient())
                 {
-                    string result = await content.ReadAsStringAsync();
-                    return result;
+                    var token = _customConfiguration.GetValue("PlexToken");
+                    var request = new HttpRequestMessage();
+                    request.RequestUri = new Uri(uri);
+                    request.Method = HttpMethod.Get;
+                    request.Headers.Add("X-Plex-Token", token);
+                    using (HttpResponseMessage response = await client.GetAsync(uri))
+                    using (HttpContent content = response.Content)
+                    {
+                        result = await content.ReadAsStringAsync();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.Error("There was an error when getting song metadata from the Plex server. Error: " + ex);
+            }
+            return result;
         }
     }
 }

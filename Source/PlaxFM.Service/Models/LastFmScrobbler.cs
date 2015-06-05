@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.ModelBinding;
+using System.Web;
 using System.Xml;
 using System.Xml.Linq;
-using System.Web;
 using Ninject.Extensions.Logging;
 using PlaxFm.Configuration;
 using PlaxFm.Core.Utilities;
-using Quartz.Impl.Matchers;
 
 namespace PlaxFm.Models
 {
@@ -25,10 +19,10 @@ namespace PlaxFm.Models
     {
         private readonly ILogger _logger;
         private readonly IAppSettings _appSettings;
-        private readonly ICustomConfiguration _customConfiguration;
+        private readonly CustomConfiguration _customConfiguration;
         public static string UserAgent = "PlexScrobble";
 
-        public LastFmScrobbler(ILogger logger, IAppSettings appSettings, ICustomConfiguration customConfiguration)
+        public LastFmScrobbler(ILogger logger, IAppSettings appSettings, CustomConfiguration customConfiguration)
         {
             _logger = logger;
             _appSettings = appSettings;
@@ -37,7 +31,7 @@ namespace PlaxFm.Models
 
         public void Scrobble(List<SongEntry> songList)
         {
-            _logger.Debug("Let's scrobble something");
+            _logger.Info("Scrobbling song entries.");
             string session = _customConfiguration.GetValue("SessionId");
 
             if (session != "")
@@ -49,7 +43,7 @@ namespace PlaxFm.Models
             }
             else
             {
-                _logger.Debug("Unable to get LastFM session Id.");
+                _logger.Warn("Unable to get LastFM session Id.");
             }
         }
 
@@ -71,37 +65,43 @@ namespace PlaxFm.Models
             builder.Query = query.ToString();
             var url = builder.ToString();
             HttpContent blankcontent = new StringContent("");
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                //blankcontent.Headers.Add("User-Agent", UserAgent);
-                using (HttpResponseMessage response = await client.PostAsync(url, blankcontent))
-                using (HttpContent content = response.Content)
+                using (HttpClient client = new HttpClient())
                 {
-                    string result = await content.ReadAsStringAsync();
-                    if (result != null)
+                    //blankcontent.Headers.Add("User-Agent", UserAgent);
+                    using (HttpResponseMessage response = await client.PostAsync(url, blankcontent))
+                    using (HttpContent content = response.Content)
                     {
-                        using (XmlReader reader = XmlReader.Create(new StringReader(result)))
+                        string result = await content.ReadAsStringAsync();
+                        if (result != null)
                         {
-                            var data = XDocument.Load(reader);
-                            var status = data.ElementOrEmpty("lfm").AttributeOrEmpty("status").Value;
-                            var accepted =
-                                data.ElementOrEmpty("lfm")
-                                    .ElementOrEmpty("scrobbles")
-                                    .AttributeOrEmpty("accepted")
-                                    .Value;
-                            if (status == "ok" && accepted == "1")
+                            using (XmlReader reader = XmlReader.Create(new StringReader(result)))
                             {
-                                _logger.Info("Scrobbled " + song.Artist + " - " + song.Title);
+                                var data = XDocument.Load(reader);
+                                var status = data.ElementOrEmpty("lfm").AttributeOrEmpty("status").Value;
+                                var accepted =
+                                    data.ElementOrEmpty("lfm")
+                                        .ElementOrEmpty("scrobbles")
+                                        .AttributeOrEmpty("accepted")
+                                        .Value;
+                                if (status == "ok" && accepted == "1")
+                                {
+                                    _logger.Info("Scrobbled " + song.Artist + " - " + song.Title);
+                                }
+                                else
+                                {
+                                    _logger.Warn("Unable to scrobble " + song.Artist + " - " + song.Title + ". \nResponse: " + data);
+                                }
                             }
-                            else
-                            {
-                                _logger.Warn("Unable to scrobble " + song.Artist + " - " + song.Title + ". \nResponse: " + data);
-                            }
-                        }
 
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("There was an error when connecting to the Last.FM server. " + ex);
             }
         }
            

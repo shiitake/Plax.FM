@@ -15,14 +15,14 @@ namespace PlaxFm.SystemTray
     
     public class ServiceHandler : IServiceHandler
     {
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
         private static ServiceController _service;
         private const string BasePath64 = @"C:\Program Files (x86)";
         private const string BasePath32 = @"C:\Program Files";
         private const string FileLocation = @"\Shiitake Studios\Plax.Fm\PlaxFM.exe";
         private static string _command;
 
-        public ServiceHandler(Logger logger)
+        public ServiceHandler(ILogger logger)
         {
             _logger = logger;
             _service = new ServiceController("Plax.FM");
@@ -33,7 +33,7 @@ namespace PlaxFm.SystemTray
 #endif
         }
         
-        public bool DoesServiceExist(string serviceName)
+        public bool DoesServiceExist(string serviceName = "Plax.FM")
         {
             _logger.Info("Checking if PlaxFM service has been installed");
             ServiceController[] services = ServiceController.GetServices();
@@ -43,7 +43,10 @@ namespace PlaxFm.SystemTray
 
         public bool IsServiceStarted()
         {
-            return _service.Status.Equals(ServiceControllerStatus.Running);
+            var serviceExists = DoesServiceExist();
+            if (serviceExists)
+            {return _service.Status.Equals(ServiceControllerStatus.Running);}
+            return false;
         }
         
         public void InstallService()

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using Ninject.Extensions.Logging;
 using PlaxFm.Configuration;
 using PlaxFm.Models;
@@ -14,18 +11,21 @@ namespace PlaxFm.Jobs
     public class PlexJob : IPlexJob
     {
         private readonly ILogger _logger;
-        private readonly IAppSettings _appSettings;
-        private readonly ICustomConfiguration _customConfiguration;
-        private readonly string LogCache;
-        private readonly string PlexLog;
+        private readonly CustomConfiguration _customConfiguration;
+        private readonly LogReader _reader;
+        private readonly LastFmScrobbler _scrobbler;
+        private readonly string _logCache;
+        private readonly string _plexLog;
         
-        public PlexJob(ILogger logger, IAppSettings appSettings)
+        public PlexJob(ILogger logger, IAppSettings appSettings, CustomConfiguration customConfiguration, LogReader reader, LastFmScrobbler scrobbler)
         {
             _logger = logger;
-            _appSettings = appSettings;
-            _customConfiguration = new CustomConfiguration(_appSettings, logger);
-            LogCache = Environment.ExpandEnvironmentVariables(_appSettings.LogCache);
-            PlexLog = Environment.ExpandEnvironmentVariables(_appSettings.PlexLog);
+            var settings = appSettings;
+            _customConfiguration = customConfiguration;
+            _reader = reader;
+            _scrobbler = scrobbler;
+            _logCache = Environment.ExpandEnvironmentVariables(settings.LogCache);
+            _plexLog = Environment.ExpandEnvironmentVariables(settings.PlexLog);
         }
 
         public void Execute(IJobExecutionContext context)
@@ -59,13 +59,11 @@ namespace PlaxFm.Jobs
             else
             {
                 _logger.Info("Job starting.");
-                var reader = new LogReader(_logger, _appSettings, _customConfiguration);
-                var songList = reader.ReadLog(PlexLog, LogCache);
+                var songList = _reader.ReadLog(_plexLog, _logCache);
                 if (songList.Count > 0)
                 {
                     _logger.Info(songList.Count + " new song(s) found.");
-                    var scrobbler = new LastFmScrobbler(_logger, _appSettings, _customConfiguration);
-                    scrobbler.Scrobble(songList);
+                    _scrobbler.Scrobble(songList);
                 }
                 else
                 {

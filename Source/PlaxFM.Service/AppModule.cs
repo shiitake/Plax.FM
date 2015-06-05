@@ -1,5 +1,4 @@
-﻿using Ninject.Extensions.Logging;
-using Ninject.Modules;
+﻿using Ninject.Modules;
 using PlaxFm.Configuration;
 using PlaxFm.Models;
 
@@ -10,9 +9,9 @@ namespace PlaxFm
         public override void Load()
         {
             Bind<IAppSettings>().To<AppSettings>();
-            Bind<ILogReader>().To<LogReader>();
-            Bind<ILastFmScrobbler>().To<LastFmScrobbler>();
-            Bind<ICustomConfiguration>().To<CustomConfiguration>();
+            Bind<LogReader>().ToSelf();
+            Bind<LastFmScrobbler>().ToSelf();
+            Bind<CustomConfiguration>().ToSelf();
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using Ninject;
+using PlaxFm.SystemTray.Config;
 
 namespace PlaxFm.SystemTray
 {
@@ -8,9 +10,10 @@ namespace PlaxFm.SystemTray
         [STAThread]
         static void Main()
         {
+            var kernel = new StandardKernel(new AppModule());
+            var tray = kernel.Get<SysTrayApp>();
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SysTrayApp());
+            Application.Run(tray);
         }
     }
 }

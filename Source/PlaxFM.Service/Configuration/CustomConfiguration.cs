@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Xml.Schema;
+using System.IO;
 using Ninject.Extensions.Logging;
 using PlaxFm.Core.Utilities;
-using PlaxFm.Models;
 
 namespace PlaxFm.Configuration
 {
@@ -26,27 +16,24 @@ namespace PlaxFm.Configuration
     
     public class CustomConfiguration : ICustomConfiguration
     {
-        private readonly IAppSettings _appSettings;
         private readonly ILogger _logger;
         private DataSet _storage;
-        private readonly string _configFile;
-        private readonly string _schemaFile;
-        private ConfigHelper _config;
+        private readonly ConfigHelper _config;
 
         public CustomConfiguration(IAppSettings appSettings, ILogger logger)
         {
-            _appSettings = appSettings;
+            var settings = appSettings;
             _logger = logger;
-            _configFile = Environment.ExpandEnvironmentVariables(_appSettings.ConfigFile);
-            _schemaFile = Environment.ExpandEnvironmentVariables(_appSettings.SchemaFile);
-            var configInfo = new FileInfo(_configFile);
+            var configFile = Environment.ExpandEnvironmentVariables(settings.ConfigFile);
+            var schemaFile = Environment.ExpandEnvironmentVariables(settings.SchemaFile);
+            var configInfo = new FileInfo(configFile);
             if (configInfo.Exists)
             {
                 _storage = new DataSet("UserConfiguration");
-                _storage.ReadXmlSchema(_schemaFile);
-                _storage.ReadXml(_configFile);
+                _storage.ReadXmlSchema(schemaFile);
+                _storage.ReadXml(configFile);
             }
-            _config = new ConfigHelper(_storage, _configFile, _schemaFile);
+            _config = new ConfigHelper(_storage, configFile, schemaFile);
         }
 
         private void Init()
@@ -57,6 +44,7 @@ namespace PlaxFm.Configuration
         public bool UserConfirmed(int plexId = 1)
         {
             Init();
+            _logger.Info("Checking user configuration");
             var plex = _config.GetValue("PlexToken") != "";
             var init = _config.GetValue("Setup", "Initialized").ToLower() == "true";
             var auth = _config.GetValue("Authorized").ToLower() == "true";
@@ -66,6 +54,7 @@ namespace PlaxFm.Configuration
         public void AddUser(string username, int plexId)
         {
             Init();
+            _logger.Info("Adding new user.");
             var row = _storage.Tables["User"].NewRow();
             row["PlexId"] = plexId.ToString();
             row["PlexUsername"] = username;
@@ -75,12 +64,14 @@ namespace PlaxFm.Configuration
 
         public void DeleteUser(string username)
         {
+            _logger.Info("Deleting user " + username);
             var row = _config.GetRowByUsername(username);
             _config.DeleteRow(row);
         }
 
         public void DeleteUser(int plexId)
         {
+            _logger.Info("Deleteing user " + plexId);
             var row = _config.GetRowById(plexId);
             _config.DeleteRow(row);
         }
