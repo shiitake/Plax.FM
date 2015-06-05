@@ -12,7 +12,7 @@ namespace PlaxFm.SystemTray
     public class SysTrayApp : Form
     {
         private readonly NotifyIcon _trayIcon;
-        private readonly Initialization _init;
+        private readonly Initializer _init;
         private const string ServiceName = "Plax.FM";
         private readonly Logger _logger;
         private readonly ServiceHandler _handler;
@@ -39,7 +39,7 @@ namespace PlaxFm.SystemTray
                 _handler.InstallService();
             }
 
-            _init = new Initialization(_logger);
+            _init = new Initializer(_logger);
             var lastFmSetup = _init.ConfirmLastFmSetup();
             var plexSetup = _init.ConfirmPlexSetup();
 

@@ -10,11 +10,16 @@ using System.Xml;
 using System.Xml.Linq;
 using PlaxFm.Core.Utilities;
 using NLog;
+using Ninject.Extensions.Logging;
+using Ninject;
 using PlaxFm.Core.CustomExceptions;
 
 namespace PlaxFm.SystemTray.Config
 {
-    class Initialization
+    public interface IInitializer
+    { }
+      
+    class Initializer : IInitializer
     {
         private static Logger _logger;
         private readonly string LastFmApiKey = "266155149c516542879ee1ec55c93697";
@@ -24,7 +29,7 @@ namespace PlaxFm.SystemTray.Config
         private DataSet _storage;
         private readonly ConfigHelper _config;
 
-        public Initialization(Logger logger)
+        public Initializer(Logger logger)
         {
             _logger = logger;
             try

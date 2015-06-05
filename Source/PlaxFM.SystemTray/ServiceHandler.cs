@@ -71,7 +71,11 @@ namespace PlaxFm.SystemTray
         {
             try
             {
-                StopService();
+                var isStarted = IsServiceStarted();
+                if (isStarted)
+                {
+                    StopService();
+                }
                 _logger.Info("Uninstalling PlaxFM service");
                 var procStartInfo = new ProcessStartInfo(_command, "uninstall");
                 procStartInfo.RedirectStandardOutput = true;

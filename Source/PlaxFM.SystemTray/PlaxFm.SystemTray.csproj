@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\AppModule.cs" />
-    <Compile Include="Config\Initialization.cs" />
+    <Compile Include="Config\Initializer.cs" />
     <Compile Include="PlaxConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,10 +93,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="nlog.config">
+    <Content Include="nlog.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -12,6 +12,7 @@ namespace PlaxFm.SystemTray.Config
         public override void Load()
         {
             Bind<IServiceHandler>().To<ServiceHandler>();
+            Bind<IInitializer>().To<Initializer>();
         }
     }
 }
