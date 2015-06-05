@@ -39,7 +39,8 @@ namespace PlaxFm.SystemTray
                 _handler.InstallService();
             }
 
-            _init = new Initializer(_logger);
+            _init = kernel.Get<Initializer>();
+            
             var lastFmSetup = _init.ConfirmLastFmSetup();
             var plexSetup = _init.ConfirmPlexSetup();
 

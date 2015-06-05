@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using Ninject.Extensions.Logging;
+using Ninject.Extensions.Logging.NLog2;
 using Ninject;
 using NLog;
 
@@ -14,14 +15,14 @@ namespace PlaxFm.SystemTray
     
     public class ServiceHandler : IServiceHandler
     {
-        private static ILogger _logger;
+        private readonly Logger _logger;
         private static ServiceController _service;
         private const string BasePath64 = @"C:\Program Files (x86)";
         private const string BasePath32 = @"C:\Program Files";
         private const string FileLocation = @"\Shiitake Studios\Plax.Fm\PlaxFM.exe";
         private static string _command;
 
-        public ServiceHandler(ILogger logger)
+        public ServiceHandler(Logger logger)
         {
             _logger = logger;
             _service = new ServiceController("Plax.FM");

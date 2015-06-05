@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using PlaxFm.Core.Utilities;
 using NLog;
 using Ninject.Extensions.Logging;
+using Ninject.Extensions.Logging.NLog2;
 using Ninject;
 using PlaxFm.Core.CustomExceptions;
 
@@ -21,7 +22,7 @@ namespace PlaxFm.SystemTray.Config
       
     class Initializer : IInitializer
     {
-        private static Logger _logger;
+        private readonly Logger _logger;
         private readonly string LastFmApiKey = "266155149c516542879ee1ec55c93697";
         private readonly string LastFmApiSecret = "035cf4de6dc150fff952fbf3108d10b1";
         private readonly string ConfigFile = @"%ProgramData%\PlaxFM\Config\CustomConfiguration.xml";
