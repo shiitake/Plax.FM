@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using Ninject;
 using Ninject.Extensions.Logging;
@@ -29,7 +30,7 @@ namespace PlaxFm.SystemTray
 
             
             //if service isn't installed go ahead and install it
-            var installed = _handler.DoesServiceExist(ServiceName);
+            var installed = _handler.IsServiceInstalled;
             if (!installed)
             {
                 _handler.InstallService();
@@ -37,28 +38,28 @@ namespace PlaxFm.SystemTray
             
             var lastFmSetup = _init.ConfirmLastFmSetup();
             var plexSetup = _init.ConfirmPlexSetup();
+            var started = _handler.IsServiceStarted();
 
             var trayMenu = new ContextMenu();
-            _setupMenuItem = new MenuItem("Initial Setup", InitialSetup);
-            _setupMenuItem.Enabled = (!lastFmSetup || !plexSetup);
+            _setupMenuItem = new MenuItem("Initial Setup", InitialSetup) {Enabled = (!lastFmSetup || !plexSetup)};
             trayMenu.MenuItems.Add(_setupMenuItem);
 
-            _startServiceMenuItem = new MenuItem("Start Plax.FM", StartService);
-            _startServiceMenuItem.Enabled = !_handler.IsServiceStarted();
+            _startServiceMenuItem = new MenuItem("Start Plax.FM", StartService) {Enabled = !started};
             trayMenu.MenuItems.Add(_startServiceMenuItem);
 
-            _stopServiceMenuItem = new MenuItem("Stop Plax.FM", StopService);
-            _stopServiceMenuItem.Enabled = _handler.IsServiceStarted();
+            _stopServiceMenuItem = new MenuItem("Stop Plax.FM", StopService) {Enabled = started};
             trayMenu.MenuItems.Add(_stopServiceMenuItem);
 
             trayMenu.MenuItems.Add("Exit", OnExit);
-            
-            _trayIcon = new NotifyIcon();
-            _trayIcon.Text = "Plax.FM";
-            _trayIcon.Icon = new Icon("favicon.ico", 40, 40);
 
-            _trayIcon.ContextMenu = trayMenu;
-            _trayIcon.Visible = true;
+            _trayIcon = new NotifyIcon
+            {
+                Text = "Plax.FM",
+                Icon = new Icon("favicon.ico", 40, 40),
+                ContextMenu = trayMenu,
+                Visible = true
+            };
+            _logger.Info("System tray started.");
         }
 
         protected override void OnLoad(EventArgs e)
@@ -71,7 +72,7 @@ namespace PlaxFm.SystemTray
 
         private void OnExit(object sender, EventArgs e)
         {
-            var installed = _handler.DoesServiceExist(ServiceName);
+            var installed = _handler.IsServiceInstalled;
             if (installed)
             {
                 _handler.UnInstallService();
@@ -113,14 +114,32 @@ namespace PlaxFm.SystemTray
         
         private void StopService(object sender, EventArgs e)
         {
+            _logger.Info("Stopping PlaxFM service through tray application");
             _handler.StopService();
+            var stopped = _handler.IsServiceStopped();
+            while (!stopped)
+            {
+                stopped = _handler.IsServiceStopped();
+                _logger.Info("Waiting for service to stop.");
+                Thread.Sleep(2000);
+            }
+            _logger.Info("PlaxFM service has stopped.");
             _stopServiceMenuItem.Enabled = false;
             _startServiceMenuItem.Enabled = true;
         }
 
         private void StartService(object sender, EventArgs e)
         {
+            _logger.Info("Starting PlaxFM service through tray application.");
             _handler.StartService();
+            var started = _handler.IsServiceStarted();
+            while (!started)
+            {
+                started = _handler.IsServiceStarted();
+                _logger.Info("Waiting for service to start.");
+                Thread.Sleep(2000);
+            }
+            _logger.Info("PlaxFM service has started.");
             _startServiceMenuItem.Enabled = false;
             _stopServiceMenuItem.Enabled = true;
         }

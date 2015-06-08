@@ -43,7 +43,7 @@ namespace PlaxFm.SystemTray.Config
                 }
                 _config = new ConfigHelper(_storage, configFile, schemaFile);
             }
-            catch (FileNotFoundException ex)
+            catch (Exception ex)
             {
                 _logger.Error("Error during initialization. "+ ex);
                 

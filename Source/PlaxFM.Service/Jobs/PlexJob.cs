@@ -25,7 +25,8 @@ namespace PlaxFm.Jobs
             _reader = reader;
             _scrobbler = scrobbler;
             _logCache = Environment.ExpandEnvironmentVariables(settings.LogCache);
-            _plexLog = Environment.ExpandEnvironmentVariables(settings.PlexLog);
+            var userFolder = @"C:\Users\" + _customConfiguration.GetValue("Setup", "Profile");
+            _plexLog = userFolder + settings.PlexLog;
         }
 
         public void Execute(IJobExecutionContext context)

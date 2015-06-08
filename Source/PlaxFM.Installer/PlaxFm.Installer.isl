@@ -1987,6 +1987,7 @@
 		<col def="S255">Data</col>
 		<row><td>PROJECT_ASSISTANT_DEFAULT_FEATURE</td><td>AlwaysInstall</td></row>
 		<row><td>PROJECT_ASSISTANT_FEATURES</td><td>NonSelectable</td></row>
+		<row><td>_Built</td><td/></row>
 	</table>
 
 	<table name="ISBillBoard">
@@ -2760,7 +2761,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Shiitake Studios</td><td>0</td><td/><td>186872179</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Shiitake Studios</td><td>0</td><td/><td>1126424012</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-1700557260</td></row>
@@ -3578,6 +3579,7 @@
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME3</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1297939024</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1163666357</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME5</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>186892691</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME6</td><td>1033</td><td>PlaxFM</td><td>0</td><td/><td>1126389132</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1033</td><td>From the list of servers below, select the database server you would like to target.</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1033</td><td>From the list of catalog names below, select the database catalog you would like to target.</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1033</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>-1700541228</td></row>
@@ -3866,8 +3868,8 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-1700541228</td></row>
-		<row><td>ID_STRING1</td><td>1033</td><td>http://www.ShiitakeStudios.com</td><td>0</td><td/><td>186872179</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>Shiitake Studios</td><td>0</td><td/><td>186872179</td></row>
+		<row><td>ID_STRING1</td><td>1033</td><td>http://www.ShiitakeStudios.com</td><td>0</td><td/><td>1126424012</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>Shiitake Studios</td><td>0</td><td/><td>1126424012</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>Plax.Fm</td><td>0</td><td/><td>-1297934484</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1163715477</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>PlaxFM</td><td>0</td><td/><td>-761035373</td></row>
@@ -3981,7 +3983,7 @@
 		<col def="V0">Data</col>
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
-		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.SystemTray\favicon.ico</td><td>0</td></row>
+		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\favicon48x48.ico</td><td>0</td></row>
 		<row><td>PlexScrobble.vshos_0D4E482CE5AB4B148A9B662D65E6B06F.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>_5A83B54868C141BEA2D4FE331978C906.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_5ACA36576D4D4C3292D21BD6880BAB66.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
@@ -3996,6 +3998,7 @@
 		<row><td>_B9A32D3764D6476284D14D5C267FF676.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_C56DE4E3C4BC4C478A1B92589CDDF78D.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_C8E28ACF76464A84AFA11FFFF8BE9D9C.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_E877D66A08604B71B1A3B8A8EBDD0AE5.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
@@ -4128,7 +4131,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{D4CD52D2-9C39-42CF-ADDC-36136629AFAE}</td></row>
 		<row><td>ISUSSignature</td><td>{FFC32E37-B3E0-4E41-8891-95F9341B4867}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewInstallScriptStd,viewCustomActions,viewRelease,viewProject,viewSystemSearch,viewAppFiles,viewObjects,viewFeatureFiles,viewRealSetupDesign,viewUpgradePaths,viewDependencies,viewUI,viewServices,viewEnvironmentVariables</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewInstallScriptStd,viewCustomActions,viewRelease,viewProject,viewSystemSearch,viewAppFiles,viewObjects,viewFeatureFiles,viewRealSetupDesign,viewUpgradePaths,viewDependencies,viewUI,viewServices,viewEnvironmentVariables,viewShortcuts</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4586,7 +4589,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="i2">InstallMode</col>
 		<row><td>FileKey1</td><td>PlaxFm.SystemTray.Primary_output</td><td/><td>shiita_1_shiitake_studios</td><td>2</td></row>
 		<row><td>FileKey2</td><td>PlaxFm.SystemTray.Primary_output</td><td/><td>plax.fm1</td><td>2</td></row>
-		<row><td>_Built</td><td>PlaxFm.SystemTray.Primary_output</td><td/><td>plax.fm1</td><td>2</td></row>
+		<row><td>_Built</td><td>PlaxFm.SystemTray.Primary_output1</td><td/><td>plax.fm</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4672,7 +4675,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>_Built</td><td>plax.fm1</td><td>##IDS_SHORTCUT_DISPLAY_NAME5##</td><td>PlaxFm.SystemTray.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built</td><td>plax.fm</td><td>##IDS_SHORTCUT_DISPLAY_NAME6##</td><td>PlaxFm.SystemTray.Primary_output1</td><td>AlwaysInstall</td><td/><td/><td/><td/><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">

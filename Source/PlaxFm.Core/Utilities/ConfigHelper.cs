@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Security.Principal;
 
 namespace PlaxFm.Core.Utilities
 {
@@ -43,8 +44,18 @@ namespace PlaxFm.Core.Utilities
             var userInit = new DataTable("Setup");
             var initialized = new DataColumn("Initialized", typeof(bool), "", MappingType.Attribute);
             userInit.Columns.Add(initialized);
+            userInit.Columns.Add("Profile");
             var initRow = userInit.NewRow();
             initRow["Initialized"] = false;
+            initRow["Profile"] = String.Empty;
+            var windowsIdentity = WindowsIdentity.GetCurrent();
+            if (windowsIdentity != null)
+            {
+                var name = windowsIdentity.Name;
+                var index = name.LastIndexOf(@"\",StringComparison.CurrentCulture);
+                name = name.Substring(index + 1);
+                initRow["Profile"] = name;
+            }
             userInit.Rows.Add(initRow);
 
             //create User table

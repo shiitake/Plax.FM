@@ -81,6 +81,11 @@ namespace PlaxFm.Configuration
             return _config.GetValue(settingName, plexId);
         }
 
+        public string GetValue(string tableName, string settingName, int plexId = 1)
+        {
+            return _config.GetValue(tableName, settingName, plexId);
+        }
+
         public void SetValue(string settingName, string settingValue, int plexId = 1)
         {
             _config.SetValue(settingName, settingValue, plexId);

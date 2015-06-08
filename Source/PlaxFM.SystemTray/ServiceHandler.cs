@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.ServiceProcess;
 using Ninject.Extensions.Logging;
 using Ninject.Extensions.Logging.NLog2;
@@ -16,16 +17,24 @@ namespace PlaxFm.SystemTray
     public class ServiceHandler : IServiceHandler
     {
         private readonly ILogger _logger;
-        private static ServiceController _service;
+        private ServiceController _service;
         private const string BasePath64 = @"C:\Program Files (x86)";
         private const string BasePath32 = @"C:\Program Files";
         private const string FileLocation = @"\Shiitake Studios\Plax.Fm\PlaxFM.exe";
         private static string _command;
+        private static bool _isServiceInstalled;
+
+        public bool IsServiceInstalled
+        {
+            get { return _isServiceInstalled; } 
+        }
 
         public ServiceHandler(ILogger logger)
         {
             _logger = logger;
             _service = new ServiceController("Plax.FM");
+            _isServiceInstalled = DoesServiceExist();
+            
 #if DEBUG
             _command = @"..\..\..\PlaxFM.Service\bin\Debug\plaxfm.exe";
 #else
@@ -35,17 +44,30 @@ namespace PlaxFm.SystemTray
         
         public bool DoesServiceExist(string serviceName = "Plax.FM")
         {
-            _logger.Info("Checking if PlaxFM service has been installed");
-            ServiceController[] services = ServiceController.GetServices();
-            var service = services.FirstOrDefault(s => s.ServiceName == serviceName);
-            return service != null;
+            try
+            {
+                ServiceController[] services = ServiceController.GetServices();
+                var service = services.FirstOrDefault(s => s.ServiceName == serviceName);
+                return service != null;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("There was an error looking for the service. " + ex);
+                throw;
+            }
         }
 
         public bool IsServiceStarted()
         {
-            var serviceExists = DoesServiceExist();
-            if (serviceExists)
+            if (IsServiceInstalled)
             {return _service.Status.Equals(ServiceControllerStatus.Running);}
+            return false;
+        }
+
+        public bool IsServiceStopped()
+        {
+            if (IsServiceInstalled)
+            { return _service.Status.Equals(ServiceControllerStatus.Stopped); }
             return false;
         }
         
@@ -141,14 +163,23 @@ namespace PlaxFm.SystemTray
             }
         }
 
-        private static string GetServiceFilePath()
+        private string GetServiceFilePath()
         {
-            var fileInfo = new FileInfo(BasePath64 + FileLocation);
-            if (!fileInfo.Exists)
+            _logger.Info("Getting service path");
+            try
             {
-                return BasePath32 + FileLocation;
+                var fileInfo = new FileInfo(BasePath64 + FileLocation);
+                if (!fileInfo.Exists)
+                {
+                    return BasePath32 + FileLocation;
+                }
+                return BasePath64 + FileLocation;
             }
-            return BasePath64 + FileLocation;
+            catch (Exception ex)
+            {
+                _logger.Error("There was a problem getting the service path location. " + ex);
+                throw;
+            }
         }
     }
 }
