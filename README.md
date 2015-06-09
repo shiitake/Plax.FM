@@ -12,7 +12,7 @@ Plax.FM was inspired by [Plex-Lastfm-Scrobbler](https://github.com/jesseward/ple
 
 
 ##### Installation instructions:
-1. Download the installation files
+1. Download the installation files [here](https://www.dropbox.com/s/fwuoinfror2sbd7/Plax.FM.zip?dl=0)
 2. Unzip the files and run setup.exe
 3. After completing the installation you should have the option to start Plax.FM.
 4. You should see the system tray application which will give you the initial setup options and let you start/stop the service. 
