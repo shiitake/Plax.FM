@@ -2,12 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.ServiceProcess;
 using Ninject.Extensions.Logging;
-using Ninject.Extensions.Logging.NLog2;
-using Ninject;
-using NLog;
 
 namespace PlaxFm.SystemTray
 {
@@ -23,7 +19,6 @@ namespace PlaxFm.SystemTray
         private const string FileLocation = @"\Shiitake Studios\Plax.Fm\PlaxFM.exe";
         private static string _command;
         private static bool _isServiceInstalled;
-
         public bool IsServiceInstalled
         {
             get { return _isServiceInstalled; } 
@@ -59,16 +54,16 @@ namespace PlaxFm.SystemTray
 
         public bool IsServiceStarted()
         {
-            if (IsServiceInstalled)
-            {return _service.Status.Equals(ServiceControllerStatus.Running);}
-            return false;
+            if (!IsServiceInstalled) return false;
+            _service.Refresh();
+            return _service.Status.Equals(ServiceControllerStatus.Running);
         }
 
         public bool IsServiceStopped()
         {
-            if (IsServiceInstalled)
-            { return _service.Status.Equals(ServiceControllerStatus.Stopped); }
-            return false;
+            if (!IsServiceInstalled) return false;
+            _service.Refresh();
+            return _service.Status.Equals(ServiceControllerStatus.Stopped);
         }
         
         public void InstallService()

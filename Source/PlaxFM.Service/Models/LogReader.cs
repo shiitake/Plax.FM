@@ -27,6 +27,7 @@ namespace PlaxFm.Models
         private readonly CustomConfiguration _customConfiguration;
         private string _workingCopy;
         private string _baseUrl;
+        private int _maxTimeout;
 
         public LogReader(ILogger logger, IAppSettings appSettings, CustomConfiguration customConfiguration)
         {
@@ -35,6 +36,7 @@ namespace PlaxFm.Models
             _customConfiguration = customConfiguration;
             _workingCopy = Environment.ExpandEnvironmentVariables(settings.WorkingCopy);
             _baseUrl = settings.PlexServer;
+            _maxTimeout = settings.MaxTimeout;
         }
 
         public List<SongEntry> ReadLog(string plexLog, string logCache)
@@ -51,25 +53,28 @@ namespace PlaxFm.Models
         {
             _logger.Info("Making working copy of Plex log.");
             _workingCopy = VerifyLogExists(_workingCopy);
-            int retryCount = 1;
-            while (retryCount <= 6)
+            
+            var locked = FileExtensions.IsFileLocked(log);
+            var timeout = 0;
+            //wait for unlock
+            while (locked)
             {
-                try
+                locked = FileExtensions.IsFileLocked(log);
+                Thread.Sleep(1000);
+                timeout += 1000;
+                if (timeout >= _maxTimeout)
                 {
-                    File.Copy(log, _workingCopy, true);
+                    _logger.Warn("File lock operation has timed out.");
                     break;
                 }
-                catch (Exception ex)
-                {
-                    _logger.Warn("There was an exception while attempting to make the copy: " + ex);
-                    _logger.Info("Retry attempt " + retryCount + "of 5" );
-                    retryCount++;
-                    Thread.Sleep(2000);
-                }    
             }
-            if (retryCount == 5)
+            try
             {
-                _logger.Error("Exceeded maximum number of attempts to copy the log.");
+                File.Copy(log, _workingCopy, true);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("There was an exception while attempting to make the copy of the Plex Media server log: " + ex);
             }
             return _workingCopy;
         }
@@ -77,31 +82,31 @@ namespace PlaxFm.Models
         private void CopyCache(string logCache)
         {
             _logger.Info("Caching working copy of log");
-            int retryCount = 1;
-            while (retryCount <= 5)
+            var locked = FileExtensions.IsFileLocked(logCache);
+            var timeout = 0;
+            while (locked)
             {
-                try
+                locked = FileExtensions.IsFileLocked(logCache);
+                Thread.Sleep(1000);
+                timeout += 1000;
+                if (timeout > _maxTimeout)
                 {
-                    File.Copy(_workingCopy, logCache, true);
+                    _logger.Warn("File lock operation has timed out.");
                     break;
                 }
-                catch (Exception ex)
-                {
-                    _logger.Warn("There was an exception while attempting to make the copy: " + ex);
-                    _logger.Info("Retry attempt " + retryCount + "of 5");
-                    retryCount++;
-                    Thread.Sleep(2000);
-                }
             }
-            if (retryCount == 5)
+            try
             {
-                _logger.Error("Exceeded maximum number of attempts to copy the log.");
+                File.Copy(_workingCopy, logCache, true);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("There was an exception while attempting to make the copy of the log cache: " + ex);
             }
         }
         
         private string VerifyLogExists(string log)
         {
-            
             var logInfo = new FileInfo(log);
             if (!logInfo.Exists)
             {

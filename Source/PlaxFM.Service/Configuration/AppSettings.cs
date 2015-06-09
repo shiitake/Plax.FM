@@ -16,6 +16,7 @@ namespace PlaxFm.Configuration
         public string ConfigFile { get; set; }
         public string SchemaFile { get; set; }
         public string PlexServer { get; set; }
+        public int MaxTimeout { get; set; }
 
         public AppSettings()
         {
@@ -29,6 +30,7 @@ namespace PlaxFm.Configuration
             ConfigFile = GetAppSetting<string>("ConfigFile");
             SchemaFile = GetAppSetting<string>("SchemaFile");
             PlexServer = GetAppSetting<string>("PlexServer");
+            MaxTimeout = GetAppSetting<int>("MaxTimeout", 10000);
         }
 
         private T GetAppSetting<T>(string key)

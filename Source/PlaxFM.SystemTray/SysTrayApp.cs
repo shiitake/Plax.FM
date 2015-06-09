@@ -2,11 +2,8 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using Ninject;
 using Ninject.Extensions.Logging;
 using PlaxFm.SystemTray.Config;
-using Ninject.Extensions.Logging.NLog2;
-using NLog;
 
 namespace PlaxFm.SystemTray
 {
@@ -15,11 +12,15 @@ namespace PlaxFm.SystemTray
         private readonly NotifyIcon _trayIcon;
         private readonly Initializer _init;
         private readonly ServiceHandler _handler;
-        private const string ServiceName = "Plax.FM";
+        private static string _serviceName = "Plax.FM";
         private readonly ILogger _logger;
         private MenuItem _setupMenuItem;
         private MenuItem _startServiceMenuItem;
         private MenuItem _stopServiceMenuItem;
+        public static string ServiceName
+        {
+            get { return _serviceName; }
+        }
         
         public SysTrayApp(ILogger logger, ServiceHandler handler, Initializer init)
         {
@@ -28,7 +29,6 @@ namespace PlaxFm.SystemTray
             _init = init;
             _logger.Info("Starting PlaxFm System Tray");
 
-            
             //if service isn't installed go ahead and install it
             var installed = _handler.IsServiceInstalled;
             if (!installed)
@@ -54,13 +54,15 @@ namespace PlaxFm.SystemTray
 
             _trayIcon = new NotifyIcon
             {
-                Text = "Plax.FM",
+                Text = @"Plax.FM",
                 Icon = new Icon("favicon.ico", 40, 40),
                 ContextMenu = trayMenu,
                 Visible = true
             };
             _logger.Info("System tray started.");
         }
+
+
 
         protected override void OnLoad(EventArgs e)
         {

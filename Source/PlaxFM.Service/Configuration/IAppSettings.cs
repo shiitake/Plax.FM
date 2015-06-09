@@ -17,5 +17,6 @@ namespace PlaxFm.Configuration
         string ConfigFile { get;  }
         string SchemaFile { get;  }
         string PlexServer { get;  }
+        int MaxTimeout { get; }
     }
 }
