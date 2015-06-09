@@ -16,7 +16,7 @@ namespace PlaxFm.SystemTray
         private ServiceController _service;
         private const string BasePath64 = @"C:\Program Files (x86)";
         private const string BasePath32 = @"C:\Program Files";
-        private const string FileLocation = @"\Shiitake Studios\Plax.Fm\PlaxFM.exe";
+        private const string FileLocation = @"\Shiitake Studios\Plax.Fm\Plax.FM.exe";
         private static string _command;
         private static bool _isServiceInstalled;
         public bool IsServiceInstalled
@@ -31,7 +31,7 @@ namespace PlaxFm.SystemTray
             _isServiceInstalled = DoesServiceExist();
             
 #if DEBUG
-            _command = @"..\..\..\PlaxFM.Service\bin\Debug\plaxfm.exe";
+            _command = @"..\..\..\PlaxFM.Service\bin\Debug\plax.fm.exe";
 #else
             _command = GetServiceFilePath();
 #endif

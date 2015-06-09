@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PlaxFm.Core.CustomExceptions;
-
 
 namespace PlaxFm.Core.Utilities
 {
@@ -22,7 +16,7 @@ namespace PlaxFm.Core.Utilities
                 var url = "http://www.last.fm/api/auth/?api_key=" + api_key + "&token=" + token;
                 ProcessStartInfo sInfo = new ProcessStartInfo(url);
                 Process.Start(sInfo);
-                Thread.Sleep(5000);
+                Thread.Sleep(10000);
                 var followUp = "Click OK once you've completed the Authorization";
                 var finished = MessageBox.Show(followUp, "Pending confirmation", MessageBoxButtons.OK,MessageBoxIcon.None);
                 if (finished == DialogResult.OK)

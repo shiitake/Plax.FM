@@ -21,8 +21,8 @@ namespace PlaxFm.SystemTray.Config
         private readonly ILogger _logger;
         private readonly string LastFmApiKey = "266155149c516542879ee1ec55c93697";
         private readonly string LastFmApiSecret = "035cf4de6dc150fff952fbf3108d10b1";
-        private readonly string ConfigFile = @"%ProgramData%\PlaxFM\Config\CustomConfiguration.xml";
-        private readonly string SchemaFile = @"%ProgramData%\PlaxFM\Config\CustomConfiguration.xsd";
+        private readonly string ConfigFile = @"%ProgramData%\Plax.FM\Config\CustomConfiguration.xml";
+        private readonly string SchemaFile = @"%ProgramData%\Plax.FM\Config\CustomConfiguration.xsd";
         private DataSet _storage;
         private readonly ConfigHelper _config;
 

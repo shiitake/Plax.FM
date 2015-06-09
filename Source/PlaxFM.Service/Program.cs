@@ -42,7 +42,7 @@ namespace PlaxFm
             }
             catch (Exception ex)
             {
-                logger.Fatal("PlexJob service failed to start. {0}", ex.Message);
+                logger.Fatal("Plex.FM service failed to start. {0}", ex.Message);
                 throw;
             }
         }

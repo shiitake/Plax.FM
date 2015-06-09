@@ -345,7 +345,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{05DEE080-F743-4AE4-89A1-4305F954E927}</td><td>CommonAppDataFolder</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{29DB9F83-E606-456B-8E50-A330693596BF}</td><td>LocalAppDataFolder</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{F45A185C-2E1A-4DDC-B318-9307398C5EDE}</td><td>CONFIG</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{BFBCADEC-F3E1-4F36-8B37-385FF806F149}</td><td>PLAXFM</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{BFBCADEC-F3E1-4F36-8B37-385FF806F149}</td><td>PLAX.FM1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{398F7B60-E2B2-451F-82CA-EE30CCE74770}</td><td>LOGS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{E280CD7C-5A53-44C9-B6AA-4D89D538B76B}</td><td>TRAY</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT7</td><td>{2A99659C-A1C2-4242-A3F9-65B139B2A84A}</td><td>ARCHIVES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1082,7 +1082,7 @@
 		<row><td>CommonAppDataFolder</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>LOGS</td><td>ISX_DEFAULTCOMPONENT5</td></row>
 		<row><td>LocalAppDataFolder</td><td>ISX_DEFAULTCOMPONENT2</td></row>
-		<row><td>PLAXFM</td><td>ISX_DEFAULTCOMPONENT4</td></row>
+		<row><td>PLAX.FM1</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1166,7 +1166,7 @@
 		<row><td>ARCHIVES</td><td>LOGS</td><td>Archives</td><td/><td>0</td><td/></row>
 		<row><td>AdminToolsFolder</td><td>TARGETDIR</td><td>.:Admint~1|AdminTools</td><td/><td>0</td><td/></row>
 		<row><td>AppDataFolder</td><td>TARGETDIR</td><td>.:APPLIC~1|Application Data</td><td/><td>0</td><td/></row>
-		<row><td>CONFIG</td><td>PLAXFM</td><td>Config</td><td/><td>0</td><td/></row>
+		<row><td>CONFIG</td><td>PLAX.FM1</td><td>Config</td><td/><td>0</td><td/></row>
 		<row><td>CommonAppDataFolder</td><td>TARGETDIR</td><td>.:Common~1|CommonAppData</td><td/><td>0</td><td/></row>
 		<row><td>CommonFiles64Folder</td><td>TARGETDIR</td><td>.:Common64</td><td/><td>0</td><td/></row>
 		<row><td>CommonFilesFolder</td><td>TARGETDIR</td><td>.:Common</td><td/><td>0</td><td/></row>
@@ -1180,7 +1180,7 @@
 		<row><td>ISMyCompanyDir</td><td>ProgramFilesFolder</td><td>MYCOMP~1|My Company Name</td><td/><td>0</td><td/></row>
 		<row><td>ISMyProductDir</td><td>ISMyCompanyDir</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
 		<row><td>ISYourDataBaseDir</td><td>INSTALLDIR</td><td>Database</td><td/><td>0</td><td/></row>
-		<row><td>LOGS</td><td>PLAXFM</td><td>Logs</td><td/><td>0</td><td/></row>
+		<row><td>LOGS</td><td>PLAX.FM1</td><td>Logs</td><td/><td>0</td><td/></row>
 		<row><td>LocalAppDataFolder</td><td>TARGETDIR</td><td>.:LocalA~1|LocalAppData</td><td/><td>0</td><td/></row>
 		<row><td>MICROSOFT</td><td>ProgramFilesFolder</td><td>MICROS~1|Microsoft</td><td/><td>0</td><td/></row>
 		<row><td>MY_PRODUCT_NAME</td><td>MICROSOFT</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
@@ -1188,9 +1188,10 @@
 		<row><td>MyPicturesFolder</td><td>TARGETDIR</td><td>.:MyPict~1|MyPictures</td><td/><td>0</td><td/></row>
 		<row><td>NetHoodFolder</td><td>TARGETDIR</td><td>.:NetHood</td><td/><td>0</td><td/></row>
 		<row><td>PLAX.FM</td><td>SHIITAKE_STUDIOS</td><td>Plax.Fm</td><td/><td>0</td><td/></row>
-		<row><td>PLAXFM</td><td>CommonAppDataFolder</td><td>PlaxFM</td><td/><td>0</td><td/></row>
-		<row><td>PLEXSCROBBLE</td><td>SHIITAKE_STUDIOS</td><td>PLEXSC~1|PlexScrobble</td><td/><td>0</td><td/></row>
+		<row><td>PLAX.FM1</td><td>CommonAppDataFolder</td><td>Plax.FM</td><td/><td>0</td><td/></row>
+		<row><td>PLEXSCROBBLE</td><td>shiitake_studios</td><td>Plax.FM</td><td/><td>1</td><td/></row>
 		<row><td>PersonalFolder</td><td>TARGETDIR</td><td>.:Personal</td><td/><td>0</td><td/></row>
+		<row><td>Plax.FM</td><td>SHIITAKE_STUDIOS</td><td>PLEXSC~1|Plax.FM</td><td/><td>0</td><td/></row>
 		<row><td>PrimaryVolumePath</td><td>TARGETDIR</td><td>.:Primar~1|PrimaryVolumePath</td><td/><td>0</td><td/></row>
 		<row><td>PrintHoodFolder</td><td>TARGETDIR</td><td>.:PRINTH~1|PrintHood</td><td/><td>0</td><td/></row>
 		<row><td>ProgramFiles64Folder</td><td>TARGETDIR</td><td>.:Prog64~1|Program Files 64</td><td/><td>0</td><td/></row>
@@ -1213,7 +1214,6 @@
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
 		<row><td>plax.fm</td><td>shiitake_studios</td><td>plax.fm</td><td/><td>1</td><td/></row>
 		<row><td>plax.fm1</td><td>shiita_1_shiitake_studios</td><td>Plax.FM</td><td/><td>1</td><td/></row>
-		<row><td>plexscrobble</td><td>shiitake_studios</td><td>PlexScrobble</td><td/><td>1</td><td/></row>
 		<row><td>shiita_1_shiitake_studios</td><td>ProgramMenuFolder</td><td>SHIITA~1|Shiitake Studios</td><td/><td>1</td><td/></row>
 		<row><td>shiitake_studios</td><td>ProgramMenuFolder</td><td>Shiitake Studios</td><td/><td>1</td><td/></row>
 	</table>
@@ -1948,28 +1948,28 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>ninject.dll</td><td>Ninject.dll</td><td>Ninject.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</td><td>1</td><td/></row>
-		<row><td>ninject.dll1</td><td>Ninject.dll1</td><td>Ninject.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</td><td>1</td><td/></row>
-		<row><td>ninject.extensions.logging.d</td><td>Ninject.Extensions.Logging.dll</td><td>Ninject.Extensions.Logging.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</td><td>1</td><td/></row>
-		<row><td>ninject.extensions.logging.d1</td><td>Ninject.Extensions.Logging.dll1</td><td>Ninject.Extensions.Logging.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</td><td>1</td><td/></row>
-		<row><td>ninject.extensions.logging.n</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.dll</td><td>1</td><td/></row>
-		<row><td>ninject.extensions.logging.n1</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.Extensions.Logging.NLog2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.xml</td><td>1</td><td/></row>
-		<row><td>ninject.extensions.logging.n2</td><td>Ninject.Extensions.Logging.NLog2.dll1</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.dll</td><td>1</td><td/></row>
-		<row><td>ninject.extensions.logging.n3</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.Extensions.Logging.NLog2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.xml</td><td>1</td><td/></row>
-		<row><td>ninject.extensions.logging.x</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.Extensions.Logging.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.xml</td><td>1</td><td/></row>
-		<row><td>ninject.extensions.logging.x2</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.Extensions.Logging.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.xml</td><td>1</td><td/></row>
-		<row><td>ninject.xml</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.xml</td><td>1</td><td/></row>
-		<row><td>ninject.xml1</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.xml</td><td>1</td><td/></row>
-		<row><td>nlog.dll</td><td>NLog.dll</td><td>NLog.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\NLog.2.1.0\lib\net45\NLog.dll</td><td>1</td><td/></row>
-		<row><td>nlog.dll1</td><td>NLog.dll1</td><td>NLog.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\NLog.2.0.1.2\lib\net45\NLog.dll</td><td>1</td><td/></row>
-		<row><td>nlog.xml</td><td>ISX_DEFAULTCOMPONENT6</td><td>NLog.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\NLog.2.0.1.2\lib\net45\NLog.xml</td><td>1</td><td/></row>
+		<row><td>ninject.dll</td><td>Ninject.dll</td><td>Ninject.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</td><td>1</td><td/></row>
+		<row><td>ninject.dll1</td><td>Ninject.dll1</td><td>Ninject.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.d</td><td>Ninject.Extensions.Logging.dll</td><td>Ninject.Extensions.Logging.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.d1</td><td>Ninject.Extensions.Logging.dll1</td><td>Ninject.Extensions.Logging.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.n</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.n1</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.Extensions.Logging.NLog2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.xml</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.n2</td><td>Ninject.Extensions.Logging.NLog2.dll1</td><td>Ninject.Extensions.Logging.NLog2.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.dll</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.n3</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.Extensions.Logging.NLog2.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.Extensions.Logging.nlog2.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.NLog2.xml</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.x</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.Extensions.Logging.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.xml</td><td>1</td><td/></row>
+		<row><td>ninject.extensions.logging.x2</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.Extensions.Logging.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.Extensions.Logging.3.2.0.0\lib\net45-full\Ninject.Extensions.Logging.xml</td><td>1</td><td/></row>
+		<row><td>ninject.xml</td><td>ISX_DEFAULTCOMPONENT6</td><td>Ninject.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.xml</td><td>1</td><td/></row>
+		<row><td>ninject.xml1</td><td>ISX_DEFAULTCOMPONENT</td><td>Ninject.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.xml</td><td>1</td><td/></row>
+		<row><td>nlog.dll</td><td>NLog.dll</td><td>NLog.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\NLog.2.1.0\lib\net45\NLog.dll</td><td>1</td><td/></row>
+		<row><td>nlog.dll1</td><td>NLog.dll1</td><td>NLog.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\NLog.2.0.1.2\lib\net45\NLog.dll</td><td>1</td><td/></row>
+		<row><td>nlog.xml</td><td>ISX_DEFAULTCOMPONENT6</td><td>NLog.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\NLog.2.0.1.2\lib\net45\NLog.xml</td><td>1</td><td/></row>
 		<row><td>plaxfm.core.primary_output</td><td>PlaxFm.Core.Primary_output</td><td>PlaxFm.Core.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Core&gt;|Built</td><td>3</td><td/></row>
 		<row><td>plaxfm.core.primary_output1</td><td>PlaxFm.Core.Primary_output1</td><td>PlaxFm.Core.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Core&gt;|Built</td><td>3</td><td/></row>
 		<row><td>plaxfm.service.content_files</td><td>PlaxFm.Service.Content_Files1</td><td>PlaxFm.Service.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Service&gt;|ContentFiles</td><td>3</td><td/></row>
 		<row><td>plaxfm.service.primary_outpu</td><td>PlaxFm.Service.Primary_output1</td><td>PlaxFm.Service.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.Service&gt;|Built</td><td>3</td><td/></row>
 		<row><td>plaxfm.systemtray.content_fi</td><td>PlaxFm.SystemTray.Content_Files1</td><td>PlaxFm.SystemTray.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.SystemTray&gt;|ContentFiles</td><td>3</td><td/></row>
 		<row><td>plaxfm.systemtray.primary_ou</td><td>PlaxFm.SystemTray.Primary_output1</td><td>PlaxFm.SystemTray.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;PlaxFm.SystemTray&gt;|Built</td><td>3</td><td/></row>
-		<row><td>quartz.dll</td><td>Quartz.dll</td><td>Quartz.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\PlexScrobble\packages\Quartz.2.1.2\lib\net40-client\Quartz.dll</td><td>1</td><td/></row>
+		<row><td>quartz.dll</td><td>Quartz.dll</td><td>Quartz.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Git\Plax.FM\packages\Quartz.2.1.2\lib\net40-client\Quartz.dll</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2761,7 +2761,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Shiitake Studios</td><td>0</td><td/><td>1126424012</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Shiitake Studios</td><td>0</td><td/><td>1260601519</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-1700557260</td></row>
@@ -3574,8 +3574,8 @@
 		<row><td>IDS_PROGMSG_XML_UPDATE_FILE</td><td>1033</td><td>Updating XML file %s...</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS_SETUPEXE_EXPIRE_MSG</td><td>1033</td><td>This setup works until %s. The setup will now exit.</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS_SETUPEXE_LAUNCH_COND_E</td><td>1033</td><td>This setup was built with an evaluation version of InstallShield and can only be launched from setup.exe.</td><td>0</td><td/><td>-1700541228</td></row>
-		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>Launch PlexScrobble.exe</td><td>0</td><td/><td>-1700566986</td></row>
-		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>1033</td><td>Launch PlexScrobble.vshost.exe</td><td>0</td><td/><td>-1700566986</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>Launch Plax.FM.exe</td><td>0</td><td/><td>-1700566986</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>1033</td><td>Launch Plax.FM.vshost.exe</td><td>0</td><td/><td>-1700566986</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME3</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1297939024</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1163666357</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME5</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>186892691</td></row>
@@ -3867,8 +3867,8 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-1700541228</td></row>
-		<row><td>ID_STRING1</td><td>1033</td><td>http://www.ShiitakeStudios.com</td><td>0</td><td/><td>1126424012</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>Shiitake Studios</td><td>0</td><td/><td>1126424012</td></row>
+		<row><td>ID_STRING1</td><td>1033</td><td>http://www.ShiitakeStudios.com</td><td>0</td><td/><td>1260601519</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>Shiitake Studios</td><td>0</td><td/><td>1260601519</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>Plax.Fm</td><td>0</td><td/><td>-1297934484</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1163715477</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>PlaxFM</td><td>0</td><td/><td>-761035373</td></row>
@@ -3984,24 +3984,24 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\favicon48x48.ico</td><td>0</td></row>
-		<row><td>NewShortcut3_4BDDA4AD14B04C82A6AF6C95A2DB0977.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\favicon48x48.ico</td><td>0</td></row>
-		<row><td>PlexScrobble.vshos_0D4E482CE5AB4B148A9B662D65E6B06F.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
-		<row><td>_0F4D7E49B3DA46D5A787DA0C40AFEA68.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_5A83B54868C141BEA2D4FE331978C906.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_5ACA36576D4D4C3292D21BD6880BAB66.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_60BE39F08024446191DC55517E6AF131.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_702C6B9E649344D1B5EB7CFED1E70692.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_80CCD96D26024F76B416DFB08D17C874.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_816ADF383C8344C6B79394C3407F704D.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_979CFCDBD48A4D92AB92634300EF18DA.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_A2038BD8B0364276AA238D3A82B015D3.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_A5D340845AEF4D1BB00FED4E88080FC3.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_B792EFFFEDF24563A55F2054DC8F9645.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_B9577448F8FA47E98975B46DB9938CE0.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_B9A32D3764D6476284D14D5C267FF676.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_C56DE4E3C4BC4C478A1B92589CDDF78D.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_C8E28ACF76464A84AFA11FFFF8BE9D9C.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
-		<row><td>_E877D66A08604B71B1A3B8A8EBDD0AE5.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>NewShortcut3_070B63A5C33F418C9908D9B0E561C03E.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\favicon48x48.ico</td><td>0</td></row>
+		<row><td>Plax.FM.vshos_0D4E482CE5AB4B148A9B662D65E6B06F.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
+		<row><td>_0F4D7E49B3DA46D5A787DA0C40AFEA68.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_5A83B54868C141BEA2D4FE331978C906.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_5ACA36576D4D4C3292D21BD6880BAB66.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_60BE39F08024446191DC55517E6AF131.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_702C6B9E649344D1B5EB7CFED1E70692.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_80CCD96D26024F76B416DFB08D17C874.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_816ADF383C8344C6B79394C3407F704D.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_979CFCDBD48A4D92AB92634300EF18DA.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_A2038BD8B0364276AA238D3A82B015D3.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_A5D340845AEF4D1BB00FED4E88080FC3.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_B792EFFFEDF24563A55F2054DC8F9645.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_B9577448F8FA47E98975B46DB9938CE0.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_B9A32D3764D6476284D14D5C267FF676.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_C56DE4E3C4BC4C478A1B92589CDDF78D.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_C8E28ACF76464A84AFA11FFFF8BE9D9C.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_E877D66A08604B71B1A3B8A8EBDD0AE5.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
@@ -4680,7 +4680,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>NewShortcut3</td><td>plax.fm</td><td>##ID_STRING9##</td><td>ISX_DEFAULTCOMPONENT</td><td>[INSTALLDIR]/Tray/Plax.FM.SystemTray.exe</td><td/><td/><td/><td>NewShortcut3_4BDDA4AD14B04C82A6AF6C95A2DB0977.exe</td><td>0</td><td>1</td><td>TRAY</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut3</td><td>plax.fm</td><td>##ID_STRING9##</td><td>ISX_DEFAULTCOMPONENT</td><td>[INSTALLDIR]/Tray/Plax.FM.SystemTray.exe</td><td/><td/><td/><td>NewShortcut3_070B63A5C33F418C9908D9B0E561C03E.exe</td><td>0</td><td>1</td><td>TRAY</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
