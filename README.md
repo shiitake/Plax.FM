@@ -1,4 +1,6 @@
-<img src="https://github.com/shiitake/Plax.FM/blob/master/Plax.FM.png" width="50" height="50" align="right" /><h1>Plax.FM</h1>
+<img src="https://github.com/shiitake/Plax.FM/blob/master/Plax.FM.png" width="50" height="50" align="left" />
+<h1 align="center">Plax.FM</h1><img src="https://github.com/shiitake/Plax.FM/blob/master/Plax.FM.png" width="50" height="50" align="right" />
+
 Plax.FM is a small windows service to scrobble music you've played on your Plex Media server. 
 
 I've tried to make the Plax.FM installation and setup as easy as possible. It should be able to run on any recent Windows media server without having to install any 3rd party dependencies. 
