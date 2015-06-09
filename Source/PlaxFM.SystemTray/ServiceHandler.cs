@@ -80,6 +80,7 @@ namespace PlaxFm.SystemTray
                 proc.Start();
                 var result = proc.StandardOutput.ReadToEnd();
                 _logger.Info(result);
+                _isServiceInstalled = DoesServiceExist();
             }
             catch (Exception ex)
             {
@@ -107,6 +108,7 @@ namespace PlaxFm.SystemTray
                 proc.Start();
                 string result = proc.StandardOutput.ReadToEnd();
                 _logger.Info(result);
+                _isServiceInstalled = DoesServiceExist();
             }
             catch (Exception ex)
             {
@@ -118,7 +120,6 @@ namespace PlaxFm.SystemTray
         {
             try
             {
-                _logger.Info("Stopping PlaxFM service");
                 var procStartInfo = new ProcessStartInfo(_command, "stop");
                 procStartInfo.RedirectStandardOutput = true;
                 procStartInfo.UseShellExecute = false;
@@ -141,7 +142,6 @@ namespace PlaxFm.SystemTray
         {
             try
             {
-                _logger.Info("Starting PlaxFM service");
                 var procStartInfo = new ProcessStartInfo(_command, "start");
                 procStartInfo.RedirectStandardOutput = true;
                 procStartInfo.UseShellExecute = false;
@@ -151,6 +151,8 @@ namespace PlaxFm.SystemTray
                 proc.Start();
                 string result = proc.StandardOutput.ReadToEnd();
                 _logger.Info(result);
+                var timeout = TimeSpan.FromMilliseconds(60000);
+                _service.WaitForStatus(ServiceControllerStatus.Running, timeout);
             }
             catch (Exception ex)
             {

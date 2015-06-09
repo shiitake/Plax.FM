@@ -9,7 +9,7 @@
             requestedExecutionLevel node with one of the following.
 
               <requestedExecutionLevel  level="asInvoker" uiAccess="false" /> -->
-        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="true" />
         <!-- <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
             Specifying requestedExecutionLevel node will disable file and registry virtualization.

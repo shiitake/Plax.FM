@@ -79,6 +79,7 @@ namespace PlaxFm.SystemTray
             {
                 _handler.UnInstallService();
             }
+            _logger.Info("Closing Plax.FM System tray.");
             Application.Exit();
         }
 
@@ -118,14 +119,6 @@ namespace PlaxFm.SystemTray
         {
             _logger.Info("Stopping PlaxFM service through tray application");
             _handler.StopService();
-            var stopped = _handler.IsServiceStopped();
-            while (!stopped)
-            {
-                stopped = _handler.IsServiceStopped();
-                _logger.Info("Waiting for service to stop.");
-                Thread.Sleep(2000);
-            }
-            _logger.Info("PlaxFM service has stopped.");
             _stopServiceMenuItem.Enabled = false;
             _startServiceMenuItem.Enabled = true;
         }
@@ -134,14 +127,6 @@ namespace PlaxFm.SystemTray
         {
             _logger.Info("Starting PlaxFM service through tray application.");
             _handler.StartService();
-            var started = _handler.IsServiceStarted();
-            while (!started)
-            {
-                started = _handler.IsServiceStarted();
-                _logger.Info("Waiting for service to start.");
-                Thread.Sleep(2000);
-            }
-            _logger.Info("PlaxFM service has started.");
             _startServiceMenuItem.Enabled = false;
             _stopServiceMenuItem.Enabled = true;
         }

@@ -3579,7 +3579,6 @@
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME3</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1297939024</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1163666357</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME5</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>186892691</td></row>
-		<row><td>IDS_SHORTCUT_DISPLAY_NAME6</td><td>1033</td><td>PlaxFM</td><td>0</td><td/><td>1126389132</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1033</td><td>From the list of servers below, select the database server you would like to target.</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1033</td><td>From the list of catalog names below, select the database catalog you would like to target.</td><td>0</td><td/><td>-1700541228</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1033</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>-1700541228</td></row>
@@ -3876,6 +3875,7 @@
 		<row><td>ID_STRING6</td><td>1033</td><td>PlaxFM - Music Scrobbler</td><td>0</td><td/><td>-761010797</td></row>
 		<row><td>ID_STRING7</td><td>1033</td><td>PlaxFm Service</td><td>0</td><td/><td>186859987</td></row>
 		<row><td>ID_STRING8</td><td>1033</td><td>PlaxFm Scrobbler service</td><td>0</td><td/><td>186896851</td></row>
+		<row><td>ID_STRING9</td><td>1033</td><td>PlaxFM</td><td>0</td><td/><td>1260628236</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-1700541228</td></row>
 	</table>
 
@@ -3984,7 +3984,9 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\favicon48x48.ico</td><td>0</td></row>
+		<row><td>NewShortcut3_4BDDA4AD14B04C82A6AF6C95A2DB0977.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\favicon48x48.ico</td><td>0</td></row>
 		<row><td>PlexScrobble.vshos_0D4E482CE5AB4B148A9B662D65E6B06F.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
+		<row><td>_0F4D7E49B3DA46D5A787DA0C40AFEA68.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_5A83B54868C141BEA2D4FE331978C906.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_5ACA36576D4D4C3292D21BD6880BAB66.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_60BE39F08024446191DC55517E6AF131.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
@@ -3993,6 +3995,7 @@
 		<row><td>_816ADF383C8344C6B79394C3407F704D.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_979CFCDBD48A4D92AB92634300EF18DA.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_A2038BD8B0364276AA238D3A82B015D3.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
+		<row><td>_A5D340845AEF4D1BB00FED4E88080FC3.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_B792EFFFEDF24563A55F2054DC8F9645.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_B9577448F8FA47E98975B46DB9938CE0.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
 		<row><td>_B9A32D3764D6476284D14D5C267FF676.exe</td><td/><td>C:\Git\PlexScrobble\Source\PlaxFM.SystemTray\bin\Debug\Plax.FM.SystemTray.exe</td><td>0</td></row>
@@ -4131,7 +4134,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{D4CD52D2-9C39-42CF-ADDC-36136629AFAE}</td></row>
 		<row><td>ISUSSignature</td><td>{FFC32E37-B3E0-4E41-8891-95F9341B4867}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewInstallScriptStd,viewCustomActions,viewRelease,viewProject,viewSystemSearch,viewAppFiles,viewObjects,viewFeatureFiles,viewRealSetupDesign,viewUpgradePaths,viewDependencies,viewUI,viewServices,viewEnvironmentVariables,viewShortcuts</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewInstallScriptStd,viewCustomActions,viewRelease,viewProject,viewSystemSearch,viewAppFiles,viewObjects,viewFeatureFiles,viewRealSetupDesign,viewUpgradePaths,viewDependencies,viewUI,viewServices,viewEnvironmentVariables,viewShortcuts,viewRegistry</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4579,6 +4582,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S0">Value</col>
 		<col def="s72">Component_</col>
 		<col def="I4">ISAttributes</col>
+		<row><td>Registry10</td><td>1</td><td>Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers</td><td>C:\Program Files (x86)\Shiitake Studios\Plax.Fm\Tray\Plax.FM.SystemTray.exe</td><td>RUNASADMIN</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
+		<row><td>Registry12</td><td>1</td><td>Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers</td><td>C:\Program Files\Shiitake Studios\Plax.Fm\Tray\Plax.FM.SystemTray.exe</td><td>RUNASADMIN</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
 	</table>
 
 	<table name="RemoveFile">
@@ -4589,7 +4594,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="i2">InstallMode</col>
 		<row><td>FileKey1</td><td>PlaxFm.SystemTray.Primary_output</td><td/><td>shiita_1_shiitake_studios</td><td>2</td></row>
 		<row><td>FileKey2</td><td>PlaxFm.SystemTray.Primary_output</td><td/><td>plax.fm1</td><td>2</td></row>
-		<row><td>_Built</td><td>PlaxFm.SystemTray.Primary_output1</td><td/><td>plax.fm</td><td>2</td></row>
+		<row><td>NewShortcut3</td><td>ISX_DEFAULTCOMPONENT</td><td/><td>plax.fm</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4675,7 +4680,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>_Built</td><td>plax.fm</td><td>##IDS_SHORTCUT_DISPLAY_NAME6##</td><td>PlaxFm.SystemTray.Primary_output1</td><td>AlwaysInstall</td><td/><td/><td/><td/><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut3</td><td>plax.fm</td><td>##ID_STRING9##</td><td>ISX_DEFAULTCOMPONENT</td><td>[INSTALLDIR]/Tray/Plax.FM.SystemTray.exe</td><td/><td/><td/><td>NewShortcut3_4BDDA4AD14B04C82A6AF6C95A2DB0977.exe</td><td>0</td><td>1</td><td>TRAY</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
