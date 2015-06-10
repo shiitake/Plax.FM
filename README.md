@@ -22,7 +22,7 @@ Plax.FM was inspired by [Plex-Lastfm-Scrobbler](https://github.com/jesseward/ple
 4. You should see the system tray application which will give you the initial setup options and let you start/stop the service. 
 5. At the initial setup screen you will need to do the following: 
   * Input your plex media credentials
-  * After submitting this you should get a prompt which will open your browswer window to the last.fm website so you can authorize Plax.FM to scrobble to your account. You will likely have to login first. 
+  * After submitting this you should get a prompt which will open your browser window to the last.fm website so you can authorize Plax.FM to scrobble to your account. You will likely have to login first. 
 
 ##### Caveats/Issues: 
 - Plex Media server defaults to localhost on port 32400 - (this can be configured manually by editing the app.config file)
