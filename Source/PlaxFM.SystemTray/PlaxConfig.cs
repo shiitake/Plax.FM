@@ -30,5 +30,10 @@ namespace PlaxFm.SystemTray
         {
 
         }
+
+        private void passwordBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
