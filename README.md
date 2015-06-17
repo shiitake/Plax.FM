@@ -33,3 +33,5 @@ Plax.FM was inspired by [Plex-Lastfm-Scrobbler](https://github.com/jesseward/ple
 ##### Future Features:
 - Adding better options for custom server location/port
 - Adding support for multiple plex and last.fm user
+
+To see the current development status you can checkout the [trello board.](https://trello.com/b/zrBfd00v/plax-fm-development-board)
