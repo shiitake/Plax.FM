@@ -28,7 +28,7 @@ Plax.FM was inspired by [Plex-Lastfm-Scrobbler](https://github.com/jesseward/ple
 - Plex Media server defaults to localhost on port 32400 - (this can be configured manually by editing the app.config file)
 - You will want to install this using the same windows profile that the Plex is using. 
 - There will sometimes be contention issues when Plax.FM tries to read the Plex Media Server log. This shouldn't cause to much of an issue - it will just try again.
-
+- The "Enable Plex Media Server debug logging" advanced option must be enabled on the Plex Media Server.  This option is present in the "General" options.
 
 ##### Future Features:
 - Adding better options for custom server location/port
