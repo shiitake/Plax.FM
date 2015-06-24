@@ -33,6 +33,7 @@ namespace PlaxFm.Models
         {
             _logger.Info("Scrobbling song entries.");
             string session = _customConfiguration.GetValue("SessionId");
+            //var session = "aa17677e445e60e864f1eb100259987c";
 
             if (session != "")
             {

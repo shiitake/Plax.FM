@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Ninject.Extensions.Logging;
 using PlaxFm.Configuration;
 using PlaxFm.Models;
@@ -60,7 +61,14 @@ namespace PlaxFm.Jobs
             else
             {
                 _logger.Info("Job starting.");
-                var songList = _reader.ReadLog(_plexLog, _logCache);
+                //var songList = _reader.ReadLog(_plexLog, _logCache);
+                var song = new SongEntry();
+                song.Artist = "Tiësto";
+                song.Title = "Just Be";
+                song.TimePlayed = DateTime.UtcNow;
+                var songList = new List<SongEntry>();
+                songList.Add(song);
+                
                 if (songList.Count > 0)
                 {
                     _logger.Info(songList.Count + " new song(s) found.");

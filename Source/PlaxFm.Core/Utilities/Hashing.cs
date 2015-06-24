@@ -11,6 +11,10 @@ namespace PlaxFm.Core.Utilities
     {
         public static string CalculateMD5Hash(string input)
         {
+            //step 0 - make sure string is UTF-8 encoded
+            byte[] bytes = Encoding.Default.GetBytes(input);
+            input = Encoding.UTF8.GetString(bytes);
+            
             // step 1, calculate MD5 hash from input
             MD5 md5 = System.Security.Cryptography.MD5.Create();
             byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
