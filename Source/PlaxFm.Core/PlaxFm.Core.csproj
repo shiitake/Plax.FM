@@ -50,6 +50,7 @@
     <Compile Include="Utilities\FileExtensions.cs" />
     <Compile Include="Utilities\Hashing.cs" />
     <Compile Include="Utilities\PopUp.cs" />
+    <Compile Include="Utilities\StringHelper.cs" />
     <Compile Include="Utilities\XDocumentExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
