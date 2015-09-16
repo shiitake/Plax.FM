@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,15 +19,5 @@ namespace PlaxFm.Models
             PlexMediaServerLog rec = (PlexMediaServerLog)record;
             return this.DateAdded == rec.DateAdded;
         }
-    }
-
-    public class SongEntry
-    {
-        public int UserId { get; set; }
-        public int MediaId { get; set; }
-        public string Title { get; set; }
-        public string Artist { get; set; }
-        public string Album { get; set; }
-        public DateTime TimePlayed { get; set; }
     }
 }

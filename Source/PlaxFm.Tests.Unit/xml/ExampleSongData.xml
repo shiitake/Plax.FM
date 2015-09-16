@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MediaContainer size="1" allowSync="1" identifier="com.plexapp.plugins.library" librarySectionID="5" librarySectionTitle="Music" librarySectionUUID="fab129cf-40a0-48eb-a814-fc3045ebe807" mediaTagPrefix="/system/bundle/media/flags/" mediaTagVersion="1440317160">
+  <Track ratingKey="107202" key="/library/metadata/107202" parentRatingKey="107191" grandparentRatingKey="107190" guid="com.plexapp.agents.plexmusic://gracenote/track/139768392-2138B5CFD7933F90A0974EA594DD81E4/139768403-F2400CDB97479E60C62F6A2172C93BB4?lang=en" type="track" title="When We Die" grandparentKey="/library/metadata/107190" parentKey="/library/metadata/107191" grandparentTitle="Jack Peñate" parentTitle="Matinée" summary="" index="11" parentIndex="1" ratingCount="180" viewCount="1" lastViewedAt="1442416084" thumb="/library/metadata/107191/thumb/1433747244" art="/library/metadata/107190/art/1439456912" parentThumb="/library/metadata/107191/thumb/1433747244" grandparentThumb="/library/metadata/107190/thumb/1439456912" grandparentArt="/library/metadata/107190/art/1439456912" duration="362527" addedAt="1282617486" updatedAt="1433747244">
+    <Media id="100036" duration="362527" bitrate="184" audioChannels="2" audioCodec="mp3" container="mp3">
+      <Part id="100617" key="/library/parts/100617/file.mp3" duration="362527" file="M:\FamilyMusic\Jack Pe%C3%B1ate\Matin%C3%A9e\1-11 When We Die.mp3" size="8413760" container="mp3">
+        <Stream id="120630" streamType="2" selected="1" codec="mp3" index="0" channels="2" bitrate="184" bitrateMode="vbr" duration="362527" samplingRate="44100" />
+      </Part>
+    </Media>
+    <Mood id="9552" tag="" />
+  </Track>
+</MediaContainer>
