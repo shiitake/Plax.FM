@@ -123,6 +123,7 @@
     <Compile Include="Models\LastFmScrobbler.cs" />
     <Compile Include="Models\LogReader.cs" />
     <Compile Include="Models\PlexMediaServerLog.cs" />
+    <Compile Include="Models\SongEntry.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text.RegularExpressions;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -13,6 +12,7 @@ using FileHelpers;
 using Ninject.Extensions.Logging;
 using PlaxFm.Configuration;
 using PlaxFm.Core.Utilities;
+using Quartz.Util;
 
 namespace PlaxFm.Models
 {
@@ -126,26 +126,7 @@ namespace PlaxFm.Models
         private async Task<List<SongEntry>> ParseLogsForSongEntries(PlexMediaServerLog[] logs)
         {
             _logger.Info("Parsing logs for song entries.");
-            var songList = new List<SongEntry>();
-            Regex rgx = new Regex(@".*\sDEBUG\s-\sLibrary\sitem\s(\d+)\s'.*'\sgot\splayed\sby\saccount\s(\d+).*");
-            foreach (PlexMediaServerLog log in logs)
-            {
-                if (rgx.IsMatch(log.LogEntry))
-                {
-                    var line = rgx.Replace(log.LogEntry, "$1,$2");
-                    if (line.Length > 0)
-                    {
-                        var lineArray = line.Split(',');
-                        var song = new SongEntry();
-                        song.MediaId = Int32.Parse(lineArray[0]);
-                        song.UserId = Int32.Parse(lineArray[1]);
-                        var date = log.DateAdded.Trim();
-                        var format = "MMM dd, yyyy HH:mm:ss:fff";
-                        song.TimePlayed = DateTime.ParseExact(date, format, CultureInfo.InvariantCulture).ToUniversalTime();
-                        songList.Add(song);
-                    }    
-                }
-            }
+            var songList = logs.Select(log => new SongEntry(log)).Where(song => song.MediaId > 0 && song.UserId > 0).ToList();
             if (songList.Count > 0)
             {
                 songList = RemoveDuplicates(songList);
@@ -163,6 +144,7 @@ namespace PlaxFm.Models
         private async Task<List<SongEntry>> GetSongData(List<SongEntry> songList)
         {
             _logger.Info("Retrieving song data from songlist.");
+            var populatedList = new List<SongEntry>();
             foreach (SongEntry song in songList)
             {
                 XDocument docResponse = null;
@@ -178,38 +160,14 @@ namespace PlaxFm.Models
                     }
                 }
 
-                if (docResponse != null)
+                var populatedSong = song.PopulateSongData(song, docResponse);
+
+                if (!populatedSong.Artist.IsNullOrWhiteSpace() && !populatedSong.Title.IsNullOrWhiteSpace())
                 {
-                    song.Artist =
-                        docResponse.ElementOrEmpty("MediaContainer")
-                            .ElementOrEmpty("Track")
-                            .AttributeOrEmpty("originalTitle")
-                            .Value;
-                    if (song.Artist == "")
-                    {
-                        song.Artist =
-                            docResponse.ElementOrEmpty("MediaContainer")
-                                .ElementOrEmpty("Track")
-                                .AttributeOrEmpty("grandparentTitle")
-                                .Value;
-                    }
-                    song.Title =
-                        docResponse.ElementOrEmpty("MediaContainer")
-                            .ElementOrEmpty("Track")
-                            .AttributeOrEmpty("title")
-                            .Value;
-                    song.Album =
-                        docResponse.ElementOrEmpty("MediaContainer")
-                            .ElementOrEmpty("Track")
-                            .AttributeOrEmpty("parentTitle")
-                            .Value;
-                }
-                if (song.Artist == "" || song.Title == "")
-                {
-                    songList.Remove(song);
+                    populatedList.Add(populatedSong);
                 }
             }
-            return songList;
+            return populatedList;
         }
         
         private async Task<string> GetPlexResponse(string uri)
@@ -224,11 +182,14 @@ namespace PlaxFm.Models
                     request.RequestUri = new Uri(uri);
                     request.Method = HttpMethod.Get;
                     request.Headers.Add("X-Plex-Token", token);
-                    using (HttpResponseMessage response = await client.GetAsync(uri))
-                    using (HttpContent content = response.Content)
-                    {
-                        result = await content.ReadAsStringAsync();
-                    }
+                    //using (HttpResponseMessage response = await client.GetAsync(uri))
+                    //using (HttpContent content = response.Content)
+                    //{
+                    //    result = await content.ReadAsStringAsync();
+                    //}
+
+                    var response = await client.GetByteArrayAsync(uri);
+                    result = Encoding.UTF8.GetString(response, 0, response.Length - 1);
                 }
             }
             catch (Exception ex)

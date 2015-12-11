@@ -51,6 +51,9 @@ appSettings.config
 *.log
 *.scc
 
+# Unit testing file
+!ExamplePlexMediaServer.log
+
 # Visual C++ cache files
 ipch/
 *.aps
