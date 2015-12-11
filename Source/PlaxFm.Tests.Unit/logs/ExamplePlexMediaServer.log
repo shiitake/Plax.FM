@@ -1,0 +1,13 @@
+Dec 11, 2015 15:17:40:191 [1100] VERBOSE -  * duration => 174777
+Dec 11, 2015 15:17:40:192 [1100] DEBUG - Client [794lqvg8y8n0zfr] reporting timeline state playing, progress of 166780/174777ms for guid=, ratingKey=22 url=, key=/library/metadata/22, containerKey=, metadataId=22
+Dec 11, 2015 15:17:40:197 [1100] DEBUG - Library item 22 '10,000 Emerald Pools' got played by account 1!
+Dec 11, 2015 15:17:40:199 [1100] DEBUG - [Now] Device is Chrome (Plex Web (Chrome)).
+Dec 11, 2015 15:17:40:199 [1100] DEBUG - [Now] Updated play state for /library/metadata/22.
+Dec 11, 2015 15:17:40:199 [5116] DEBUG - Completed: [127.0.0.1:51257] GET /:/timeline?ratingKey=22&key=%2Flibrary%2Fmetadata%2F22&state=playing&playQueueItemID=1&time=166780&duration=174777 (3 live) GZIP 8ms 158 bytes 200 (pipelined: 47)
+Dec 11, 2015 15:17:48:182 [0328] DEBUG - Request: [127.0.0.1:51257] GET /:/timeline?ratingKey=22&key=%2Flibrary%2Fmetadata%2F22&state=stopped&continuing=1&playQueueItemID=1&time=174753&duration=174777 (3 live) GZIP
+Dec 11, 2015 15:20:48:459 [4196] DEBUG - Client [794lqvg8y8n0zfr] reporting timeline state playing, progress of 179934/189614ms for guid=, ratingKey=23 url=, key=/library/metadata/23, containerKey=, metadataId=23
+Dec 11, 2015 15:20:48:471 [4196] DEBUG - Library item 23 'Dug My Heart' got played by account 1!
+Dec 11, 2015 15:20:48:472 [4196] DEBUG - [Now] Device is Chrome (Plex Web (Chrome)).
+Dec 11, 2015 15:20:48:472 [4196] DEBUG - [Now] Updated play state for /library/metadata/23.
+Dec 11, 2015 15:20:48:473 [5116] DEBUG - Completed: [127.0.0.1:51392] GET /:/timeline?ratingKey=23&key=%2Flibrary%2Fmetadata%2F23&state=playing&playQueueItemID=2&time=179934&duration=189614 (3 live) GZIP 14ms 158 bytes 200 (pipelined: 20)
+Dec 11, 2015 15:20:58:139 [1100] DEBUG - Request: [127.0.0.1:51392] GET /:/timeline?ratingKey=23&key=%2Flibrary%2Fmetadata%2F23&state=stopped&continuing=1&playQueueItemID=2&time=189591&duration=189614 (3 live) GZIP
