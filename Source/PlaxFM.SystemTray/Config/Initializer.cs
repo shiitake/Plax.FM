@@ -72,7 +72,7 @@ namespace PlaxFm.SystemTray.Config
                 var session = await DownloadLastFmSession(token);
                 if (session != "")
                 {
-                    _config.SetValue("Setup", "Initialized", true);
+                    _config.SetValue("Setup", "Initialized", "true");
                     _config.SetValue("Token", "");
                 }
                 else

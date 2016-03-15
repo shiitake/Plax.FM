@@ -131,7 +131,7 @@ namespace PlaxFm.Core.Utilities
             Save();
         }
 
-        public void SetValue(string tableName, string settingName, object settingValue, int plexId = 1)
+        public void SetValue(string tableName, string settingName, string settingValue, int plexId = 1)
         {
             int row = GetRowById(plexId);
 
