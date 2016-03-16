@@ -46,6 +46,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.Core.2.2.0\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
+    <Reference Include="ConfigBuilderTask, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ConfigBuilder.1.0.5\lib\ConfigBuilderTask.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FileHelpers">
       <HintPath>..\..\packages\FileHelpers.2.0.0.0\lib\FileHelpers.dll</HintPath>
     </Reference>
@@ -136,11 +140,8 @@
     <Content Include="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="appSettings.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="packages.config" />
+    <None Include="Template.app.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -152,6 +153,10 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="ConfigBuilder" AssemblyFile="..\..\packages\ConfigBuilder.1.0.5\lib\ConfigBuilderTask.dll" />
+  <Target Name="BuildConfig" BeforeTargets="BeforeBuild">
+    <ConfigBuilder ValuesFilePath="../../ConfigValues.xml" ProjectName="$(MSBuildProjectName)" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
