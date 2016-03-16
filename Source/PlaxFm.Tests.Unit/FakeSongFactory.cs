@@ -15,5 +15,11 @@ namespace PlaxFm.Tests.Unit
             var doc = XDocument.Load("xml/ExampleSongData.xml");
             return song.PopulateSongData(song, doc);
         }
+
+        public static SongEntry CreateResponseUmlaut(SongEntry song)
+        {
+            var doc = XDocument.Load("xml/ExampleSongData.xml");
+            return song.PopulateSongData(song, doc);
+        }
     }
 }

@@ -62,13 +62,32 @@ namespace PlaxFm.Jobs
             {
                 _logger.Info("Job starting.");
                 //var songList = _reader.ReadLog(_plexLog, _logCache);
-                var song = new SongEntry();
-                song.Artist = "Tiësto";
-                song.Title = "Just Be";
-                song.TimePlayed = DateTime.UtcNow;
                 var songList = new List<SongEntry>();
-                songList.Add(song);
+                var song1 = new SongEntry
+                {
+                    Artist = "Jack Pe&#195;&#177;ate",
+                    Title = "When We Die",
+                    TimePlayed = DateTime.Now
+                };
+                songList.Add(song1);
+
+                var song2 = new SongEntry
+                {
+                    Artist = "Tiësto",
+                    Title = "Just Be",
+                    TimePlayed = DateTime.UtcNow
+                };
+                songList.Add(song2);
+
                 
+                var song3 = new SongEntry
+                {
+                    Artist = "The Mountain Goats",
+                    Title = "No Children",
+                    TimePlayed = DateTime.UtcNow
+                };
+                songList.Add(song3);
+
                 if (songList.Count > 0)
                 {
                     _logger.Info(songList.Count + " new song(s) found.");

@@ -112,6 +112,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="appSettings.config" />
     <None Include="logs\ExamplePlexMediaServer.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
