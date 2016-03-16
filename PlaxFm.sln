@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.Service", "Source\PlaxFM.Service\PlaxFm.Service.csproj", "{07DA0509-E3F6-4926-9198-A4AC4F2E1564}"
 EndProject
@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{387D01
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A0C1223B-0BE1-4913-8175-58217F48890A}"
 	ProjectSection(SolutionItems) = preProject
-		appSettings.config = appSettings.config
+		ConfigValues.xml = ConfigValues.xml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.Tests.Unit", "Source\PlaxFm.Tests.Unit\PlaxFm.Tests.Unit.csproj", "{ECDD3ACC-E67A-479D-9D8E-39613D8EF56F}"

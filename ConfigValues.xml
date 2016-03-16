@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ConfigValues WorkingEnvironment="Dev" WorkingEnvironmentFolder="./">
+  <Tasks>
+	<CreateConfigTask NameFormat="App.config" InputFile="./Template.App.config" OutputFolderFormat="./Configuration/{0}/" />
+  </Tasks>
+  <Parameters>
+    <ConfigParameter Name="LastFmApiKey">
+      <Values>
+        <ConfigParameterValue Environment="Dev" Value="[redacted]" />
+        <ConfigParameterValue Environment="Prod" Value="[redacted]" />
+      </Values>
+    </ConfigParameter>
+    <ConfigParameter Name="LastFmApiSecret">
+      <Values>
+        <ConfigParameterValue Environment="Dev" Value="[redacted]" />
+        <ConfigParameterValue Environment="Prod" Value="[redacted]" />
+      </Values>
+    </ConfigParameter>
+    <ConfigParameter Name="LogCache" Default="%ProgramData%\PlaxFM\Logs\logcache.log">
+      <Values>
+        <ConfigParameterValue Environment="Dev" Value="C:\Git\Plax.FM\logcache.log" />
+        <ConfigParameterValue Environment="Prod" Value="%ProgramData%\PlaxFM\Logs\logcache.log" />
+      </Values>
+    </ConfigParameter>
+    <ConfigParameter Name="PlexLog" Default="\AppData\local\Plex Media Server\Logs\Plex Media Server.log">
+      <Values>
+        <ConfigParameterValue Environment="Dev" Value="C:\Git\Plax.FM\Plex Media Server.log" />
+        <ConfigParameterValue Environment="Prod" Value="\AppData\local\Plex Media Server\Logs\Plex Media Server.log" />
+      </Values>
+    </ConfigParameter>
+    <ConfigParameter Name="WorkingCopy" Default="%ProgramData%\PlaxFM\Logs\workingcopy.log">
+      <Values>
+        <ConfigParameterValue Environment="Dev" Value="C:\Git\Plax.FM\workingcopy.log" />
+        <ConfigParameterValue Environment="Prod" Value="%ProgramData%\PlaxFM\Logs\workingcopy.log" />
+      </Values>
+    </ConfigParameter>
+    <ConfigParameter Name="ConfigFile" Default="%ProgramData%\PlaxFM\Config\CustomConfiguration.xml">
+      <Values>
+        <ConfigParameterValue Environment="Dev" Value="C:\Git\Plax.FM\CustomConfiguration.xml" />
+        <ConfigParameterValue Environment="Prod" Value="%ProgramData%\PlaxFM\Config\CustomConfiguration.xml" />
+      </Values>
+    </ConfigParameter>
+    <ConfigParameter Name="SchemaFile" Default="%ProgramData%\PlaxFM\Config\CustomConfiguration.xsd">
+      <Values>
+        <ConfigParameterValue Environment="Dev" Value="C:\Git\Plax.FM\CustomConfiguration.xsd" />
+        <ConfigParameterValue Environment="Prod" Value="%ProgramData%\PlaxFM\Config\CustomConfiguration.xsd" />
+      </Values>
+    </ConfigParameter>
+  </Parameters>
+</ConfigValues>
