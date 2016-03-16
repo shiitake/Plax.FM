@@ -22,6 +22,8 @@ build/
 connectionStrings.config
 ConfigValues.xml
 appSettings.config
+Configuration/dev/
+Configuration/prod/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
