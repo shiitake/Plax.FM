@@ -8,7 +8,6 @@ I've tried to make the Plax.FM installation and setup as easy as possible. It sh
 
 Plax.FM was inspired by [Plex-Lastfm-Scrobbler](https://github.com/jesseward/plex-lastfm-scrobbler). If you are running on Linux or OSX (or you just like Python) I highly recommend checking it out. 
 
-
 ##### System requirements: 
 - Windows 7, 8, 8.1  
 - Microsoft .NET Framework 4.5
@@ -34,4 +33,7 @@ Plax.FM was inspired by [Plex-Lastfm-Scrobbler](https://github.com/jesseward/ple
 - Adding better options for custom server location/port
 - Adding support for multiple plex and last.fm user
 
+##### Build Status:  <img src="https://travis-ci.org/shiitake/Plax.FM.svg?branch=master" />
+
 To see the current development status you can checkout the [trello board.](https://trello.com/b/zrBfd00v/plax-fm-development-board)
+
