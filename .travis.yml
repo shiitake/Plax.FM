@@ -1,0 +1,4 @@
+language: csharp
+solution: PlaxFm.sln
+script:
+  - xbuild /p:Configuration=Release /p:TargetFrameworkVersion="v4.5" PlaxFm.sln
