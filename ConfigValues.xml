@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ConfigValues WorkingEnvironment="Dev" WorkingEnvironmentFolder="./">
   <Tasks>
-	<CreateConfigTask NameFormat="App.config" InputFile="./Template.app.config" OutputFolderFormat="./Configuration/{0}/" />
+	<CreateConfigTask NameFormat="app.config" InputFile="./Template.app.config" OutputFolderFormat="./Configuration/{0}/" />
   </Tasks>
   <Parameters>
     <ConfigParameter Name="LastFmApiKey">
