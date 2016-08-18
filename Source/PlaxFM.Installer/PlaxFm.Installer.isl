@@ -3983,7 +3983,7 @@
 		<col def="V0">Data</col>
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
-		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\favicon48x48.ico</td><td>0</td></row>
+		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\Images\favicon48x48_white.ico</td><td>0</td></row>
 		<row><td>NewShortcut3_070B63A5C33F418C9908D9B0E561C03E.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Source\PlaxFM.Service\favicon48x48.ico</td><td>0</td></row>
 		<row><td>Plax.FM.vshos_0D4E482CE5AB4B148A9B662D65E6B06F.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>_0F4D7E49B3DA46D5A787DA0C40AFEA68.exe</td><td/><td>C:\Git\Plax.FM\Source\PlaxFM.SystemTray\bin\Release\Plax.FM.SystemTray.exe</td><td>0</td></row>
@@ -4134,7 +4134,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{D4CD52D2-9C39-42CF-ADDC-36136629AFAE}</td></row>
 		<row><td>ISUSSignature</td><td>{FFC32E37-B3E0-4E41-8891-95F9341B4867}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewInstallScriptStd,viewCustomActions,viewRelease,viewProject,viewSystemSearch,viewAppFiles,viewObjects,viewFeatureFiles,viewRealSetupDesign,viewUpgradePaths,viewDependencies,viewUI,viewServices,viewEnvironmentVariables,viewShortcuts,viewRegistry</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewInstallScriptStd,viewCustomActions,viewRelease,viewProject,viewSystemSearch,viewAppFiles,viewObjects,viewFeatureFiles,viewRealSetupDesign,viewUpgradePaths,viewDependencies,viewUI,viewServices,viewEnvironmentVariables,viewShortcuts,viewRegistry,viewLearnMore,viewUpdateService</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
