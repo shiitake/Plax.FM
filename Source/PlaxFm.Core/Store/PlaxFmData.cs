@@ -4,17 +4,18 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using PlaxFm.Core.Models;
 
-namespace PlaxFm.Store
+namespace PlaxFm.Core.Store
 {
-    public class PlaxFmDatabase
+    class PlaxFmData
     {
         private SQLiteConnection _dbConnection;
         private readonly string PlaxDatebase = "PlaxFmDb.sqlite";
-        public PlaxFmDatabase(string configLocation)
+
+        public PlaxFmData(string configLocation)
         {
             //check for db
             var dbFile = configLocation + @"\" + PlaxDatebase;
@@ -22,7 +23,7 @@ namespace PlaxFm.Store
             if (!dbInfo.Exists)
             {
                 CreateNewDb();
-                
+
             }
             SQLiteConnection.CreateFile(dbFile);
             _dbConnection = new SQLiteConnection("Data Source=PlaxFmDb.sqlite;Version=3;");
@@ -109,7 +110,7 @@ namespace PlaxFm.Store
                     {
                         return null;
                     }
-                    
+
                 }
             }
             catch (Exception ex)
@@ -117,20 +118,7 @@ namespace PlaxFm.Store
                 Console.WriteLine($"There was an error retrieviing data for user {PlexId} from the table. {ex.Message}");
                 return null;
             }
-            
+
         }
-
-    public class User
-    {
-        public int PlexId { get; set; }
-        public string PlexUsername { get; set; }
-        public string LastFmUsername { get; set; }
-        public string SessionId { get; set; }
-        public string Token { get; set; }
-        public bool IsAuthorized { get; set; }
-        public string PlexToken { get; set; }
-    }
-
-
     }
 }

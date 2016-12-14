@@ -46,5 +46,12 @@
         <ConfigParameterValue Environment="Prod" Value="%ProgramData%\PlaxFM\Config\CustomConfiguration.xsd" />
       </Values>
     </ConfigParameter>
+    <ConfigParameter Name="ConfigLocation" Default="%ProgramData%\PlaxFM\Config\">
+      <Values>
+        <ConfigParameterValue Environment="Dev" Value="C:\Git\Plax.FM\" />
+        <ConfigParameterValue Environment="Prod" Value="%ProgramData%\PlaxFM\Config\" />
+      </Values>
+    </ConfigParameter>
+
   </Parameters>
 </ConfigValues>

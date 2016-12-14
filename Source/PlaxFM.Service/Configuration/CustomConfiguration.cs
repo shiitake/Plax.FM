@@ -24,16 +24,24 @@ namespace PlaxFm.Configuration
         {
             var settings = appSettings;
             _logger = logger;
-            var configFile = Environment.ExpandEnvironmentVariables(settings.ConfigFile);
-            var schemaFile = Environment.ExpandEnvironmentVariables(settings.SchemaFile);
-            var configInfo = new FileInfo(configFile);
-            if (configInfo.Exists)
+            if (settings.UseConfigFile == true)
             {
-                _storage = new DataSet("UserConfiguration");
-                _storage.ReadXmlSchema(schemaFile);
-                _storage.ReadXml(configFile);
+                var configFile = Environment.ExpandEnvironmentVariables(settings.ConfigFile);
+                var schemaFile = Environment.ExpandEnvironmentVariables(settings.SchemaFile);
+                var configInfo = new FileInfo(configFile);
+                if (configInfo.Exists)
+                {
+                    _storage = new DataSet("UserConfiguration");
+                    _storage.ReadXmlSchema(schemaFile);
+                    _storage.ReadXml(configFile);
+                }
+                _config = new ConfigHelper(_storage, configFile, schemaFile);
             }
-            _config = new ConfigHelper(_storage, configFile, schemaFile);
+            else
+            {
+                var configLocation = Environment.ExpandEnvironmentVariables(settings.ConfigLocation);
+                _config = new ConfigHelper(configLocation);
+            }
         }
 
         private void Init()

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Security.Principal;
+using PlaxFm.Core;
+using PlaxFm.Core.Store;
 
 namespace PlaxFm.Core.Utilities
 {
@@ -14,18 +16,59 @@ namespace PlaxFm.Core.Utilities
         private DataSet _storage;
         private readonly string _configFile;
         private readonly string _schemaFile;
+        private string _configLocation;
+        private bool _loadConfigFromFile;
         
-        public ConfigHelper(DataSet storage, string configFile, string schemaFile)
+        public ConfigHelper(string configFile, string schemaFile)
         {
             _configFile = configFile;
             _schemaFile = schemaFile;
-            if (storage == null)
+            _loadConfigFromFile = true;
+            var configInfo = new FileInfo(configFile);
+            if (configInfo.Exists)
             {
-                Create();
+                _storage = new DataSet("UserConfiguration");
+                _storage.ReadXmlSchema(schemaFile);
+                _storage.ReadXml(configFile);
             }
             else
             {
-                _storage = storage;
+                Create();
+            }
+            
+            //if (storage == null)
+            //{
+            //    Create();
+            //}
+            //else
+            //{
+            //    _storage = storage;
+            //}
+        }
+
+        public ConfigHelper(string configLocation)
+        {
+            _loadConfigFromFile = false;
+            _configLocation = configLocation;
+            var plaxDb = new PlaxFmData(configLocation);
+        }
+
+        public DataSet GetStorage()
+        {
+            return _storage;
+        }
+
+        private void CreateConfig()
+        {
+            if (!string.IsNullOrWhiteSpace(_configFile))
+            {
+                var configInfo = new FileInfo(_configFile);
+                _configLocation = configInfo.Directory.ToString();
+            }
+            var directory = new DirectoryInfo(_configLocation);
+            if (!directory.Exists)
+            {
+                directory.Create();
             }
         }
 
@@ -70,6 +113,25 @@ namespace PlaxFm.Core.Utilities
             userConfig.Columns.Add("PlexToken");
             var authorized = new DataColumn("Authorized", typeof(bool), "", MappingType.Attribute);
             userConfig.Columns.Add(authorized);
+            var row = CreateNewUser(userConfig);
+            userConfig.Rows.Add(row);
+
+            //add tables to dataset
+            config.Tables.Add(userInit);
+            config.Tables.Add(userConfig);
+
+            //write dataset to config files
+            if (_loadConfigFromFile)
+            {
+                config.WriteXmlSchema(_schemaFile);
+                config.WriteXml(_configFile);
+            }
+            
+            _storage = config;
+        }
+
+        private DataRow CreateNewUser(DataTable userConfig)
+        {
             var row = userConfig.NewRow();
             row["PlexId"] = "1";
             row["PlexUsername"] = string.Empty;
@@ -78,19 +140,23 @@ namespace PlaxFm.Core.Utilities
             row["Token"] = string.Empty;
             row["Authorized"] = false;
             row["PlexToken"] = string.Empty;
-            userConfig.Rows.Add(row);
-
-            //add tables to dataset
-            config.Tables.Add(userInit);
-            config.Tables.Add(userConfig);
-
-            //write dataset to config files
-            config.WriteXmlSchema(_schemaFile);
-            config.WriteXml(_configFile);
-            _storage = config;
+            return row;
         }
 
         public DataSet LoadConfig()
+        {
+            if (_loadConfigFromFile)
+            {
+                return LoadConfigFromFile();
+            }
+            var storage = new DataSet();
+            storage.ReadXmlSchema(_schemaFile);
+            storage.ReadXml(_configFile);
+            _storage = storage;
+            return _storage;
+        }
+
+        public DataSet LoadConfigFromFile()
         {
             var storage = new DataSet();
             storage.ReadXmlSchema(_schemaFile);
