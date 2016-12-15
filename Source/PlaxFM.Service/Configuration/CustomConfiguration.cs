@@ -24,7 +24,7 @@ namespace PlaxFm.Configuration
         {
             var settings = appSettings;
             _logger = logger;
-            if (settings.UseConfigFile == true)
+            if (settings.UseConfigFile)
             {
                 var configFile = Environment.ExpandEnvironmentVariables(settings.ConfigFile);
                 var schemaFile = Environment.ExpandEnvironmentVariables(settings.SchemaFile);
@@ -35,13 +35,14 @@ namespace PlaxFm.Configuration
                     _storage.ReadXmlSchema(schemaFile);
                     _storage.ReadXml(configFile);
                 }
-                _config = new ConfigHelper(_storage, configFile, schemaFile);
+                _config = new ConfigHelper(configFile, schemaFile);
             }
             else
             {
                 var configLocation = Environment.ExpandEnvironmentVariables(settings.ConfigLocation);
                 _config = new ConfigHelper(configLocation);
             }
+            _storage = _config.GetStorage();
         }
 
         private void Init()

@@ -74,12 +74,13 @@ namespace PlaxFm.Core.Utilities
 
         private void Create()
         {
-            var configInfo = new FileInfo(_configFile);
-            var directory = new DirectoryInfo(configInfo.Directory.ToString());
-            if (!directory.Exists)
-            {
-                directory.Create();
-            }
+            CreateConfig();
+            CreateDataSet();
+            Save();
+        }
+
+        private void CreateDataSet() { 
+            
             //create config Dataset
             var config = new DataSet("UserConfiguration");
 
@@ -119,13 +120,6 @@ namespace PlaxFm.Core.Utilities
             //add tables to dataset
             config.Tables.Add(userInit);
             config.Tables.Add(userConfig);
-
-            //write dataset to config files
-            if (_loadConfigFromFile)
-            {
-                config.WriteXmlSchema(_schemaFile);
-                config.WriteXml(_configFile);
-            }
             
             _storage = config;
         }
@@ -173,8 +167,16 @@ namespace PlaxFm.Core.Utilities
 
         public void Save()
         {
-            _storage.WriteXmlSchema(_schemaFile);
-            _storage.WriteXml(_configFile);
+            if (_loadConfigFromFile)
+            {
+                _storage.WriteXmlSchema(_schemaFile);
+                _storage.WriteXml(_configFile);
+            }
+            else
+            {
+                
+            }
+            
         }
 
         public string GetValue(string settingName, int plexId = 1)

@@ -13,12 +13,12 @@ namespace PlaxFm.Core.Store
     class PlaxFmData
     {
         private SQLiteConnection _dbConnection;
-        private readonly string PlaxDatebase = "PlaxFmDb.sqlite";
+        private readonly string PlaxDatabase = "PlaxFmDb.sqlite";
 
         public PlaxFmData(string configLocation)
         {
             //check for db
-            var dbFile = configLocation + @"\" + PlaxDatebase;
+            var dbFile = configLocation + @"\" + PlaxDatabase;
             var dbInfo = new FileInfo(dbFile);
             if (!dbInfo.Exists)
             {
@@ -34,14 +34,14 @@ namespace PlaxFm.Core.Store
         public void CreateNewDb()
         {
             CreateDbFile();
-            _dbConnection = CreateConnection(PlaxDatebase);
+            _dbConnection = CreateConnection(PlaxDatabase);
             _dbConnection.Open();
             CreateUserTable(_dbConnection);
         }
 
         public void CreateDbFile()
         {
-            SQLiteConnection.CreateFile(PlaxDatebase);
+            SQLiteConnection.CreateFile(PlaxDatabase);
         }
 
         public SQLiteConnection CreateConnection(string dataSource)
@@ -55,6 +55,23 @@ namespace PlaxFm.Core.Store
             {
                 var sql =
                 "create table User (PlexId int unique not null, PlexUsername varchar(50), LastFmUsername varchar(50), SessionId varchar(50), Token varchar(50), IsAuthorized bit, PlexToken varchar(50))";
+                using (var command = new SQLiteCommand(sql, conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"There was an error creating the table. {ex.Message}");
+            }
+        }
+
+        public void CreateSetupTable(SQLiteConnection conn)
+        {
+            try
+            {
+                var sql =
+                "create table Setup (Initialized bool not null, Profile varchar(50))";
                 using (var command = new SQLiteCommand(sql, conn))
                 {
                     command.ExecuteNonQuery();
@@ -115,10 +132,15 @@ namespace PlaxFm.Core.Store
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"There was an error retrieviing data for user {PlexId} from the table. {ex.Message}");
+                Console.WriteLine($"There was an error retrieving data for user {PlexId} from the table. {ex.Message}");
                 return null;
             }
 
+        }
+
+        public void SaveDataSet(DataSet storage)
+        {
+            
         }
     }
 }
