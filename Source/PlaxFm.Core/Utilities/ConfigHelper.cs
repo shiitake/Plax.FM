@@ -14,8 +14,8 @@ namespace PlaxFm.Core.Utilities
     public class ConfigHelper
     {
         private DataSet _storage;
-        private readonly string _configFile;
-        private readonly string _schemaFile;
+        private readonly string _configFile = "CustomConfiguration.xml";
+        private readonly string _schemaFile = "CustomConfiguration.xsd";
         private string _configLocation;
         private bool _loadConfigFromFile;
         
@@ -48,9 +48,30 @@ namespace PlaxFm.Core.Utilities
 
         public ConfigHelper(string configLocation)
         {
-            _loadConfigFromFile = false;
-            _configLocation = configLocation;
+            //check for database
             var plaxDb = new PlaxFmData(configLocation);
+            var userCount = plaxDb.GetUserCount();
+            if (userCount < 1)
+            {
+                _configLocation = configLocation;
+                //check for config file
+                var configFile = _configLocation + @"\" + _configFile;
+                var schemaFile = _configLocation + @"\" + _schemaFile;
+                var configInfo = new FileInfo(configFile);
+                if (configInfo.Exists)
+                {
+                    var migrateStorage = new DataSet("UserConfiguration");
+                    migrateStorage.ReadXmlSchema(schemaFile);
+                    migrateStorage.ReadXml(configFile);
+
+                    //todo: migrate old storage to new storage
+                }
+                else
+                {
+                    //create new users in db
+                    //create new dataset
+                }
+            }
         }
 
         public DataSet GetStorage()

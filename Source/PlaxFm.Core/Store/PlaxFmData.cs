@@ -12,39 +12,42 @@ namespace PlaxFm.Core.Store
 {
     class PlaxFmData
     {
-        private SQLiteConnection _dbConnection;
-        private readonly string PlaxDatabase = "PlaxFmDb.sqlite";
+        public bool DoesDbExist { get; set; }
+        private readonly SQLiteConnection _dbConnection;
+        private readonly string _dbName = "PlaxFmDb.sqlite";
+        private readonly string _dbFile;
+        //private readonly string _connectionString = "Data Source = PlaxFmDb.sqlite; Version=3;";
 
         public PlaxFmData(string configLocation)
         {
-            //check for db
-            var dbFile = configLocation + @"\" + PlaxDatabase;
-            var dbInfo = new FileInfo(dbFile);
-            if (!dbInfo.Exists)
-            {
-                CreateNewDb();
+            //get db file
+            _dbFile = configLocation + @"\" + _dbName;
 
-            }
-            SQLiteConnection.CreateFile(dbFile);
-            _dbConnection = new SQLiteConnection("Data Source=PlaxFmDb.sqlite;Version=3;");
-            _dbConnection.Open();
+            //get db connection
+            _dbConnection = CreateConnection(_dbFile);
 
+            //does db exist
+            var dbInfo = new FileInfo(_dbFile);
+            if (dbInfo.Exists) return;
+            DoesDbExist = false;
+            CreateNewDb();
         }
 
         public void CreateNewDb()
         {
             CreateDbFile();
-            _dbConnection = CreateConnection(PlaxDatabase);
             _dbConnection.Open();
             CreateUserTable(_dbConnection);
+            CreateSetupTable(_dbConnection);
+            _dbConnection.Close();
         }
 
         public void CreateDbFile()
         {
-            SQLiteConnection.CreateFile(PlaxDatabase);
+            SQLiteConnection.CreateFile(_dbName);
         }
 
-        public SQLiteConnection CreateConnection(string dataSource)
+        private SQLiteConnection CreateConnection(string dataSource)
         {
             return new SQLiteConnection($"Data Source={dataSource};Version=3;");
         }
@@ -81,6 +84,12 @@ namespace PlaxFm.Core.Store
             {
                 Console.WriteLine($"There was an error creating the table. {ex.Message}");
             }
+        }
+
+        public int GetUserCount()
+        {
+            //todo: add this functionality. 
+            return 0;
         }
 
         public int InsertNewUser(SQLiteConnection conn, User user)
