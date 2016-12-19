@@ -24,24 +24,27 @@ namespace PlaxFm.Configuration
         {
             var settings = appSettings;
             _logger = logger;
-            if (settings.UseConfigFile)
-            {
-                var configFile = Environment.ExpandEnvironmentVariables(settings.ConfigFile);
-                var schemaFile = Environment.ExpandEnvironmentVariables(settings.SchemaFile);
-                var configInfo = new FileInfo(configFile);
-                if (configInfo.Exists)
-                {
-                    _storage = new DataSet("UserConfiguration");
-                    _storage.ReadXmlSchema(schemaFile);
-                    _storage.ReadXml(configFile);
-                }
-                _config = new ConfigHelper(configFile, schemaFile);
-            }
-            else
-            {
-                var configLocation = Environment.ExpandEnvironmentVariables(settings.ConfigLocation);
-                _config = new ConfigHelper(configLocation);
-            }
+            var configLocation = Environment.ExpandEnvironmentVariables(settings.ConfigLocation);
+            _config = new ConfigHelper(configLocation);
+
+            //if (settings.UseConfigFile)
+            //{
+            //    var configFile = Environment.ExpandEnvironmentVariables(settings.ConfigFile);
+            //    var schemaFile = Environment.ExpandEnvironmentVariables(settings.SchemaFile);
+            //    var configInfo = new FileInfo(configFile);
+            //    if (configInfo.Exists)
+            //    {
+            //        _storage = new DataSet("UserConfiguration");
+            //        _storage.ReadXmlSchema(schemaFile);
+            //        _storage.ReadXml(configFile);
+            //    }
+            //    _config = new ConfigHelper(configFile, schemaFile);
+            //}
+            //else
+            //{
+            //    var configLocation = Environment.ExpandEnvironmentVariables(settings.ConfigLocation);
+            //    _config = new ConfigHelper(configLocation);
+            //}
             _storage = _config.GetStorage();
         }
 
