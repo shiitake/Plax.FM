@@ -2,6 +2,7 @@
 using System.Data;
 using System.IO;
 using Ninject.Extensions.Logging;
+using PlaxFm.Core.Models;
 using PlaxFm.Core.Utilities;
 
 namespace PlaxFm.Configuration
@@ -53,25 +54,33 @@ namespace PlaxFm.Configuration
             _storage = _config.LoadConfig();
         }
 
+        public int GetUserCount()
+        {
+            return _config.GetUserCount();
+        }
+
         public bool UserConfirmed(int plexId = 1)
         {
-            Init();
-            _logger.Info("Checking user configuration");
-            var plex = _config.GetValue("PlexToken") != "";
-            var init = _config.GetValue("Setup", "Initialized").ToLower() == "true";
-            var auth = _config.GetValue("Authorized").ToLower() == "true";
-            return (plex && init && auth);
+            //Init();
+            //_logger.Info("Checking user configuration");
+            //var plex = _config.GetValue("PlexToken") != "";
+            //var init = _config.GetValue("Setup", "Initialized").ToLower() == "true";
+            //var auth = _config.GetValue("Authorized").ToLower() == "true";
+            //return (plex && init && auth);
+            return _config.IsUserConfirmed(plexId);
         }
         
         public void AddUser(string username, int plexId)
         {
-            Init();
-            _logger.Info("Adding new user.");
-            var row = _storage.Tables["User"].NewRow();
-            row["PlexId"] = plexId.ToString();
-            row["PlexUsername"] = username;
-            _storage.Tables["User"].Rows.Add(row);
-            _config.Save(_storage);
+            //Init();
+            //_logger.Info("Adding new user.");
+            //var row = _storage.Tables["User"].NewRow();
+            //row["PlexId"] = plexId.ToString();
+            //row["PlexUsername"] = username;
+            //_storage.Tables["User"].Rows.Add(row);
+            //_config.Save(_storage);
+            var user = new User { IsAuthorized = false, PlexUsername = username, PlexId = plexId} ;
+            _config.AddUser(user);
         }
 
         public void DeleteUser(string username)

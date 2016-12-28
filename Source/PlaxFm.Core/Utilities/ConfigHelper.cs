@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Security.Principal;
 using PlaxFm.Core;
+using PlaxFm.Core.Models;
 using PlaxFm.Core.Store;
 
 namespace PlaxFm.Core.Utilities
@@ -18,6 +19,8 @@ namespace PlaxFm.Core.Utilities
         private readonly string _schemaFile = "CustomConfiguration.xsd";
         private string _configLocation;
         private bool _loadConfigFromFile;
+        private PlaxFmData _plaxDb { get; set; }
+        public bool IsInitialized { get; set; }
         
         public ConfigHelper(string configFile, string schemaFile)
         {
@@ -49,8 +52,8 @@ namespace PlaxFm.Core.Utilities
         public ConfigHelper(string configLocation)
         {
             //check for database
-            var plaxDb = new PlaxFmData(configLocation);
-            var userCount = plaxDb.GetUserCount();
+            _plaxDb = new PlaxFmData(configLocation);
+            var userCount = GetUserCount();
             if (userCount < 1)
             {
                 _configLocation = configLocation;
@@ -71,6 +74,45 @@ namespace PlaxFm.Core.Utilities
                     //create new users in db
                     //create new dataset
                 }
+            }
+        }
+
+        public int GetUserCount()
+        {
+                using (var context = new PlaxContext(_plaxDb.DbConnection))
+                {
+                    return context.Users.Count();
+                }
+        }
+
+        public bool IsUserConfirmed(int plexId)
+        {
+            using (var context = new PlaxContext(_plaxDb.DbConnection))
+            {
+                return context.Users.Any(u => u.PlexId == plexId && u.IsAuthorized && u.PlexToken != "");
+            }
+        }
+
+        public void AddUser(User user)
+        {
+            using (var context = new PlaxContext(_plaxDb.DbConnection))
+            {
+                context.Users.Add(user);
+            }
+        }
+
+        public User GetUserByUserName(string userName)
+        {
+            using (var context = new PlaxContext(_plaxDb.DbConnection))
+            {
+                return context.Users.First(u => u.PlexUsername == userName);
+            }
+        }
+        public User GetUserByPlexId(int plexId)
+        {
+            using (var context = new PlaxContext(_plaxDb.DbConnection))
+            {
+                return context.Users.First(u => u.PlexId  == plexId);
             }
         }
 

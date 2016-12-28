@@ -13,6 +13,7 @@ namespace PlaxFm.Core.Store
     class PlaxFmData
     {
         public bool DoesDbExist { get; set; }
+        public SQLiteConnection DbConnection { get; set; }
         private readonly SQLiteConnection _dbConnection;
         private readonly string _dbName = "PlaxFmDb.sqlite";
         private readonly string _dbFile;
@@ -21,15 +22,15 @@ namespace PlaxFm.Core.Store
         public PlaxFmData(string configLocation)
         {
             //get db file
-            _dbFile = configLocation + @"\" + _dbName;
+            _dbFile = Path.Combine(configLocation, _dbName);
 
             //get db connection
             _dbConnection = CreateConnection(_dbFile);
+            DbConnection = _dbConnection;
 
             //does db exist
             var dbInfo = new FileInfo(_dbFile);
             if (dbInfo.Exists) return;
-            DoesDbExist = false;
             CreateNewDb();
         }
 
@@ -39,17 +40,18 @@ namespace PlaxFm.Core.Store
             _dbConnection.Open();
             CreateUserTable(_dbConnection);
             CreateSetupTable(_dbConnection);
+            CreateSongCacheTable(_dbConnection);
             _dbConnection.Close();
         }
 
         public void CreateDbFile()
         {
-            SQLiteConnection.CreateFile(_dbName);
+            SQLiteConnection.CreateFile(_dbFile);
         }
 
         private SQLiteConnection CreateConnection(string dataSource)
         {
-            return new SQLiteConnection($"Data Source={dataSource};Version=3;");
+            return new SQLiteConnection($"Data Source={dataSource}");
         }
 
         public void CreateUserTable(SQLiteConnection conn)
@@ -57,7 +59,7 @@ namespace PlaxFm.Core.Store
             try
             {
                 var sql =
-                "create table User (PlexId int unique not null, PlexUsername varchar(50), LastFmUsername varchar(50), SessionId varchar(50), Token varchar(50), IsAuthorized bit, PlexToken varchar(50))";
+                "create table User (PlexId integer primary key autoincrement not null, PlexUsername varchar(50), LastFmUsername varchar(50), SessionId varchar(50), Token varchar(50), IsAuthorized bit, PlexToken varchar(50))";
                 using (var command = new SQLiteCommand(sql, conn))
                 {
                     command.ExecuteNonQuery();
@@ -74,7 +76,25 @@ namespace PlaxFm.Core.Store
             try
             {
                 var sql =
-                "create table Setup (Initialized bool not null, Profile varchar(50))";
+                "create table Setup (Initialized bool not null, Profile varchar(50) primary key)";
+                using (var command = new SQLiteCommand(sql, conn))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"There was an error creating the table. {ex.Message}");
+            }
+        }
+
+        public void CreateSongCacheTable(SQLiteConnection conn)
+        {
+            try
+            {
+                Console.WriteLine("Creating SongCache table");
+                var sql =
+                    "create table Songs (CacheId integer primary key autoincrement not null, UserId int not null, MediaId int not null, Title varchar(50), Artist varchar(50), Album varchar(50), TimePlayed DateTime, HasBeenScrobbled bool)";
                 using (var command = new SQLiteCommand(sql, conn))
                 {
                     command.ExecuteNonQuery();
