@@ -58,8 +58,14 @@ namespace PlaxFm.Core.Store
         {
             try
             {
-                var sql =
-                "create table User (PlexId integer primary key autoincrement not null, PlexUsername varchar(50), LastFmUsername varchar(50), SessionId varchar(50), Token varchar(50), IsAuthorized bit, PlexToken varchar(50))";
+                var sql = @"create table User 
+                (PlexId integer primary key autoincrement not null, 
+                PlexUsername varchar(255), 
+                LastFmUsername varchar(255), 
+                SessionId varchar(255), 
+                Token varchar(255), 
+                IsAuthorized boolean, 
+                PlexToken varchar(255))";
                 using (var command = new SQLiteCommand(sql, conn))
                 {
                     command.ExecuteNonQuery();
@@ -93,8 +99,15 @@ namespace PlaxFm.Core.Store
             try
             {
                 Console.WriteLine("Creating SongCache table");
-                var sql =
-                    "create table Songs (CacheId integer primary key autoincrement not null, UserId int not null, MediaId int not null, Title varchar(50), Artist varchar(50), Album varchar(50), TimePlayed DateTime, HasBeenScrobbled bool)";
+                var sql = @"create table Songs 
+                (CacheId integer primary key autoincrement not null, 
+                UserId int not null, 
+                MediaId int not null, 
+                Title varchar(255), 
+                Artist varchar(255), 
+                Album varchar(255), 
+                TimePlayed DateTime, 
+                HasBeenScrobbled boolean)";
                 using (var command = new SQLiteCommand(sql, conn))
                 {
                     command.ExecuteNonQuery();

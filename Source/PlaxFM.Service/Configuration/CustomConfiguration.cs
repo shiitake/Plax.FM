@@ -83,6 +83,11 @@ namespace PlaxFm.Configuration
             _config.AddUser(user);
         }
 
+        public void UpdateUser(User user)
+        {
+            
+        }
+
         public void DeleteUser(string username)
         {
             _logger.Info("Deleting user " + username);

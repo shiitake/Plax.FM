@@ -98,6 +98,22 @@ namespace PlaxFm.Core.Utilities
             using (var context = new PlaxContext(_plaxDb.DbConnection))
             {
                 context.Users.Add(user);
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateUser(User user)
+        {
+            using (var context = new PlaxContext(_plaxDb.DbConnection))
+            {
+                context.Users.Attach(user);
+                var entry = context.Entry(user);
+                entry.Property(e => e.IsAuthorized).IsModified = true;
+                entry.Property(e => e.SessionId).IsModified = true;
+                entry.Property(e => e.Token).IsModified = true;
+                entry.Property(e => e.PlexToken).IsModified = true;
+                entry.Property(e => e.LastFmUsername).IsModified = true;
+                context.SaveChanges();
             }
         }
 
