@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.Tests.Unit", "Source\PlaxFm.Tests.Unit\PlaxFm.Tests.Unit.csproj", "{ECDD3ACC-E67A-479D-9D8E-39613D8EF56F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.Store", "Source\PlaxFm.Store\PlaxFm.Store.csproj", "{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -87,6 +89,16 @@ Global
 		{ECDD3ACC-E67A-479D-9D8E-39613D8EF56F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ECDD3ACC-E67A-479D-9D8E-39613D8EF56F}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{ECDD3ACC-E67A-479D-9D8E-39613D8EF56F}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
