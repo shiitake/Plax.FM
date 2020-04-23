@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="yes"?>
+<UserConfiguration>
+  <Setup Initialized="false">
+    <Profile>SYSTEM</Profile>
+  </Setup>
+  <User PlexId="1" PlexUsername="" Authorized="false">
+    <LastFmUsername />
+    <SessionId />
+    <Token />
+    <PlexToken />
+  </User>
+</UserConfiguration>

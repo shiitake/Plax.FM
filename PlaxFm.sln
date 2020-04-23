@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.Service", "Source\PlaxFM.Service\PlaxFm.Service.csproj", "{07DA0509-E3F6-4926-9198-A4AC4F2E1564}"
 EndProject
@@ -29,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.Tests.Unit", "Source\PlaxFm.Tests.Unit\PlaxFm.Tests.Unit.csproj", "{ECDD3ACC-E67A-479D-9D8E-39613D8EF56F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaxFm.Store", "Source\PlaxFm.Store\PlaxFm.Store.csproj", "{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PlaxFm.Setup", "PlaxFm.Setup\PlaxFm.Setup.vdproj", "{465F5059-E409-4A98-AEFD-61ABFD590501}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,8 +101,16 @@ Global
 		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{ED81CC2A-AA2D-4D09-8BC3-292DDBBA9011}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{465F5059-E409-4A98-AEFD-61ABFD590501}.CD_ROM|Any CPU.ActiveCfg = Release
+		{465F5059-E409-4A98-AEFD-61ABFD590501}.Debug|Any CPU.ActiveCfg = Debug
+		{465F5059-E409-4A98-AEFD-61ABFD590501}.DVD-5|Any CPU.ActiveCfg = Debug
+		{465F5059-E409-4A98-AEFD-61ABFD590501}.Release|Any CPU.ActiveCfg = Release
+		{465F5059-E409-4A98-AEFD-61ABFD590501}.SingleImage|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8A6FDAE-F359-4C33-9DB6-7AFF3D9B6706}
 	EndGlobalSection
 EndGlobal

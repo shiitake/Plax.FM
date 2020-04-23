@@ -55,7 +55,7 @@ namespace PlaxFm.SystemTray
             _trayIcon = new NotifyIcon
             {
                 Text = @"Plax.FM",
-                Icon = new Icon("favicon.ico", 40, 40),
+                Icon = new Icon("favicon_white.ico", 40, 40),
                 ContextMenu = trayMenu,
                 Visible = true
             };
